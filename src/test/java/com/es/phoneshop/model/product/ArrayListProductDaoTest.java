@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.model.filter.Filter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,7 +25,7 @@ public class ArrayListProductDaoTest
     @Before
     public void setup() {
         productDao = ArrayListProductDao.getInstance();
-		newProduct = new Product(17L, "htces4g", "HTC UVO Short 4G", new BigDecimal(32),
+		newProduct = new Product("htces4g", "HTC UVO Short 4G", new BigDecimal(32),
 				Currency.getInstance("USD"), 3, "HTC/HTC%20EVO%20Shift%204G.jpg");
     }
 
@@ -35,44 +36,33 @@ public class ArrayListProductDaoTest
     
     @Test
     public void testSavingProduct() {
-    	Long id = ArrayListProductDao.getMaxId();
-    	productDao.save(newProduct);
+    	Long id = productDao.save(newProduct);
     	
     	assertTrue(productDao.getProduct(id).getId().equals(id));
     }
     
     @Test
 	public void testSavingAndGettingProduct() {
-    	Long id = ArrayListProductDao.getMaxId();
-		productDao.save(newProduct);
+    	Long id = productDao.save(newProduct);
 		
 		assertEquals(new Product(id, newProduct), productDao.getProduct(id));
-		assertNotNull(productDao.getProduct(newProduct.getId()));
+		assertNotNull(productDao.getProduct(id));
 	}
 
 	@Test
 	public void testSavingDifferentProductsWithOneId() {
-		Long id = ArrayListProductDao.getMaxId();
+		Long id;
 		Product someOldProduct = new Product("htces4g", "HTC UVO Short 5G", new BigDecimal(42),
 				Currency.getInstance("USD"), 8, "HTC/HTC%20EVO%20Shift%204G.jpg");
-		Product someNewProduct = new Product(id, "htces7g", "HpC UVO Short 5G", new BigDecimal(42),
+		Product someNewProduct = new Product("htces7g", "HpC UVO Short 6G", new BigDecimal(42),
 				Currency.getInstance("USD"), 8, "HTC/HTC%20EVO%20Shift%204G.jpg");
 		
-		productDao.save(someOldProduct);
-		someOldProduct.setId(id);
+		id = productDao.save(someOldProduct);
+		someNewProduct.setId(id);
 		productDao.save(someNewProduct);
 
 		assertNotNull(productDao.getProduct(id).getId());
 		assertEquals(productDao.getProduct(id), someNewProduct);
 		assertNotEquals(productDao.getProduct(id), someOldProduct);
 	}
-/*
-	@Test
-	public void testAreRequestedProductsSatisfyRequerments() {
-		
-		assertTrue(productDao.findProducts()
-				.stream()
-				.allMatch(p -> (p.getStock()>0 && p.getPrice() != null)));
-	}
-	*/
 }

@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import com.es.phoneshop.model.comparator.SortingComparator;
 import com.es.phoneshop.model.filter.Filter;
+import com.es.phoneshop.model.filter.FilterMatcher;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
 import com.es.phoneshop.model.product.Product;
@@ -30,7 +31,6 @@ public class ArrayListProductDao implements ProductDao {
 	}
 	
 	public static ArrayListProductDao getInstance() {
-		
 		ArrayListProductDao result = instance;
 		if(result != null) {
 			return result;
@@ -47,19 +47,21 @@ public class ArrayListProductDao implements ProductDao {
 
     @Override
     public Product getProduct(Long id) {
-
     	Product buf;
     	
 		if (id == null) {
 			throw new IllegalArgumentException("Id is null");
 			}
 
-		readWriteLock.readLock().lock();
-		buf = products.stream()
-				.filter(p -> id.equals(p.getId()))
-				.findAny()
-				.orElseThrow(ProductNotFoundException::new);
-		readWriteLock.readLock().unlock();
+		try {
+			readWriteLock.readLock().lock();
+			buf = products.stream()
+					.filter(p -> id.equals(p.getId()))
+					.findAny()
+					.orElseThrow(() -> new ProductNotFoundException("No products with current id were found (id = " + id + ")"));
+		} finally {
+			readWriteLock.readLock().unlock();
+		}
 		
 		return buf;
     }
@@ -67,71 +69,70 @@ public class ArrayListProductDao implements ProductDao {
     @Override
     public List<Product> findProducts(Filter filter) {
 
-    	readWriteLock.readLock().lock();
-
-    	List<Product> prods = products.stream()
-    			.filter(p -> {
-    				if(filter.getQueryWords().size() == 0) {
-    					return true;
-    				} else {
-    					return filter.percentOfWords(p) > 0 ?
-    		    				true : false;
-    				}})
-    			.sorted((p1, p2) -> {
-    			return SortingComparator.sortProducts(p1, p2, filter);
-    			})
-    			.collect(Collectors.toList());
-
-	/*	List<Product> prods = products.stream()
-				.filter(p -> p.getStock() > 0 && p.getPrice() != null)
-				.collect(Collectors.toList());*/
-		readWriteLock.readLock().unlock();
-
+    	List<Product> prods;
+    	
+    	try {
+    		readWriteLock.readLock().lock();
+        	prods = products.stream()
+        			.filter(p -> {
+        				if(filter.getQueryWords().size() == 0) {
+        					return true;
+        				} else {
+        					return FilterMatcher.percentOfWords(p, filter) > 0 ?
+        		    				true : false;
+        				}})
+        			.sorted((p1, p2) -> {
+        			return SortingComparator.sortProducts(p1, p2, filter);
+        			})
+        			.collect(Collectors.toList());
+    	} finally {
+    		readWriteLock.readLock().unlock();
+    	}
+    	
 		return prods;
     }
 
     @Override
-    public void save(Product product) {
-
+    public Long save(Product product) {
     	if(product == null) {
     		throw new IllegalArgumentException("Product is null");
     	}
 
     	List<Product> sameIdProducts;
 
-    	readWriteLock.writeLock().lock();
-    	if(product.getId() == null) {
-    		products.add(new Product(maxId++, product));
-    	} else {
-    		sameIdProducts = products.stream()
-        			.filter(p -> product.getId().equals(p.getId()))
-        			.collect(Collectors.toList());
-
-        	if(sameIdProducts.size()<1) {
-        		throw new ProductNotFoundException("No products with current id were found");
+    	try {
+    		readWriteLock.writeLock().lock();
+        	if(product.getId() == null) {
+        		products.add(new Product(maxId++, product));
         	} else {
-        		products.set(products.indexOf(sameIdProducts.get(0)), product);
-    		}
-    	}
-    	readWriteLock.writeLock().unlock();
+        		sameIdProducts = products.stream()
+            			.filter(p -> product.getId().equals(p.getId()))
+            			.collect(Collectors.toList());
 
+            	if(sameIdProducts.size()<1) {
+            		throw new ProductNotFoundException("No products with current id were found");
+            	} else {
+            		products.set(products.indexOf(sameIdProducts.get(0)), product);
+        		}
+        	}
+    	} finally {
+    		readWriteLock.writeLock().unlock();
+    	}
+    	return maxId - 1;
     }
 
     @Override
     public void delete(Long id) {
-
     	if(id == null) {
 			throw new IllegalArgumentException("Id is null");
 		}
 
-    	readWriteLock.writeLock().lock();
-    	products.removeIf(p -> id.equals(p.getId()));
-    	readWriteLock.writeLock().unlock();
-
-    }
-
-    public static Long getMaxId() {
-    	return ArrayListProductDao.maxId;
+    	try {
+    		readWriteLock.writeLock().lock();
+        	products.removeIf(p -> id.equals(p.getId()));
+    	} finally {
+    		readWriteLock.writeLock().unlock();
+    	}
     }
 
 }

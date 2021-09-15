@@ -5,6 +5,7 @@ import com.es.phoneshop.dao.impl.ArrayListProductDao;
 import com.es.phoneshop.enums.SortField;
 import com.es.phoneshop.enums.SortOrder;
 import com.es.phoneshop.model.filter.Filter;
+import com.es.phoneshop.model.filter.FilterCreator;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -27,21 +28,17 @@ public class ProductListPageServlet extends HttpServlet {
 	
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	//For situations, when there's no such parameteres
-        String field = request.getParameter("field");
-        String order = request.getParameter("order");
-        Filter filter;
+    	//Constants
+        String field = "field";
+        String order = "order";
+        String query = "query";
         
-        if(field == null && order == null && (request.getParameter("query") == null || "".equals(request.getParameter("query")) )) {
-        	filter = new Filter(SortField.STOCK, SortOrder.DESC, null);
-        } else {
-        	filter = new Filter(
-            		(field != null) ? SortField.valueOf(field.toUpperCase()) : null, 
-            		(order != null) ? SortOrder.valueOf(order.toUpperCase()) : null, 
-            		(String)request.getParameter("query"));
-        }
+        //Filter-creating logic
+        FilterCreator creator = new FilterCreator();
+        creator.setQuery(request.getParameter(query));
+        creator.setSorting(request.getParameter(field), request.getParameter(order));
         
-    	request.setAttribute("products", productDao.findProducts(filter));
+    	request.setAttribute("products", productDao.findProducts(creator.createFilter()));
         request.getRequestDispatcher("/WEB-INF/pages/productList.jsp").forward(request, response);
     }
 

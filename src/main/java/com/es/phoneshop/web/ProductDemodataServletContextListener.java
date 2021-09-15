@@ -39,8 +39,7 @@ public class ProductDemodataServletContextListener implements ServletContextList
 	/**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
-    public void contextInitialized(ServletContextEvent event)  { 
-        
+    public void contextInitialized(ServletContextEvent event)  {
     	productDao = ArrayListProductDao.getInstance();
     	if(event.getServletContext().getInitParameter("insertDemoData").equals("true")) {
         	getSampleProducts().stream().forEach(p -> productDao.save(p));	

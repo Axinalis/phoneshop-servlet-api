@@ -16,7 +16,7 @@ public class Filter{
 	private List<String> queryWords;
 
 	public Filter() {
-
+		this(null, null, null);
 	}
 
 	public Filter(SortField sortField, SortOrder sortOrder, String query) {
@@ -57,20 +57,4 @@ public class Filter{
 	public void setQueryWords(List<String> queryWords) {
 		this.queryWords = queryWords;
 	}
-	
-	public double percentOfWords(Product p) {
-
-		if (queryWords.stream()
-				.anyMatch(word -> word.equals(p.getCode()))) {
-			return 1;
-		}
-
-		int wordsNum = (int) queryWords.stream()
-				.filter(word -> {
-			return p.getDescription().contains(word);})
-				.count();
-
-		return (double) wordsNum / p.getDescription().split("//s+").length;
-	}
-	
 }

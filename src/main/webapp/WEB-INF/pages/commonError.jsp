@@ -5,7 +5,7 @@
 
 <tags:master pageTitle="Product not found error">
   <p>
-    Product is not found
+    Undefined error
   </p>
 
   <p>

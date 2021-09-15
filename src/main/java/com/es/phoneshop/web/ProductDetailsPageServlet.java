@@ -33,7 +33,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		productDao = ArrayListProductDao.getInstance();
 		
 		String productId = request.getPathInfo();
@@ -48,7 +47,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		doGet(request, response);
 	}
 
