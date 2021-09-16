@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.es.phoneshop.comparator.filter.Filter;
+import com.es.phoneshop.comparator.filter.FilterCreator;
 import com.es.phoneshop.enums.SortField;
 import com.es.phoneshop.enums.SortOrder;
 

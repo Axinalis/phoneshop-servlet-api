@@ -8,6 +8,8 @@ import java.util.Currency;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.es.phoneshop.comparator.filter.Filter;
+import com.es.phoneshop.comparator.filter.FilterMatcher;
 import com.es.phoneshop.enums.SortField;
 import com.es.phoneshop.enums.SortOrder;
 import com.es.phoneshop.model.product.Product;

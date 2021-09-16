@@ -1,4 +1,4 @@
-package com.es.phoneshop.model.filter;
+package com.es.phoneshop.comparator.filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

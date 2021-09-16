@@ -2,7 +2,7 @@ package com.es.phoneshop.dao;
 
 import java.util.List;
 
-import com.es.phoneshop.model.filter.Filter;
+import com.es.phoneshop.comparator.filter.Filter;
 import com.es.phoneshop.model.product.Product;
 
 public interface ProductDao {

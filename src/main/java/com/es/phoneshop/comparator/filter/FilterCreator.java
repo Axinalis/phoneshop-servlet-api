@@ -1,4 +1,4 @@
-package com.es.phoneshop.model.filter;
+package com.es.phoneshop.comparator.filter;
 
 import com.es.phoneshop.enums.SortField;
 import com.es.phoneshop.enums.SortOrder;

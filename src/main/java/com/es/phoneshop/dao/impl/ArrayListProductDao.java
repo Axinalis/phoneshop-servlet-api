@@ -8,9 +8,9 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
-import com.es.phoneshop.model.comparator.SortingComparator;
-import com.es.phoneshop.model.filter.Filter;
-import com.es.phoneshop.model.filter.FilterMatcher;
+import com.es.phoneshop.comparator.SortingComparator;
+import com.es.phoneshop.comparator.filter.Filter;
+import com.es.phoneshop.comparator.filter.FilterMatcher;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
 import com.es.phoneshop.model.product.Product;

@@ -1,11 +1,11 @@
 package com.es.phoneshop.web;
 
+import com.es.phoneshop.comparator.filter.Filter;
+import com.es.phoneshop.comparator.filter.FilterCreator;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
 import com.es.phoneshop.enums.SortField;
 import com.es.phoneshop.enums.SortOrder;
-import com.es.phoneshop.model.filter.Filter;
-import com.es.phoneshop.model.filter.FilterCreator;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

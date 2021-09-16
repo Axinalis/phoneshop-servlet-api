@@ -5,9 +5,9 @@ import java.util.Currency;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.es.phoneshop.comparator.filter.Filter;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
-import com.es.phoneshop.model.filter.Filter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
