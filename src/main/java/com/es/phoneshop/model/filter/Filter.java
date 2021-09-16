@@ -3,6 +3,7 @@ package com.es.phoneshop.model.filter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import com.es.phoneshop.enums.SortField;
 import com.es.phoneshop.enums.SortOrder;
@@ -57,4 +58,43 @@ public class Filter{
 	public void setQueryWords(List<String> queryWords) {
 		this.queryWords = queryWords;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+
+		if (o == null) {
+			return false;
+		}
+		if (o == this) {
+			return true;
+		}
+		if (o.getClass() != this.getClass()) {
+			return false;
+		}
+		Filter p = (Filter) o;
+		if (p.getSortField() == this.getSortField() 
+				&& p.getSortOrder() == this.getSortOrder()
+				&& p.getQueryWords().equals(this.getQueryWords())) {
+			return true;
+		}
+		return false;
+	}
+
+	public int hashCode() {
+
+		return Objects.hash(this.queryWords, 
+				this.sortField, 
+				this.sortOrder);
+
+	}
+
+	public String toString() {
+		
+		return this.getClass().toString() + "{ "
+		+ "sortField=" + this.sortField
+		+ " | sortOrder=" + this.sortOrder
+		+ " | queryWords=" + this.queryWords.toString()
+		+ " }";
+	}
+	
 }

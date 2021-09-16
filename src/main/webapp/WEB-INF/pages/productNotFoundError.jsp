@@ -5,12 +5,17 @@
 
 <tags:master pageTitle="Product not found error">
   <p>
-    Product is not found
+    <h3>Product is not found</h3>
   </p>
 
   <p>
     Some error occured
   </p>
+</br>
+</br>
+</br>
+</br>
+</br>
   <p>
     <a href="${pageContext.servletContext.contextPath}/products">Back to products list</a>
   </p>

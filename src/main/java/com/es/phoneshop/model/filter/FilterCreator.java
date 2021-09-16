@@ -16,10 +16,19 @@ public class FilterCreator {
 		if(sortField == null && sortOrder == null && (query == null || "".equals(query) )) {
         	filter = new Filter(SortField.STOCK, SortOrder.DESC, null);
         } else {
-        	filter = new Filter(
-            		(sortField != null) ? SortField.valueOf(sortField.toUpperCase()) : null, 
-            		(sortOrder != null) ? SortOrder.valueOf(sortOrder.toUpperCase()) : null, 
-            		query);
+        	SortField field = null;
+        	SortOrder order = null;
+        	
+        	try {
+        		field = SortField.valueOf(sortField.toUpperCase());
+        		order = SortOrder.valueOf(sortOrder.toUpperCase());
+        	} catch(IllegalArgumentException ex) {
+        		if(field != null) {
+        			order = SortOrder.ASC;
+        		}
+        	}
+        	
+        	filter = new Filter(field, order, query);
         }
 		
 		return filter;

@@ -143,14 +143,14 @@ public class Product {
 
 	public String toString() {
 		
-		return this.getClass().toString() + "{" 
+		return this.getClass().toString() + "{ " 
 		+ "code=" + this.code
-		+ "currency=" + this.currency
-		+ "description=" + this.description
-		+ "id=" + this.id
-		+ "imageUrl=" + this.imageUrl
-		+ "price=" + this.price
-		+ "stock=" + this.stock;
+		+ " | currency=" + this.currency
+		+ " | description=" + this.description
+		+ " | id=" + this.id
+		+ " | imageUrl=" + this.imageUrl
+		+ " | price=" + this.price
+		+ " | stock=" + this.stock + " }";
 		
 	}
 }
