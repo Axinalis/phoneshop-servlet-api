@@ -8,12 +8,12 @@
   <p>
     Welcome to Expert-Soft training!
   </p>
-  
+
   <form>
   <input name="query" value="${param.query}">
   <button>Search</button>
   </form>
-   
+
   <table>
     <thead>
       <tr>
@@ -21,12 +21,12 @@
         <td>
         	Description
         	<tags:sortLink field="description" order="asc"/>
-			<tags:sortLink field="description" order="desc"/>        
+			<tags:sortLink field="description" order="desc"/>
 		</td>
         <td class="price">
         	Price
         	<tags:sortLink field="price" order="asc"/>
-			<tags:sortLink field="price" order="desc"/>  
+			<tags:sortLink field="price" order="desc"/>
         </td>
       </tr>
     </thead>
@@ -36,12 +36,14 @@
           <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer${product.imageUrl}">
         </td>
         <td>
-          <a href="${pageContext.servletContext.contextPath}/products/${product.id}">
+          <a href="${pageContext.servletContext.contextPath}/products/info/${product.id}">
             ${product.description}
           </a>
         </td>
         <td class="price">
-          <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="${product.currency.symbol}"/>
+        <a href="${pageContext.servletContext.contextPath}/products/history/${product.id}">
+           <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="${product.currency.symbol}"/>
+          </a>
         </td>
       </tr>
     </c:forEach>

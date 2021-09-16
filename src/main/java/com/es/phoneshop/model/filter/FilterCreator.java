@@ -11,27 +11,30 @@ public class FilterCreator {
 
 	public Filter createFilter() {
 		
-		Filter filter;
+		//Default filter with stock sortfield
+		if((sortField == null || sortOrder == null) && (query == null || "".equals(query) )) {
+        	return new Filter(SortField.STOCK, SortOrder.DESC, null);
+        } 
 		
-		if(sortField == null && sortOrder == null && (query == null || "".equals(query) )) {
-        	filter = new Filter(SortField.STOCK, SortOrder.DESC, null);
-        } else {
-        	SortField field = null;
-        	SortOrder order = null;
-        	
-        	try {
-        		field = SortField.valueOf(sortField.toUpperCase());
-        		order = SortOrder.valueOf(sortOrder.toUpperCase());
+		//Filter for defined sorting (with or without query)
+		if((sortField != null && sortOrder != null)) {
+    		
+    		SortField field = null;
+			SortOrder order = null;
+    		
+    		try {
+    			field = SortField.valueOf(sortField.toUpperCase());
+    			order = SortOrder.valueOf(sortOrder.toUpperCase());
         	} catch(IllegalArgumentException ex) {
         		if(field != null) {
         			order = SortOrder.ASC;
         		}
         	}
-        	
-        	filter = new Filter(field, order, query);
-        }
+    		return new Filter(field, order, query);
+    	}   
 		
-		return filter;
+		//Filter without sorting, only with query
+		return new Filter(null, null, query);
 		
 	}
 	
