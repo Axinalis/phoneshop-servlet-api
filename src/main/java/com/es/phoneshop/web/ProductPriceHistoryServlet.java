@@ -57,8 +57,6 @@ public class ProductPriceHistoryServlet extends HttpServlet {
 			throw new ProductNotFoundException("Id is not valid");
 		}
 		
-		productDao.getProduct(id);
-		
 		request.setAttribute("product", productDao.getProduct(id));
 		request.getRequestDispatcher("/WEB-INF/pages/productHistory.jsp").forward(request, response);
 
