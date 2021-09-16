@@ -48,11 +48,11 @@
   	<location>/WEB-INF/pages/productNotFoundError.jsp</location>
   	<exception-type>com.es.phoneshop.exception.ProductNotFoundException</exception-type>
   </error-page>
-<!-- 
+
   <error-page>
   	<location>/WEB-INF/pages/commonError.jsp</location>
     <error-code>500</error-code>
   </error-page>
-   -->
+   
 
 </web-app>

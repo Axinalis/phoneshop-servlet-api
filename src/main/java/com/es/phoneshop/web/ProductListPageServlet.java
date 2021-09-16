@@ -16,7 +16,10 @@ import java.io.IOException;
 
 public class ProductListPageServlet extends HttpServlet {
 	
-	ProductDao productDao;
+	private ProductDao productDao;
+	private String field = "field";
+	private String order = "order";
+    private String query = "query";
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException{
@@ -28,11 +31,7 @@ public class ProductListPageServlet extends HttpServlet {
 	
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	//Constants
-        String field = "field";
-        String order = "order";
-        String query = "query";
-        
+    	
         //Filter-creating logic
         FilterCreator creator = new FilterCreator();
         creator.setQuery(request.getParameter(query));

@@ -17,10 +17,10 @@ import com.es.phoneshop.model.product.Product;
 
 public class SortingComparatorTest {
 
-	Product p1;
-	Product p2;
-	Product incompleteProduct;
-	Filter f;
+	private Product p1;
+	private Product p2;
+	private Product incompleteProduct;
+	private Filter f;
 
 	@Before
 	public void setup() {
@@ -69,10 +69,4 @@ public class SortingComparatorTest {
 		assertTrue(SortingComparator.sortProducts(p2, incompleteProduct, f) > 0);
 		
 	}
-	
-	@Test
-	public void test() {
-
-	}
-
 }

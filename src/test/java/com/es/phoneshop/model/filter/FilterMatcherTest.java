@@ -16,8 +16,8 @@ import com.es.phoneshop.model.product.Product;
 
 public class FilterMatcherTest {
 
-	Product p;
-	Filter f;
+	private Product p;
+	private Filter f;
 	
 	@Before
 	public void setup() {

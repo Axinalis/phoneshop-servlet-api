@@ -12,8 +12,8 @@ import com.es.phoneshop.enums.SortOrder;
 
 public class FilterCreatorTest {
 
-	FilterCreator cr;
-	Filter f;
+	private FilterCreator cr;
+	private Filter f;
 	
 	@Before
 	public void setup() {
