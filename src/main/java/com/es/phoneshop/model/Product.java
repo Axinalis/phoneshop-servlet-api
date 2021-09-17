@@ -1,7 +1,8 @@
-package com.es.phoneshop.model.product;
+package com.es.phoneshop.model;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
 import java.util.Objects;
 
 public class Product {
@@ -14,6 +15,7 @@ public class Product {
     private Currency currency;
     private int stock;
     private String imageUrl;
+    private List<HistoryRecord> priceHistory;
 
     public Product() {
     }
@@ -36,6 +38,7 @@ public class Product {
 		this.currency = product.getCurrency();
 		this.stock = product.getStock();
 		this.imageUrl = product.getImageUrl();
+		this.priceHistory = product.getPriceHistory();
 	}
 
 	public Product(String code, String description, BigDecimal price, Currency currency, int stock, String imageUrl) {
@@ -47,6 +50,17 @@ public class Product {
 		this.stock = stock;
 		this.imageUrl = imageUrl;
 	}
+	
+	public Product(Long id, String code, String description, BigDecimal price, Currency currency, int stock, String imageUrl, List<HistoryRecord> priceHistory) {
+        this.id = id;
+        this.code = code;
+        this.description = description;
+        this.price = price;
+        this.currency = currency;
+        this.stock = stock;
+        this.imageUrl = imageUrl;
+        this.priceHistory = priceHistory;
+    }
     
     public Long getId() {
         return id;
@@ -104,6 +118,14 @@ public class Product {
         this.imageUrl = imageUrl;
     }
     
+    public List<HistoryRecord> getPriceHistory() {
+		return priceHistory;
+	}
+
+	public void setPriceHistory(List<HistoryRecord> priceHistory) {
+		this.priceHistory = priceHistory;
+	}
+    
     @Override
 	public boolean equals(Object o) {
 
@@ -123,7 +145,8 @@ public class Product {
 				&& p.getId().equals(this.getId())
 				&& p.getImageUrl().equals(this.getImageUrl()) 
 				&& p.getPrice().equals(this.getPrice())
-				&& p.getStock() == this.getStock()) {
+				&& p.getStock() == this.getStock() 
+				&& p.getPriceHistory().equals(this.getPriceHistory())) {
 			return true;
 		}
 		return false;
@@ -137,20 +160,23 @@ public class Product {
 				this.id, 
 				this.imageUrl, 
 				this.price, 
-				this.stock);
+				this.stock, 
+				this.priceHistory);
 
 	}
 
 	public String toString() {
 		
-		return this.getClass().toString() + "{" 
+		return this.getClass().toString() + "{ " 
 		+ "code=" + this.code
-		+ "currency=" + this.currency
-		+ "description=" + this.description
-		+ "id=" + this.id
-		+ "imageUrl=" + this.imageUrl
-		+ "price=" + this.price
-		+ "stock=" + this.stock;
+		+ " | currency=" + this.currency
+		+ " | description=" + this.description
+		+ " | id=" + this.id
+		+ " | imageUrl=" + this.imageUrl
+		+ " | price=" + this.price
+		+ " | stock=" + this.stock
+		+ " | priceHistory=" + this.priceHistory
+		+ " }";
 		
 	}
 }
