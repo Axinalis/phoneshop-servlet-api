@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import com.es.phoneshop.enums.SortField;
 import com.es.phoneshop.enums.SortOrder;
-import com.es.phoneshop.model.product.Product;
+import com.es.phoneshop.model.Product;
 
 public class Filter{
 

@@ -3,7 +3,7 @@ package com.es.phoneshop.dao;
 import java.util.List;
 
 import com.es.phoneshop.comparator.filter.Filter;
-import com.es.phoneshop.model.product.Product;
+import com.es.phoneshop.model.Product;
 
 public interface ProductDao {
     Product getProduct(Long id);

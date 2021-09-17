@@ -13,7 +13,7 @@ import com.es.phoneshop.comparator.filter.Filter;
 import com.es.phoneshop.comparator.filter.FilterMatcher;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
-import com.es.phoneshop.model.product.Product;
+import com.es.phoneshop.model.Product;
 
 public class ArrayListProductDao implements ProductDao {
 

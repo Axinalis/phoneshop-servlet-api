@@ -14,8 +14,8 @@ import javax.servlet.annotation.WebListener;
 
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
-import com.es.phoneshop.model.product.HistoryRecord;
-import com.es.phoneshop.model.product.Product;
+import com.es.phoneshop.model.HistoryRecord;
+import com.es.phoneshop.model.Product;
 
 /**
  * Application Lifecycle Listener implementation class ProductDemodataServletContextListener

@@ -1,7 +1,6 @@
 package com.es.phoneshop.validator;
 
 import com.es.phoneshop.exception.IdIsNotValidException;
-import com.es.phoneshop.exception.ProductNotFoundException;
 
 public class ProductIdValidator {
 
