@@ -12,7 +12,7 @@ public class FilterMatcher {
 		if(filter.getQueryWords() == null 
 				|| filter.getQueryWords().size() == 0
 				|| filter.getQueryWords().stream()
-				.anyMatch(word -> word.toLowerCase().equals(product.getCode().toLowerCase()))) {
+				.anyMatch(word -> word.equalsIgnoreCase(product.getCode()))) {
 			return 1;
 		}
 
@@ -22,8 +22,8 @@ public class FilterMatcher {
 		}
 
 		int wordsNum = (int) filter.getQueryWords().stream()
-				.filter(word -> {
-			return descript.toLowerCase().contains(word.toLowerCase());})
+				.filter(word -> 
+			descript.toLowerCase().contains(word.toLowerCase()))
 				.count();
 
 		descript.split("\\s+");
