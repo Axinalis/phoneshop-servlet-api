@@ -13,17 +13,31 @@
   <br/>
   <br/>
    Cost:
-   <a href="${pageContext.servletContext.contextPath}/products/history/${product.id}">
+    <a href="${pageContext.servletContext.contextPath}/products/history/${product.id}">
       <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="${product.currency.symbol}"/>
-     </a>
+    </a>
 
-     
    <br/>
    <br/>
    ${product.stock > 0? 'Available now!' : 'Unavailable' }
 
+   <form method="post">
+     <input name="quantity"/>
+     <br/>
+     <button>Add to cart</button>
+   </form>
+
    <br/>
    <br/>
-   <a href="${pageContext.servletContext.contextPath}/products">Back to products list</a>
+   <br/>
+   <br/>
+
+   <p>
+     <a href="${pageContext.servletContext.contextPath}/products/cart">To my cart</a>
+   </p>
+   <p>
+     <a href="${pageContext.servletContext.contextPath}/products">Back to products list</a>
+   </p>
+
 
 </tags:master>
