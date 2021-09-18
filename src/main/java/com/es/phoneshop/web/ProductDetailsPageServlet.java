@@ -11,9 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.exception.IllegalPathSegmentException;
 import com.es.phoneshop.exception.ProductNotFoundException;
+import com.es.phoneshop.exception.WrongAttributeValueException;
+import com.es.phoneshop.model.Product;
 import com.es.phoneshop.model.cart.CartService;
 import com.es.phoneshop.model.cart.impl.DefaultCartService;
+import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 import com.es.phoneshop.validator.Validator;
 
 /**
@@ -25,7 +29,9 @@ public class ProductDetailsPageServlet extends HttpServlet {
 
 	private ProductDao productDao;
 	private CartService cartService;
-    private String quantity = "quantity";	
+    private String quantity = "quantity";
+    private String error = "error";	
+    private String recentlyViewed = "recentlyViewed";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -53,10 +59,19 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		Long id;
 		String productId = request.getPathInfo();
 		productDao = ArrayListProductDao.getInstance();
+		Product product;
+		UserViewsHistory history;
 		
 		id = Validator.validadingId(productId);
+		product = productDao.getProduct(id);
+		history = (UserViewsHistory)request.getSession().getAttribute(recentlyViewed);
 		
-		request.setAttribute("product", productDao.getProduct(id));
+		if(history != null) {
+			history.addProduct(product);
+		} else {
+			request.getSession().setAttribute(recentlyViewed, new UserViewsHistory());
+		}
+		request.setAttribute("product", product);
 		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
 	}
 
@@ -67,13 +82,18 @@ public class ProductDetailsPageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long id;
-		int quantityInt;
+		int quantityInt = 0;
 		
 		String productId = request.getPathInfo();
-		quantityInt = Validator.validatingQuantity(request.getParameter(quantity));
 		id = Validator.validadingId(productId);
 		
-		cartService.add(id, quantityInt, request);
+		try {
+			quantityInt = Validator.validatingQuantity(request.getParameter(quantity));
+			cartService.add(id, quantityInt, request);
+		} catch(WrongAttributeValueException ex) {
+			request.setAttribute(error, ex.getMessage());
+		}
+		
 		request.setAttribute("product", productDao.getProduct(id));
 		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
 	}
