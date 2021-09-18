@@ -1,6 +1,7 @@
 package com.es.phoneshop.validator;
 
 import com.es.phoneshop.exception.IllegalPathSegmentException;
+import com.es.phoneshop.exception.WrongAttributeValueException;
 
 public class Validator {
 
@@ -20,12 +21,12 @@ public class Validator {
 	public static int validatingQuantity(String quantity) {
 		
 		if(quantity == null) {
-			throw new IllegalPathSegmentException("Value is null");
+			throw new WrongAttributeValueException("Please, enter a number");
 		}
 		try {
 			return Integer.valueOf(quantity);
 		} catch(NumberFormatException ex) {
-			throw new IllegalPathSegmentException("Cannot parse string quantity to int");
+			throw new WrongAttributeValueException("Please, enter a valid number");
 		}
 		
 	}
