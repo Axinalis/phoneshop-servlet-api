@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
-import com.es.phoneshop.validator.ProductIdValidator;
+import com.es.phoneshop.model.cart.CartService;
+import com.es.phoneshop.model.cart.impl.DefaultCartService;
+import com.es.phoneshop.validator.Validator;
 
 /**
  * Servlet implementation class ProductDetailsPageServlet
@@ -21,7 +23,9 @@ import com.es.phoneshop.validator.ProductIdValidator;
 public class ProductDetailsPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	ProductDao productDao;
+	private ProductDao productDao;
+	private CartService cartService;
+    private String quantity = "quantity";	
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -36,6 +40,7 @@ public class ProductDetailsPageServlet extends HttpServlet {
 
 		super.init(config);
 		productDao = ArrayListProductDao.getInstance();
+		cartService = DefaultCartService.getInstance();
 
 	}
 
@@ -49,11 +54,10 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		String productId = request.getPathInfo();
 		productDao = ArrayListProductDao.getInstance();
 		
-		id = ProductIdValidator.validadingId(productId);
+		id = Validator.validadingId(productId);
 		
 		request.setAttribute("product", productDao.getProduct(id));
 		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
-
 	}
 
 	/**
@@ -62,7 +66,16 @@ public class ProductDetailsPageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		Long id;
+		int quantityInt;
+		
+		String productId = request.getPathInfo();
+		quantityInt = Validator.validatingQuantity(request.getParameter(quantity));
+		id = Validator.validadingId(productId);
+		
+		cartService.add(id, quantityInt, request);
+		request.setAttribute("product", productDao.getProduct(id));
+		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
 	}
 
 }
