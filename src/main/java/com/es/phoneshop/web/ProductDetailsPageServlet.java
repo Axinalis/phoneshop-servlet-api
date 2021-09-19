@@ -9,15 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
-import com.es.phoneshop.exception.IllegalPathSegmentException;
-import com.es.phoneshop.exception.ProductNotFoundException;
-import com.es.phoneshop.exception.WrongAttributeValueException;
+import com.es.phoneshop.enums.ProductPageState;
+import com.es.phoneshop.exception.WrongQuantityValueOnProductPageException;
 import com.es.phoneshop.model.Product;
 import com.es.phoneshop.model.cart.CartService;
 import com.es.phoneshop.model.cart.impl.DefaultCartService;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
+import com.es.phoneshop.validator.PageStateResolver;
 import com.es.phoneshop.validator.Validator;
 
 /**
@@ -29,9 +30,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
 
 	private ProductDao productDao;
 	private CartService cartService;
-    private String quantity = "quantity";
-    private String error = "error";	
-    private String recentlyViewed = "recentlyViewed";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -62,14 +60,14 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		Product product;
 		UserViewsHistory history;
 		
-		id = Validator.validadingId(productId);
+		id = Validator.validatingId(productId);
 		product = productDao.getProduct(id);
-		history = (UserViewsHistory)request.getSession().getAttribute(recentlyViewed);
+		history = (UserViewsHistory)request.getSession().getAttribute(ConstantStrings.recentlyViewed);
 		
 		if(history != null) {
 			history.addProduct(product);
 		} else {
-			request.getSession().setAttribute(recentlyViewed, new UserViewsHistory());
+			request.getSession().setAttribute(ConstantStrings.recentlyViewed, new UserViewsHistory());
 		}
 		request.setAttribute("product", product);
 		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
@@ -85,13 +83,14 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		int quantityInt = 0;
 		
 		String productId = request.getPathInfo();
-		id = Validator.validadingId(productId);
+		id = Validator.validatingId(productId);
 		
 		try {
-			quantityInt = Validator.validatingQuantity(request.getParameter(quantity));
+			quantityInt = Validator.validatingQuantity(request.getParameter(ConstantStrings.quantity));
 			cartService.add(id, quantityInt, request);
-		} catch(WrongAttributeValueException ex) {
-			request.setAttribute(error, ex.getMessage());
+			request.setAttribute(ConstantStrings.success, PageStateResolver.getMessageFromState(ProductPageState.PRODUCT_ADDED));
+		} catch(WrongQuantityValueOnProductPageException ex) {
+			request.setAttribute(ConstantStrings.error, PageStateResolver.getMessageFromState(ex.getState()));
 		}
 		
 		request.setAttribute("product", productDao.getProduct(id));

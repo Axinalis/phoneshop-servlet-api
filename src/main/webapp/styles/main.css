@@ -40,6 +40,25 @@ td#menu{
   vertical-align: top;
   height: 190px;
 }
+button#addToCart{
+  background: #79a3d0;
+  color: white;
+  font-size: 9pt;
+  width:100%;
+  border-radius: 5px;
+  border: 0px;
+  height: 30px;
+}
+p#errorInfo{
+  color: red;
+  font-weight: bold;
+  font-style: italic;
+}
+p#successInfo{
+  color: #79a3d0;
+  font-weight: bold;
+  font-style: italic;
+}
 .price {
   text-align: right;
 }

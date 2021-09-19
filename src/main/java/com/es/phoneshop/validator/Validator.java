@@ -1,11 +1,12 @@
 package com.es.phoneshop.validator;
 
+import com.es.phoneshop.enums.ProductPageState;
 import com.es.phoneshop.exception.IllegalPathSegmentException;
-import com.es.phoneshop.exception.WrongAttributeValueException;
+import com.es.phoneshop.exception.WrongQuantityValueOnProductPageException;
 
 public class Validator {
 
-	public static Long validadingId(String productId) {
+	public static Long validatingId(String productId) {
 		
 		if(productId == null) {
 			throw new IllegalPathSegmentException("Id is null");
@@ -20,13 +21,13 @@ public class Validator {
 	
 	public static int validatingQuantity(String quantity) {
 		
-		if(quantity == null) {
-			throw new WrongAttributeValueException("Please, enter a number");
+		if(quantity == null || "".equals(quantity)) {
+			throw new WrongQuantityValueOnProductPageException(ProductPageState.IS_EMPTY);
 		}
 		try {
 			return Integer.valueOf(quantity);
 		} catch(NumberFormatException ex) {
-			throw new WrongAttributeValueException("Please, enter a valid number");
+			throw new WrongQuantityValueOnProductPageException(ProductPageState.NOT_A_NUMBER);
 		}
 		
 	}

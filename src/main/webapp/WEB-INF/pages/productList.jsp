@@ -13,7 +13,7 @@
     -->
       <td id="shell-td" rowspan="2" style="width:80%">
 
-        <table  bgcolor="#dfe9f4" style="width:100%;">
+        <table  bgcolor="#eef3f9" style="width:100%;">
           <thead>
             <tr>
               <td>Image</td>

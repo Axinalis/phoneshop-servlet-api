@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 
 /**
@@ -13,13 +14,12 @@ import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 @WebListener
 public class SessionListener implements HttpSessionListener {
 	
-	private static String recentlyViewed = "recentlyViewed";
 
     public SessionListener() {
     }
 
     public void sessionCreated(HttpSessionEvent se)  { 
-    	se.getSession().setAttribute(recentlyViewed, new UserViewsHistory());
+    	se.getSession().setAttribute(ConstantStrings.recentlyViewed, new UserViewsHistory());
     }
 
     public void sessionDestroyed(HttpSessionEvent se)  { 

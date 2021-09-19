@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
-import com.es.phoneshop.exception.ProductNotFoundException;
 import com.es.phoneshop.validator.Validator;
 
 /**
@@ -49,7 +48,7 @@ public class ProductPriceHistoryServlet extends HttpServlet {
 		String productId = request.getPathInfo();
 		productDao = ArrayListProductDao.getInstance();
 		
-		id = Validator.validadingId(productId);
+		id = Validator.validatingId(productId);
 		
 		request.setAttribute("product", productDao.getProduct(id));
 		request.getRequestDispatcher("/WEB-INF/pages/productHistory.jsp").forward(request, response);
