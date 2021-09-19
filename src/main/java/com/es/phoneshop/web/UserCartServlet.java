@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.cart.CartService;
 import com.es.phoneshop.model.cart.impl.DefaultCartService;
@@ -17,8 +18,7 @@ import com.es.phoneshop.model.cart.impl.DefaultCartService;
 @WebServlet("/UserCartServlet")
 public class UserCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	private static String stringCartList = "cartList";
+       ;
 	private CartService cartService;
 	
     /**
@@ -42,7 +42,7 @@ public class UserCartServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Cart cart = cartService.getCart(request);
 		
-		request.setAttribute(stringCartList, cart.getItems());
+		request.setAttribute(ConstantStrings.stringCartList, cart.getItems());
 		request.getRequestDispatcher("/WEB-INF/pages/cartProductList.jsp").forward(request, response);
 	}
 

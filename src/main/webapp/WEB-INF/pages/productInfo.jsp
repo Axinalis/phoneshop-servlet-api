@@ -55,20 +55,23 @@
               <br/>
               <br/>
                ${product.stock > 0? 'Available now!' : 'Unavailable' }
-              <form method="post">
-                <input name="quantity" value="${not empty param.quantity? param.quantity : '1'}"/>
-                <br/>
-                <button>Add to cart</button>
+              <form method="post" style="width:200px">
+                <p>
+                <input name="quantity" value="${not empty param.quantity? param.quantity : '1'}" style="width:100%;"/>
+              </p>
+                <p>
+                  <button id="addToCart">Add to cart</button>
+                </p>
               </form>
 
               <c:if test="${not empty error}">
-                <p>
+                <p id="errorInfo">
                   ${error}
                 </p>
               </c:if>
 
               <c:if test="${not empty success}">
-                <p>
+                <p id="successInfo">
                   ${success}
                 </p>
               </c:if>
