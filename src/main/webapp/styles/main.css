@@ -59,6 +59,15 @@ p#successInfo{
   font-weight: bold;
   font-style: italic;
 }
+a#headerText{
+  color:#bb8042;
+}
+a:visited#headerText{
+  color:#c96866;
+}
+a:active#headerText{
+  color:#dda09f;
+}
 .price {
   text-align: right;
 }

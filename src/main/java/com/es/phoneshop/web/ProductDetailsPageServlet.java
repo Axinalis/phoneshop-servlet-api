@@ -1,6 +1,7 @@
 package com.es.phoneshop.web;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -21,9 +22,6 @@ import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 import com.es.phoneshop.validator.PageStateResolver;
 import com.es.phoneshop.validator.Validator;
 
-/**
- * Servlet implementation class ProductDetailsPageServlet
- */
 @WebServlet("/ProductDetailsPageServlet")
 public class ProductDetailsPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,9 +29,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
 	private ProductDao productDao;
 	private CartService cartService;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public ProductDetailsPageServlet() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -48,10 +43,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long id;
@@ -69,32 +60,37 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		} else {
 			request.getSession().setAttribute(ConstantStrings.recentlyViewed, new UserViewsHistory());
 		}
+
+		String successParameter = request.getParameter(ConstantStrings.success);
+		String errorParameter = request.getParameter(ConstantStrings.error);
+		if(successParameter != null && !successParameter.equals("")){
+			request.setAttribute(ConstantStrings.success, PageStateResolver.getMessageFromState(successParameter));
+		}
+		if(errorParameter != null && !errorParameter.equals("")){
+			request.setAttribute(ConstantStrings.error,	PageStateResolver.getMessageFromState(errorParameter));
+		}
+
 		request.setAttribute("product", product);
 		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long id;
 		int quantityInt = 0;
-		
+		String stateInfo;
 		String productId = request.getPathInfo();
 		id = Validator.validatingId(productId);
 		
 		try {
 			quantityInt = Validator.validatingQuantity(request.getParameter(ConstantStrings.quantity));
 			cartService.add(id, quantityInt, request);
-			request.setAttribute(ConstantStrings.success, PageStateResolver.getMessageFromState(ProductPageState.PRODUCT_ADDED));
+			stateInfo = ConstantStrings.success + "=" + ProductPageState.PRODUCT_ADDED.toString().toLowerCase();
 		} catch(WrongQuantityValueOnProductPageException ex) {
-			request.setAttribute(ConstantStrings.error, PageStateResolver.getMessageFromState(ex.getState()));
+			stateInfo = ConstantStrings.error + "=" + ex.getState().toString().toLowerCase();
 		}
-		
-		request.setAttribute("product", productDao.getProduct(id));
-		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
+
+		response.sendRedirect("/phoneshop-servlet-api/products/info/" + id.toString() + "?" + stateInfo);
 	}
 
 }

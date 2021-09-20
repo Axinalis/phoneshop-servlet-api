@@ -41,22 +41,22 @@ public class DefaultCartService implements CartService{
 	}
 	
 	@Override
-	public Cart getCart(HttpServletRequest request) {
+	public synchronized Cart getCart(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
-		if(session.getAttribute(ConstantStrings.stringCart) == null) {
-			session.setAttribute(ConstantStrings.stringCart, new Cart());
+		if(session.getAttribute(ConstantStrings.stringSessionAttributeCart) == null) {
+			session.setAttribute(ConstantStrings.stringSessionAttributeCart, new Cart());
 		}
 		
-		return (Cart)session.getAttribute(ConstantStrings.stringCart);
+		return (Cart)session.getAttribute(ConstantStrings.stringSessionAttributeCart);
 	}
 
 	@Override
-	public void add(Long productId, int quantity, HttpServletRequest request) {
+	public synchronized void add(Long productId, int quantity, HttpServletRequest request) {
 		if(quantity <= 0) {
 			throw new WrongQuantityValueOnProductPageException(ProductPageState.NEGATIVE_VALUE);
 		}
-		
+
 		Product product = productDao.getProduct(productId);
 		
 		if(product.getStock() < quantity) {
@@ -68,7 +68,7 @@ public class DefaultCartService implements CartService{
 		.stream()
 		.filter(item -> product.equals(item.getProduct()))
 		.findFirst();
-		
+
 		if(sameProduct.isPresent()) {
 			int bufQuantity = sameProduct.get().getQuantity();
 			if((bufQuantity + quantity) > product.getStock()){
@@ -84,7 +84,5 @@ public class DefaultCartService implements CartService{
 	public void remove(Long productId, int quantity, HttpServletRequest request) {
 		add(productId, -quantity, request);
 	}
-
-	
 	
 }

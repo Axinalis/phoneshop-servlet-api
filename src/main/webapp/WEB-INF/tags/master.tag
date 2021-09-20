@@ -16,7 +16,7 @@
             <tr>
               <th>
                 <header>
-                  <a href="${pageContext.servletContext.contextPath}">
+                  <a href="${pageContext.servletContext.contextPath}" id="headerText">
                     <img src="${pageContext.servletContext.contextPath}/images/logo.svg"/>
                     PhoneShop
                   </a>
