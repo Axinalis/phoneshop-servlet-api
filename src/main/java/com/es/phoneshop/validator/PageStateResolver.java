@@ -17,4 +17,16 @@ public class PageStateResolver {
         }
     }
 
+    public static String getMessageFromState(String state){
+
+        switch(state){
+            case "is_empty": return ConstantStrings.fieldIsEmpty;
+            case "not_a_number": return ConstantStrings.notANumber;
+            case "out_of_stock": return ConstantStrings.outOfStock;
+            case "product_added": return ConstantStrings.productAdded;
+            case "negative_value": return ConstantStrings.negativeValue;
+            default: return "";
+        }
+    }
+
 }

@@ -1,9 +1,11 @@
 package com.es.phoneshop.constant;
 
+import com.es.phoneshop.model.cart.impl.DefaultCartService;
+
 public class ConstantStrings {
 
 	//For DefaultCartService
-	public static final String stringCart = "cart";
+	public static final String stringSessionAttributeCart = DefaultCartService.getInstance().getClass().toString() + ".cart";
 	public static final String success = "success";
 	
 	//For ProductDetailsPageServlet

@@ -28,14 +28,15 @@ public class UserViewsHistory {
 	}
 	
 	public void addProduct(Product product) {
-		if(recentlyViewed.size() >= numberOfLastProducts) {
+		if(recentlyViewed.contains(product)){
+			recentlyViewed.remove(product);
+		}
+		recentlyViewed.addFirst(product);
+
+		if(recentlyViewed.size() > numberOfLastProducts) {
 			recentlyViewed.removeLast();
 		}
-		
-		if(!(recentlyViewed.contains(product))) {
-			recentlyViewed.addFirst(product);
-		}
-		
+
 	}
 	
 }
