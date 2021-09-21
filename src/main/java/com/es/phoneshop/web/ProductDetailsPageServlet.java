@@ -1,7 +1,6 @@
 package com.es.phoneshop.web;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -83,7 +82,7 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		id = Validator.validatingId(productId);
 		
 		try {
-			quantityInt = Validator.validatingQuantity(request.getParameter(ConstantStrings.quantity));
+			quantityInt = Validator.parsingQuantity(request.getParameter(ConstantStrings.quantity), request.getLocale());
 			cartService.add(id, quantityInt, request);
 			stateInfo = ConstantStrings.success + "=" + ProductPageState.PRODUCT_ADDED.toString().toLowerCase();
 		} catch(WrongQuantityValueOnProductPageException ex) {

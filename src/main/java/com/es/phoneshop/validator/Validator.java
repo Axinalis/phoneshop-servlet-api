@@ -4,11 +4,15 @@ import com.es.phoneshop.enums.ProductPageState;
 import com.es.phoneshop.exception.IllegalPathSegmentException;
 import com.es.phoneshop.exception.WrongQuantityValueOnProductPageException;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
+
 public class Validator {
 
 	public static Long validatingId(String productId) {
 		
-		if(productId == null) {
+		if(productId == null || "".equals(productId)) {
 			throw new IllegalPathSegmentException("Id is null");
 		}
 		try {
@@ -19,14 +23,16 @@ public class Validator {
 		
 	}
 	
-	public static int validatingQuantity(String quantity) {
+	public static int parsingQuantity(String quantity, Locale locale) {
+		Locale bufLocale = (locale == null) ? Locale.ENGLISH : locale;
 		
 		if(quantity == null || "".equals(quantity)) {
 			throw new WrongQuantityValueOnProductPageException(ProductPageState.IS_EMPTY);
 		}
 		try {
-			return Integer.valueOf(quantity);
-		} catch(NumberFormatException ex) {
+			NumberFormat format = NumberFormat.getInstance(locale);
+			return format.parse(quantity).intValue();
+		} catch(ParseException ex) {
 			throw new WrongQuantityValueOnProductPageException(ProductPageState.NOT_A_NUMBER);
 		}
 		
