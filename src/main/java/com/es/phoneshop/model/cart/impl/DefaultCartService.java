@@ -45,7 +45,12 @@ public class DefaultCartService implements CartService{
 		HttpSession session = request.getSession();
 		
 		if(session.getAttribute(ConstantStrings.stringSessionAttributeCart) == null) {
-			session.setAttribute(ConstantStrings.stringSessionAttributeCart, new Cart());
+			synchronized(session){
+				if(session.getAttribute(ConstantStrings.stringSessionAttributeCart) == null){
+					session.setAttribute(ConstantStrings.stringSessionAttributeCart, new Cart());
+				}
+			}
+
 		}
 		
 		return (Cart)session.getAttribute(ConstantStrings.stringSessionAttributeCart);
@@ -62,12 +67,13 @@ public class DefaultCartService implements CartService{
 		if(product.getStock() < quantity) {
 			throw new WrongQuantityValueOnProductPageException(ProductPageState.OUT_OF_STOCK);
 		}
-		
-		Optional<CartItem> sameProduct = getCart(request)
-		.getItems()
-		.stream()
-		.filter(item -> product.equals(item.getProduct()))
-		.findFirst();
+
+		Cart cart = getCart(request);
+		Optional<CartItem> sameProduct = cart
+				.getItems()
+				.stream()
+				.filter(item -> product.equals(item.getProduct()))
+				.findFirst();
 
 		if(sameProduct.isPresent()) {
 			int bufQuantity = sameProduct.get().getQuantity();
@@ -78,6 +84,7 @@ public class DefaultCartService implements CartService{
 		} else {
 			getCart(request).getItems().add(new CartItem(product, quantity));
 		}
+
 	}
 
 	@Override

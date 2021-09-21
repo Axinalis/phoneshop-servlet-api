@@ -12,18 +12,12 @@ import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.cart.CartService;
 import com.es.phoneshop.model.cart.impl.DefaultCartService;
 
-/**
- * Servlet implementation class UserCartServlet
- */
 @WebServlet("/UserCartServlet")
 public class UserCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        ;
 	private CartService cartService;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public UserCartServlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -35,9 +29,6 @@ public class UserCartServlet extends HttpServlet {
 		cartService = DefaultCartService.getInstance();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Cart cart = cartService.getCart(request);
@@ -46,9 +37,6 @@ public class UserCartServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/pages/cartProductList.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
