@@ -19,7 +19,7 @@ public class SessionListener implements HttpSessionListener {
     }
 
     public void sessionCreated(HttpSessionEvent se)  { 
-    	se.getSession().setAttribute(ConstantStrings.recentlyViewed, new UserViewsHistory());
+    	se.getSession().setAttribute(ConstantStrings.RECENTLY_VIEWED, new UserViewsHistory());
     }
 
     public void sessionDestroyed(HttpSessionEvent se)  { 

@@ -1,14 +1,14 @@
-package com.es.phoneshop.model.filter;
+package com.es.phoneshop.browsing.filter;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.es.phoneshop.comparator.filter.Filter;
-import com.es.phoneshop.comparator.filter.FilterCreator;
-import com.es.phoneshop.enums.SortField;
-import com.es.phoneshop.enums.SortOrder;
+import com.es.phoneshop.browsing.filter.Filter;
+import com.es.phoneshop.browsing.filter.FilterCreator;
+import com.es.phoneshop.constant.SortField;
+import com.es.phoneshop.constant.SortOrder;
 
 public class FilterCreatorTest {
 

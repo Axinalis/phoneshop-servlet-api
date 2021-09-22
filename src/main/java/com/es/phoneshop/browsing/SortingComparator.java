@@ -1,11 +1,8 @@
-package com.es.phoneshop.comparator;
+package com.es.phoneshop.browsing;
 
-import java.math.BigDecimal;
-import java.util.Comparator;
-
-import com.es.phoneshop.comparator.filter.Filter;
-import com.es.phoneshop.comparator.filter.FilterMatcher;
-import com.es.phoneshop.enums.SortOrder;
+import com.es.phoneshop.browsing.filter.Filter;
+import com.es.phoneshop.browsing.filter.FilterMatcher;
+import com.es.phoneshop.constant.SortOrder;
 import com.es.phoneshop.model.Product;
 
 public class SortingComparator {

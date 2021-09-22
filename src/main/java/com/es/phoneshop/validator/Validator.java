@@ -1,6 +1,6 @@
 package com.es.phoneshop.validator;
 
-import com.es.phoneshop.enums.ProductPageState;
+import com.es.phoneshop.constant.ProductPageState;
 import com.es.phoneshop.exception.IllegalPathSegmentException;
 import com.es.phoneshop.exception.WrongQuantityValueOnProductPageException;
 

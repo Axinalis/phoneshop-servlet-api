@@ -1,4 +1,4 @@
-package com.es.phoneshop.enums;
+package com.es.phoneshop.constant;
 
 public enum SortField {
 

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.model.cart.Cart;
-import com.es.phoneshop.model.cart.CartService;
-import com.es.phoneshop.model.cart.impl.DefaultCartService;
+import com.es.phoneshop.service.CartService;
+import com.es.phoneshop.service.impl.DefaultCartService;
 
 @WebServlet("/UserCartServlet")
 public class UserCartServlet extends HttpServlet {
@@ -33,7 +33,7 @@ public class UserCartServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Cart cart = cartService.getCart(request);
 		
-		request.setAttribute(ConstantStrings.stringCartList, cart.getItems());
+		request.setAttribute(ConstantStrings.CART_LIST, cart.getItems());
 		request.getRequestDispatcher("/WEB-INF/pages/cartProductList.jsp").forward(request, response);
 	}
 

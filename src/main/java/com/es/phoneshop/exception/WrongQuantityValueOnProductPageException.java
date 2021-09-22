@@ -1,6 +1,6 @@
 package com.es.phoneshop.exception;
 
-import com.es.phoneshop.enums.ProductPageState;
+import com.es.phoneshop.constant.ProductPageState;
 
 public class WrongQuantityValueOnProductPageException extends RuntimeException{
 	

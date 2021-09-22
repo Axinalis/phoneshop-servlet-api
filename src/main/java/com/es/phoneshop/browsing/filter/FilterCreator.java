@@ -1,7 +1,7 @@
-package com.es.phoneshop.comparator.filter;
+package com.es.phoneshop.browsing.filter;
 
-import com.es.phoneshop.enums.SortField;
-import com.es.phoneshop.enums.SortOrder;
+import com.es.phoneshop.constant.SortField;
+import com.es.phoneshop.constant.SortOrder;
 
 public class FilterCreator {
 	

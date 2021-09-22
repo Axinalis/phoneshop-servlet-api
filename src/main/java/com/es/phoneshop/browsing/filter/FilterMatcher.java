@@ -1,7 +1,4 @@
-package com.es.phoneshop.comparator.filter;
-
-import java.util.List;
-import java.util.stream.Collectors;
+package com.es.phoneshop.browsing.filter;
 
 import com.es.phoneshop.model.Product;
 
