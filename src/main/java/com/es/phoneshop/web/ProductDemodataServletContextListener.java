@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Currency;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -12,8 +11,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import com.es.phoneshop.dao.ProductDao;
-import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.service.ProductDao;
+import com.es.phoneshop.service.impl.ArrayListProductDao;
 import com.es.phoneshop.model.HistoryRecord;
 import com.es.phoneshop.model.Product;
 

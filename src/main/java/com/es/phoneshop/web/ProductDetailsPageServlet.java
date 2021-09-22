@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.dao.ProductDao;
-import com.es.phoneshop.dao.impl.ArrayListProductDao;
-import com.es.phoneshop.enums.ProductPageState;
+import com.es.phoneshop.service.ProductDao;
+import com.es.phoneshop.service.impl.ArrayListProductDao;
+import com.es.phoneshop.constant.ProductPageState;
 import com.es.phoneshop.exception.WrongQuantityValueOnProductPageException;
 import com.es.phoneshop.model.Product;
-import com.es.phoneshop.model.cart.CartService;
-import com.es.phoneshop.model.cart.impl.DefaultCartService;
+import com.es.phoneshop.service.CartService;
+import com.es.phoneshop.service.impl.DefaultCartService;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 import com.es.phoneshop.validator.PageStateResolver;
 import com.es.phoneshop.validator.Validator;
@@ -52,21 +52,21 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		
 		id = Validator.validatingId(productId);
 		product = productDao.getProduct(id);
-		history = (UserViewsHistory)request.getSession().getAttribute(ConstantStrings.recentlyViewed);
+		history = (UserViewsHistory)request.getSession().getAttribute(ConstantStrings.RECENTLY_VIEWED);
 		
 		if(history != null) {
 			history.addProduct(product);
 		} else {
-			request.getSession().setAttribute(ConstantStrings.recentlyViewed, new UserViewsHistory());
+			request.getSession().setAttribute(ConstantStrings.RECENTLY_VIEWED, new UserViewsHistory());
 		}
 
-		String successParameter = request.getParameter(ConstantStrings.success);
-		String errorParameter = request.getParameter(ConstantStrings.error);
+		String successParameter = request.getParameter(ConstantStrings.SUCCESS);
+		String errorParameter = request.getParameter(ConstantStrings.ERROR);
 		if(successParameter != null && !successParameter.equals("")){
-			request.setAttribute(ConstantStrings.success, PageStateResolver.getMessageFromState(successParameter));
+			request.setAttribute(ConstantStrings.SUCCESS, PageStateResolver.getMessageFromState(successParameter));
 		}
 		if(errorParameter != null && !errorParameter.equals("")){
-			request.setAttribute(ConstantStrings.error,	PageStateResolver.getMessageFromState(errorParameter));
+			request.setAttribute(ConstantStrings.ERROR,	PageStateResolver.getMessageFromState(errorParameter));
 		}
 
 		request.setAttribute("product", product);
@@ -82,11 +82,11 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		id = Validator.validatingId(productId);
 		
 		try {
-			quantityInt = Validator.parsingQuantity(request.getParameter(ConstantStrings.quantity), request.getLocale());
+			quantityInt = Validator.parsingQuantity(request.getParameter(ConstantStrings.QUANTITY), request.getLocale());
 			cartService.add(id, quantityInt, request);
-			stateInfo = ConstantStrings.success + "=" + ProductPageState.PRODUCT_ADDED.toString().toLowerCase();
+			stateInfo = ConstantStrings.SUCCESS + "=" + ProductPageState.PRODUCT_ADDED.toString().toLowerCase();
 		} catch(WrongQuantityValueOnProductPageException ex) {
-			stateInfo = ConstantStrings.error + "=" + ex.getState().toString().toLowerCase();
+			stateInfo = ConstantStrings.ERROR + "=" + ex.getState().toString().toLowerCase();
 		}
 
 		response.sendRedirect("/phoneshop-servlet-api/products/info/" + id.toString() + "?" + stateInfo);

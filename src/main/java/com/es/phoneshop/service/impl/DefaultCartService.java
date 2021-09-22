@@ -1,4 +1,4 @@
-package com.es.phoneshop.model.cart.impl;
+package com.es.phoneshop.service.impl;
 
 import java.util.Optional;
 
@@ -6,17 +6,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.dao.ProductDao;
-import com.es.phoneshop.dao.impl.ArrayListProductDao;
-import com.es.phoneshop.enums.ProductPageState;
+import com.es.phoneshop.service.CartService;
+import com.es.phoneshop.service.ProductDao;
+import com.es.phoneshop.constant.ProductPageState;
 import com.es.phoneshop.exception.WrongQuantityValueOnProductPageException;
 import com.es.phoneshop.model.Product;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.cart.CartItem;
-import com.es.phoneshop.model.cart.CartService;
 
 
-public class DefaultCartService implements CartService{
+public class DefaultCartService implements CartService {
 
 	private static volatile DefaultCartService instance;
 	
@@ -44,16 +43,16 @@ public class DefaultCartService implements CartService{
 	public synchronized Cart getCart(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
-		if(session.getAttribute(ConstantStrings.stringSessionAttributeCart) == null) {
+		if(session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART) == null) {
 			synchronized(session){
-				if(session.getAttribute(ConstantStrings.stringSessionAttributeCart) == null){
-					session.setAttribute(ConstantStrings.stringSessionAttributeCart, new Cart());
+				if(session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART) == null){
+					session.setAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART, new Cart());
 				}
 			}
 
 		}
 		
-		return (Cart)session.getAttribute(ConstantStrings.stringSessionAttributeCart);
+		return (Cart)session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART);
 	}
 
 	@Override

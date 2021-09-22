@@ -1,18 +1,18 @@
 package com.es.phoneshop.validator;
 
 import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.enums.ProductPageState;
+import com.es.phoneshop.constant.ProductPageState;
 
 public class PageStateResolver {
 
     public static String getMessageFromState(ProductPageState state){
 
         switch(state){
-            case IS_EMPTY: return ConstantStrings.fieldIsEmpty;
-            case NOT_A_NUMBER: return ConstantStrings.notANumber;
-            case OUT_OF_STOCK: return ConstantStrings.outOfStock;
-            case PRODUCT_ADDED: return ConstantStrings.productAdded;
-            case NEGATIVE_VALUE: return ConstantStrings.negativeValue;
+            case IS_EMPTY: return ConstantStrings.FIELD_IS_EMPTY;
+            case NOT_A_NUMBER: return ConstantStrings.NOT_A_NUMBER;
+            case OUT_OF_STOCK: return ConstantStrings.OUT_OF_STOCK;
+            case PRODUCT_ADDED: return ConstantStrings.PRODUCT_ADDED;
+            case NEGATIVE_VALUE: return ConstantStrings.NEGATIVE_VALUE;
             default: return "";
         }
     }
@@ -20,11 +20,11 @@ public class PageStateResolver {
     public static String getMessageFromState(String state){
 
         switch(state){
-            case "is_empty": return ConstantStrings.fieldIsEmpty;
-            case "not_a_number": return ConstantStrings.notANumber;
-            case "out_of_stock": return ConstantStrings.outOfStock;
-            case "product_added": return ConstantStrings.productAdded;
-            case "negative_value": return ConstantStrings.negativeValue;
+            case "is_empty": return ConstantStrings.FIELD_IS_EMPTY;
+            case "not_a_number": return ConstantStrings.NOT_A_NUMBER;
+            case "out_of_stock": return ConstantStrings.OUT_OF_STOCK;
+            case "product_added": return ConstantStrings.PRODUCT_ADDED;
+            case "negative_value": return ConstantStrings.NEGATIVE_VALUE;
             default: return "";
         }
     }

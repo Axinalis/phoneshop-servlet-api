@@ -1,9 +1,9 @@
 package com.es.phoneshop.web;
 
-import com.es.phoneshop.comparator.filter.FilterCreator;
+import com.es.phoneshop.browsing.filter.FilterCreator;
 import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.dao.ProductDao;
-import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.service.ProductDao;
+import com.es.phoneshop.service.impl.ArrayListProductDao;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 
 import javax.servlet.ServletConfig;
@@ -27,14 +27,14 @@ public class ProductListPageServlet extends HttpServlet {
 	
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	if(request.getSession().getAttribute(ConstantStrings.recentlyViewed) == null) {
-    		request.getSession().setAttribute(ConstantStrings.recentlyViewed, new UserViewsHistory());
+    	if(request.getSession().getAttribute(ConstantStrings.RECENTLY_VIEWED) == null) {
+    		request.getSession().setAttribute(ConstantStrings.RECENTLY_VIEWED, new UserViewsHistory());
     	}
     	
         //Filter-creating logic
         FilterCreator creator = new FilterCreator();
-        creator.setQuery(request.getParameter(ConstantStrings.query));
-        creator.setSorting(request.getParameter(ConstantStrings.field), request.getParameter(ConstantStrings.order));
+        creator.setQuery(request.getParameter(ConstantStrings.QUERY));
+        creator.setSorting(request.getParameter(ConstantStrings.FIELD), request.getParameter(ConstantStrings.ORDER));
         
     	request.setAttribute("products", productDao.findProducts(creator.createFilter()));
         request.getRequestDispatcher("/WEB-INF/pages/productList.jsp").forward(request, response);

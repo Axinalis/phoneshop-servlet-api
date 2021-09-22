@@ -1,7 +1,6 @@
 package com.es.phoneshop.web;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -18,12 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.service.impl.ArrayListProductDao;
 import com.es.phoneshop.exception.IllegalPathSegmentException;
 import com.es.phoneshop.model.Product;
 import com.es.phoneshop.model.cart.Cart;
-import com.es.phoneshop.model.cart.CartService;
-import com.es.phoneshop.model.cart.impl.DefaultCartService;
+import com.es.phoneshop.service.CartService;
+import com.es.phoneshop.service.impl.DefaultCartService;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.es.phoneshop.dao.ProductDao;
+import com.es.phoneshop.service.ProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -66,12 +65,12 @@ public class ProductDetailsPageServletTest {
     	session = mock(HttpSession.class);
     	disp = mock(RequestDispatcher.class);
         when(request.getPathInfo()).thenReturn("/1");
-        when(request.getParameter(ConstantStrings.quantity)).thenReturn("5");
+        when(request.getParameter(ConstantStrings.QUANTITY)).thenReturn("5");
         when(request.getLocale()).thenReturn(Locale.ENGLISH);
         when(request.getSession()).thenReturn(session);
         when(request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp")).thenReturn(disp);
-        when(session.getAttribute(ConstantStrings.recentlyViewed)).thenReturn(new UserViewsHistory());
-        when(session.getAttribute(ConstantStrings.stringSessionAttributeCart)).thenReturn(new Cart());
+        when(session.getAttribute(ConstantStrings.RECENTLY_VIEWED)).thenReturn(new UserViewsHistory());
+        when(session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART)).thenReturn(new Cart());
         page.init(config);
     }
     

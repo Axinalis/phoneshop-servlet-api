@@ -1,13 +1,12 @@
-package com.es.phoneshop.model.product;
+package com.es.phoneshop.service.impl;
 
 import java.util.Currency;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.es.phoneshop.comparator.filter.Filter;
-import com.es.phoneshop.dao.ProductDao;
-import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.service.ProductDao;
+import com.es.phoneshop.service.impl.ArrayListProductDao;
 import com.es.phoneshop.model.Product;
 
 import static org.junit.Assert.assertEquals;

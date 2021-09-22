@@ -1,4 +1,6 @@
-package com.es.phoneshop.model.cart;
+package com.es.phoneshop.service;
+
+import com.es.phoneshop.model.cart.Cart;
 
 import javax.servlet.http.HttpServletRequest;
 
