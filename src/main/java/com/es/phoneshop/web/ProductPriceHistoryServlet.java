@@ -13,35 +13,23 @@ import com.es.phoneshop.service.ProductDao;
 import com.es.phoneshop.service.impl.ArrayListProductDao;
 import com.es.phoneshop.validator.Validator;
 
-/**
- * Servlet implementation class ProductDetailsPageServlet
- */
 @WebServlet("/ProductPriceHistoryServlet")
 public class ProductPriceHistoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	ProductDao productDao;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public ProductPriceHistoryServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-
 		super.init(config);
 		productDao = ArrayListProductDao.getInstance();
 
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long id;
@@ -55,10 +43,6 @@ public class ProductPriceHistoryServlet extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

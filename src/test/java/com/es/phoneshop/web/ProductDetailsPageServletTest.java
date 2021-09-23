@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.service.impl.ArrayListProductDao;
-import com.es.phoneshop.exception.IllegalPathSegmentException;
+import com.es.phoneshop.exception.ValidationException;
 import com.es.phoneshop.model.Product;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.service.CartService;
@@ -100,7 +100,7 @@ public class ProductDetailsPageServletTest {
             fail();
         } catch(IOException | ServletException ex) {
             fail();
-        } catch (IllegalPathSegmentException ex) {
+        } catch (ValidationException ex) {
 
         }
 

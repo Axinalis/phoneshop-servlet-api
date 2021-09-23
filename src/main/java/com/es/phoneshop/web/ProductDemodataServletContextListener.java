@@ -16,32 +16,17 @@ import com.es.phoneshop.service.impl.ArrayListProductDao;
 import com.es.phoneshop.model.HistoryRecord;
 import com.es.phoneshop.model.Product;
 
-/**
- * Application Lifecycle Listener implementation class ProductDemodataServletContextListener
- *
- */
 @WebListener
 public class ProductDemodataServletContextListener implements ServletContextListener {
 
 	ProductDao productDao;
-	
-    /**
-     * Default constructor. 
-     */
+
     public ProductDemodataServletContextListener() {
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-     * @see ServletContextListener#contextDestroyed(ServletContextEvent)
-     */
-    public void contextDestroyed(ServletContextEvent sce)  { 
-         // TODO Auto-generated method stub
+    public void contextDestroyed(ServletContextEvent sce)  {
     }
 
-	/**
-     * @see ServletContextListener#contextInitialized(ServletContextEvent)
-     */
     public void contextInitialized(ServletContextEvent event)  {
     	productDao = ArrayListProductDao.getInstance();
     	Random rand = new Random(System.currentTimeMillis());

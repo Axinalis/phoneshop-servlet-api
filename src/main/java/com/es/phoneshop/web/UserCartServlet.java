@@ -14,13 +14,12 @@ import com.es.phoneshop.service.impl.DefaultCartService;
 
 @WebServlet("/UserCartServlet")
 public class UserCartServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-       ;
 	private CartService cartService;
 
     public UserCartServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	@Override
@@ -30,7 +29,6 @@ public class UserCartServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		Cart cart = cartService.getCart(request);
 		
 		request.setAttribute(ConstantStrings.CART_LIST, cart.getItems());
@@ -38,7 +36,6 @@ public class UserCartServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

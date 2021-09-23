@@ -3,14 +3,11 @@ package com.es.phoneshop.service.impl;
 import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.service.ProductDao;
-import com.es.phoneshop.service.impl.ArrayListProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
-import com.es.phoneshop.exception.WrongQuantityValueOnProductPageException;
 import com.es.phoneshop.model.Product;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.es.phoneshop.service.impl.DefaultCartService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 

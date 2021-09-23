@@ -1,24 +1,24 @@
 package com.es.phoneshop.service.impl;
 
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.service.CartService;
-import com.es.phoneshop.service.ProductDao;
 import com.es.phoneshop.constant.ProductPageState;
-import com.es.phoneshop.exception.WrongQuantityValueOnProductPageException;
+import com.es.phoneshop.exception.ValidationException;
 import com.es.phoneshop.model.Product;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.cart.CartItem;
+import com.es.phoneshop.service.CartService;
+import com.es.phoneshop.service.ProductDao;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import static com.es.phoneshop.constant.ConstantStrings.STRING_SESSION_ATTRIBUTE_CART;
 
 public class DefaultCartService implements CartService {
 
 	private static volatile DefaultCartService instance;
-	
 	private ProductDao productDao;
 	
 	private DefaultCartService() {
@@ -40,55 +40,61 @@ public class DefaultCartService implements CartService {
 	}
 	
 	@Override
-	public synchronized Cart getCart(HttpServletRequest request) {
+	public Cart getCart(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
-		if(session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART) == null) {
+		if(session.getAttribute(STRING_SESSION_ATTRIBUTE_CART) == null) {
 			synchronized(session){
-				if(session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART) == null){
-					session.setAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART, new Cart());
+				if(session.getAttribute(STRING_SESSION_ATTRIBUTE_CART) == null){
+					session.setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
 				}
 			}
 
 		}
 		
-		return (Cart)session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART);
+		return (Cart)session.getAttribute(STRING_SESSION_ATTRIBUTE_CART);
 	}
 
 	@Override
-	public synchronized void add(Long productId, int quantity, HttpServletRequest request) {
+	public void add(Long productId, int quantity, HttpServletRequest request) {
+		ReadWriteLock lock = new ReentrantReadWriteLock();
 		if(quantity <= 0) {
-			throw new WrongQuantityValueOnProductPageException(ProductPageState.NEGATIVE_VALUE);
+			throw new ValidationException(ProductPageState.NEGATIVE_VALUE.toString().toLowerCase());
 		}
 
 		Product product = productDao.getProduct(productId);
 		
 		if(product.getStock() < quantity) {
-			throw new WrongQuantityValueOnProductPageException(ProductPageState.OUT_OF_STOCK);
+			throw new ValidationException(ProductPageState.OUT_OF_STOCK.toString().toLowerCase());
 		}
 
+		lock.readLock().lock();
 		Cart cart = getCart(request);
-		Optional<CartItem> sameProduct = cart
+		Optional<CartItem> existingItem = cart
 				.getItems()
 				.stream()
 				.filter(item -> product.equals(item.getProduct()))
 				.findFirst();
+		lock.readLock().unlock();
 
-		if(sameProduct.isPresent()) {
-			int bufQuantity = sameProduct.get().getQuantity();
+		lock.writeLock().lock();
+		if(existingItem.isPresent()) {
+			int bufQuantity = existingItem.get().getQuantity();
 			if((bufQuantity + quantity) > product.getStock()){
-				throw new WrongQuantityValueOnProductPageException(ProductPageState.OUT_OF_STOCK);
+				throw new ValidationException(ProductPageState.OUT_OF_STOCK.toString().toLowerCase());
 			}
-			sameProduct.get().setQuantity(bufQuantity + quantity);
+			existingItem.get().setQuantity(bufQuantity + quantity);
 		} else {
 			getCart(request).getItems().add(new CartItem(product, quantity));
 		}
+		lock.writeLock().unlock();
 
 	}
 
 	@Override
 	public void remove(Long productId, int quantity, HttpServletRequest request) {
-		add(productId, -quantity, request);
+		throw new RuntimeException("Not implemented");
+		//add(productId, -quantity, request);
 	}
 	
 }
