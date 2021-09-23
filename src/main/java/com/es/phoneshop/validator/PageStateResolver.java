@@ -6,7 +6,6 @@ import com.es.phoneshop.constant.ProductPageState;
 public class PageStateResolver {
 
     public static String getMessageFromState(ProductPageState state){
-
         switch(state){
             case IS_EMPTY: return ConstantStrings.FIELD_IS_EMPTY;
             case NOT_A_NUMBER: return ConstantStrings.NOT_A_NUMBER;
@@ -18,7 +17,6 @@ public class PageStateResolver {
     }
 
     public static String getMessageFromState(String state){
-
         switch(state){
             case "is_empty": return ConstantStrings.FIELD_IS_EMPTY;
             case "not_a_number": return ConstantStrings.NOT_A_NUMBER;

@@ -7,13 +7,8 @@ import javax.servlet.http.HttpSessionListener;
 import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 
-/**
- * Application Lifecycle Listener implementation class SessionListener
- *
- */
 @WebListener
 public class SessionListener implements HttpSessionListener {
-	
 
     public SessionListener() {
     }

@@ -46,10 +46,9 @@ public class ArrayListProductDao implements ProductDao {
     @Override
     public Product getProduct(Long id) {
     	Product buf;
-    	
 		if (id == null) {
 			throw new IllegalArgumentException("Id is null");
-			}
+		}
 
 		try {
 			readWriteLock.readLock().lock();
@@ -66,7 +65,6 @@ public class ArrayListProductDao implements ProductDao {
 
     @Override
     public List<Product> findProducts(Filter filter) {
-
     	List<Product> prods;
     	
     	try {
@@ -86,7 +84,6 @@ public class ArrayListProductDao implements ProductDao {
     	} finally {
     		readWriteLock.readLock().unlock();
     	}
-    	
 		return prods;
     }
 
@@ -95,7 +92,6 @@ public class ArrayListProductDao implements ProductDao {
     	if(product == null) {
     		throw new IllegalArgumentException("Product is null");
     	}
-
     	List<Product> sameIdProducts;
 
     	try {
@@ -106,7 +102,6 @@ public class ArrayListProductDao implements ProductDao {
         		sameIdProducts = products.stream()
             			.filter(p -> product.getId().equals(p.getId()))
             			.collect(Collectors.toList());
-
             	if(sameIdProducts.size()<1) {
             		throw new ProductNotFoundException("No products with current id were found");
             	} else {

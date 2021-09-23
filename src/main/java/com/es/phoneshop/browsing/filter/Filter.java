@@ -12,7 +12,6 @@ public class Filter{
 
 	private SortField sortField;
 	private SortOrder sortOrder;
-
 	private List<String> queryWords;
 
 	public Filter() {
