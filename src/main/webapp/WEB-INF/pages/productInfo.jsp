@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
-<jsp:useBean id="product" type="com.es.phoneshop.model.Product" scope="request"/>
+<jsp:useBean id="product" type="com.es.phoneshop.model.product.Product" scope="request"/>
 <jsp:useBean id="recentlyViewed" type="com.es.phoneshop.model.viewsHistory.UserViewsHistory" scope="session"/>
 <tags:master pageTitle="Product Info">
   <table id="shell">
@@ -88,7 +88,7 @@
 
       </td>
       <td id="menu" bgcolor="#bcd1e7" align="center">
-        <tags:menu listIsActive="true" cartIsActive="true"/>
+        <tags:menu/>
         <br/>
       </td>
     </tr>

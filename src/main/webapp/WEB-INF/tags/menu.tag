@@ -1,14 +1,20 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ attribute name="listIsActive" required="true" %>
-<%@ attribute name="cartIsActive" required="true" %>
 
 <h3>Menu</h3>
 <form action="${pageContext.servletContext.contextPath}/products">
 	<input name="query" value="${param.query}" style="width: 80%;">
-	<button style="width: 80%;">Search</button>
+	<button id="search">Search</button>
 </form>
 
+<form action="${pageContext.servletContext.contextPath}/products">
+	<button id="menuButton">Product List</button>
+</form>
+<form action="${pageContext.servletContext.contextPath}/products/cart">
+	<button id="menuButton">My Cart</button>
+</form>
+
+<!--
 	<c:if test="${listIsActive == true}">
 		<p align="center">
 			<a href="${pageContext.servletContext.contextPath}/products">Products list</a>
@@ -30,3 +36,4 @@
 			My cart
 		</p>
 	</c:if>
+-->
