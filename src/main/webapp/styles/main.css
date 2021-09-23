@@ -49,6 +49,25 @@ button#addToCart{
   border: 0px;
   height: 30px;
 }
+button#menuButton{
+  background: #79a3d0;
+  color: #1c426b;
+  font-size: 10pt;
+  width:80%;
+  border-radius: 5px;
+  border: 0px;
+  height: 30px;
+  font-weight: bold;
+}
+button#search{
+  background: #bcd1e7;
+  color: #1c426b;
+  font-size: 10pt;
+  width:80%;
+  border-radius: 5px;
+  border: 0px;
+  font-weight: bold;
+}
 p#errorInfo{
   color: red;
   font-weight: bold;
@@ -60,13 +79,13 @@ p#successInfo{
   font-style: italic;
 }
 a#headerText{
-  color:#c96866;
+  color:#2e5b8c;
 }
 a:visited#headerText{
-  color:#c96866;
+  color:#2e5b8c;
 }
 a:active#headerText{
-  color:#dda09f;
+  color:white;
 }
 .price {
   text-align: right;

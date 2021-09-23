@@ -54,7 +54,7 @@
 
       </td>
       <td id="menu" bgcolor="#bcd1e7" align="center">
-        <tags:menu listIsActive="true" cartIsActive="false"/>
+        <tags:menu/>
         <br/>
       </td>
     </tr>

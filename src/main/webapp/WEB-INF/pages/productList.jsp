@@ -50,7 +50,7 @@
 
       </td>
       <td id="menu" bgcolor="#bcd1e7" align="center">
-          <tags:menu listIsActive="false" cartIsActive="true"/>
+          <tags:menu/>
         <br/>
       </td>
     </tr>
