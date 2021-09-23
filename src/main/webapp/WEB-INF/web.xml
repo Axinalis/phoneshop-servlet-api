@@ -11,7 +11,7 @@
   </context-param>
 
   <listener>
-    <listener-class>com.es.phoneshop.web.ProductDemodataServletContextListener</listener-class>
+    <listener-class>com.es.phoneshop.web.listeners.ProductDemodataServletContextListener</listener-class>
   </listener>
 
   <servlet>
@@ -28,7 +28,7 @@
     <servlet-name>productInfo</servlet-name>
     <servlet-class>com.es.phoneshop.web.ProductDetailsPageServlet</servlet-class>
   </servlet>
-  
+
   <servlet-mapping>
     <servlet-name>productInfo</servlet-name>
     <url-pattern>/products/info/*</url-pattern>
@@ -44,6 +44,16 @@
     <url-pattern>/products/history/*</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>UserCart</servlet-name>
+    <servlet-class>com.es.phoneshop.web.UserCartServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>UserCart</servlet-name>
+    <url-pattern>/products/cart</url-pattern>
+  </servlet-mapping>
+
   <error-page>
   	<location>/WEB-INF/pages/productNotFoundError.jsp</location>
   	<exception-type>com.es.phoneshop.exception.ProductNotFoundException</exception-type>
@@ -53,6 +63,6 @@
   	<location>/WEB-INF/pages/commonError.jsp</location>
     <error-code>500</error-code>
   </error-page>
-   
+
 
 </web-app>

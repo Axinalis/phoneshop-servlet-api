@@ -1,9 +1,6 @@
 package com.es.phoneshop.comparator.filter;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.model.product.Product;
 
 public class FilterMatcher {
 

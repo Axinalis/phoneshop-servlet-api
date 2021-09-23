@@ -1,4 +1,4 @@
-package com.es.phoneshop.model.filter;
+package com.es.phoneshop.comparator.filter;
 
 import static org.junit.Assert.assertTrue;
 
@@ -8,11 +8,9 @@ import java.util.Currency;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.es.phoneshop.comparator.filter.Filter;
-import com.es.phoneshop.comparator.filter.FilterMatcher;
 import com.es.phoneshop.enums.SortField;
 import com.es.phoneshop.enums.SortOrder;
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.model.product.Product;
 
 public class FilterMatcherTest {
 

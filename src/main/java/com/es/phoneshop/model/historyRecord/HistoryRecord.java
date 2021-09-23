@@ -1,10 +1,8 @@
-package com.es.phoneshop.model;
+package com.es.phoneshop.model.historyRecord;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Currency;
-import java.util.Date;
 import java.util.Objects;
 
 public class HistoryRecord {

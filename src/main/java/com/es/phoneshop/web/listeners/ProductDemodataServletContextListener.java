@@ -1,10 +1,9 @@
-package com.es.phoneshop.web;
+package com.es.phoneshop.web.listeners;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Currency;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -14,35 +13,20 @@ import javax.servlet.annotation.WebListener;
 
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
-import com.es.phoneshop.model.HistoryRecord;
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.model.historyRecord.HistoryRecord;
+import com.es.phoneshop.model.product.Product;
 
-/**
- * Application Lifecycle Listener implementation class ProductDemodataServletContextListener
- *
- */
 @WebListener
 public class ProductDemodataServletContextListener implements ServletContextListener {
 
 	ProductDao productDao;
-	
-    /**
-     * Default constructor. 
-     */
+
     public ProductDemodataServletContextListener() {
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-     * @see ServletContextListener#contextDestroyed(ServletContextEvent)
-     */
-    public void contextDestroyed(ServletContextEvent sce)  { 
-         // TODO Auto-generated method stub
+    public void contextDestroyed(ServletContextEvent sce)  {
     }
 
-	/**
-     * @see ServletContextListener#contextInitialized(ServletContextEvent)
-     */
     public void contextInitialized(ServletContextEvent event)  {
     	productDao = ArrayListProductDao.getInstance();
     	Random rand = new Random(System.currentTimeMillis());

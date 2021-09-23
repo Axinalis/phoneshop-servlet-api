@@ -1,6 +1,15 @@
 package com.es.phoneshop.web;
 
-import java.io.IOException;
+import com.es.phoneshop.enums.ProductPageState;
+import com.es.phoneshop.exception.ValidationException;
+import com.es.phoneshop.model.product.Product;
+import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
+import com.es.phoneshop.service.CartService;
+import com.es.phoneshop.dao.ProductDao;
+import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.service.impl.DefaultCartService;
+import com.es.phoneshop.validator.PageStateResolver;
+import com.es.phoneshop.validator.Validator;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -8,61 +17,77 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-import com.es.phoneshop.dao.ProductDao;
-import com.es.phoneshop.dao.impl.ArrayListProductDao;
-import com.es.phoneshop.exception.ProductNotFoundException;
-import com.es.phoneshop.validator.ProductIdValidator;
+import static com.es.phoneshop.constant.ConstantStrings.*;
 
-/**
- * Servlet implementation class ProductDetailsPageServlet
- */
 @WebServlet("/ProductDetailsPageServlet")
 public class ProductDetailsPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	ProductDao productDao;
+	private ProductDao productDao;
+	private CartService cartService;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public ProductDetailsPageServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-
 		super.init(config);
 		productDao = ArrayListProductDao.getInstance();
+		cartService = DefaultCartService.getInstance();
 
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long id;
 		String productId = request.getPathInfo();
 		productDao = ArrayListProductDao.getInstance();
+		Product product;
+		UserViewsHistory history;
 		
-		id = ProductIdValidator.validadingId(productId);
+		id = Validator.validatingId(productId);
+		product = productDao.getProduct(id);
+		history = (UserViewsHistory)request.getSession().getAttribute(RECENTLY_VIEWED);
 		
-		request.setAttribute("product", productDao.getProduct(id));
-		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
+		if(history != null) {
+			history.addProduct(product);
+		} else {
+			request.getSession().setAttribute(RECENTLY_VIEWED, new UserViewsHistory());
+		}
 
+		String successParameter = request.getParameter(SUCCESS);
+		String errorParameter = request.getParameter(ERROR);
+		if(successParameter != null && !successParameter.equals("")){
+			request.setAttribute(SUCCESS, PageStateResolver.getMessageFromState(successParameter));
+		}
+		if(errorParameter != null && !errorParameter.equals("")){
+			request.setAttribute(ERROR,	PageStateResolver.getMessageFromState(errorParameter));
+		}
+
+		request.setAttribute("product", product);
+		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		Long id;
+		int quantityInt;
+		String stateInfo;
+		String productId = request.getPathInfo();
+		id = Validator.validatingId(productId);
+		
+		try {
+			quantityInt = Validator.parsingQuantity(request.getParameter(QUANTITY), request.getLocale());
+			cartService.add(id, quantityInt, request);
+			stateInfo = SUCCESS + "=" + ProductPageState.PRODUCT_ADDED.toString().toLowerCase();
+		} catch(ValidationException ex) {
+			stateInfo = ERROR + "=" + ex.getMessage().toLowerCase();
+		}
+
+		response.sendRedirect("/phoneshop-servlet-api/products/info/" + id + "?" + stateInfo);
 	}
 
 }

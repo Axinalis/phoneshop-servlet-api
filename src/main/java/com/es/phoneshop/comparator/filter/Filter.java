@@ -7,13 +7,11 @@ import java.util.Objects;
 
 import com.es.phoneshop.enums.SortField;
 import com.es.phoneshop.enums.SortOrder;
-import com.es.phoneshop.model.Product;
 
 public class Filter{
 
 	private SortField sortField;
 	private SortOrder sortOrder;
-
 	private List<String> queryWords;
 
 	public Filter() {
