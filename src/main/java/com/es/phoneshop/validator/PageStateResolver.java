@@ -1,7 +1,7 @@
 package com.es.phoneshop.validator;
 
 import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.constant.ProductPageState;
+import com.es.phoneshop.enums.ProductPageState;
 
 public class PageStateResolver {
 

@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.service.impl.ArrayListProductDao;
+import com.es.phoneshop.dao.impl.ArrayListProductDao;
 import com.es.phoneshop.exception.ValidationException;
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.model.product.Product;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.service.CartService;
 import com.es.phoneshop.service.impl.DefaultCartService;
@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.es.phoneshop.service.ProductDao;
+import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
 
 @RunWith(MockitoJUnitRunner.class)

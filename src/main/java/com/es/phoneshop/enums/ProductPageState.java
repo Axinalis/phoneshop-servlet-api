@@ -1,4 +1,4 @@
-package com.es.phoneshop.constant;
+package com.es.phoneshop.enums;
 
 public enum ProductPageState {
     PRODUCT_ADDED,

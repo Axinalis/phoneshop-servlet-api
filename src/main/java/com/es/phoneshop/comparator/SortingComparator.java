@@ -1,9 +1,9 @@
-package com.es.phoneshop.browsing;
+package com.es.phoneshop.comparator;
 
-import com.es.phoneshop.browsing.filter.Filter;
-import com.es.phoneshop.browsing.filter.FilterMatcher;
-import com.es.phoneshop.constant.SortOrder;
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.comparator.filter.Filter;
+import com.es.phoneshop.comparator.filter.FilterMatcher;
+import com.es.phoneshop.enums.SortOrder;
+import com.es.phoneshop.model.product.Product;
 
 public class SortingComparator {
 
