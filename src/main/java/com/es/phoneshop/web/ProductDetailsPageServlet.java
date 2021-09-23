@@ -1,12 +1,12 @@
 package com.es.phoneshop.web;
 
-import com.es.phoneshop.constant.ProductPageState;
+import com.es.phoneshop.enums.ProductPageState;
 import com.es.phoneshop.exception.ValidationException;
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.model.product.Product;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 import com.es.phoneshop.service.CartService;
-import com.es.phoneshop.service.ProductDao;
-import com.es.phoneshop.service.impl.ArrayListProductDao;
+import com.es.phoneshop.dao.ProductDao;
+import com.es.phoneshop.dao.impl.ArrayListProductDao;
 import com.es.phoneshop.service.impl.DefaultCartService;
 import com.es.phoneshop.validator.PageStateResolver;
 import com.es.phoneshop.validator.Validator;

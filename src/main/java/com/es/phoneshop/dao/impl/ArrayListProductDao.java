@@ -1,4 +1,4 @@
-package com.es.phoneshop.service.impl;
+package com.es.phoneshop.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
-import com.es.phoneshop.browsing.SortingComparator;
-import com.es.phoneshop.browsing.filter.Filter;
-import com.es.phoneshop.browsing.filter.FilterMatcher;
-import com.es.phoneshop.service.ProductDao;
+import com.es.phoneshop.comparator.SortingComparator;
+import com.es.phoneshop.comparator.filter.Filter;
+import com.es.phoneshop.comparator.filter.FilterMatcher;
+import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.model.product.Product;
 
 public class ArrayListProductDao implements ProductDao {
 

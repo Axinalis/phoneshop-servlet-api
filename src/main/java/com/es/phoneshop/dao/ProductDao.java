@@ -1,9 +1,9 @@
-package com.es.phoneshop.service;
+package com.es.phoneshop.dao;
 
 import java.util.List;
 
-import com.es.phoneshop.browsing.filter.Filter;
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.comparator.filter.Filter;
+import com.es.phoneshop.model.product.Product;
 
 public interface ProductDao {
     Product getProduct(Long id);

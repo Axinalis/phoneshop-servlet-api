@@ -1,12 +1,12 @@
-package com.es.phoneshop.browsing.filter;
+package com.es.phoneshop.comparator.filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import com.es.phoneshop.constant.SortField;
-import com.es.phoneshop.constant.SortOrder;
+import com.es.phoneshop.enums.SortField;
+import com.es.phoneshop.enums.SortOrder;
 
 public class Filter{
 

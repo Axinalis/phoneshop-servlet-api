@@ -1,4 +1,4 @@
-package com.es.phoneshop.web;
+package com.es.phoneshop.web.listeners;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,10 +11,10 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import com.es.phoneshop.service.ProductDao;
-import com.es.phoneshop.service.impl.ArrayListProductDao;
-import com.es.phoneshop.model.HistoryRecord;
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.dao.ProductDao;
+import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.model.historyRecord.HistoryRecord;
+import com.es.phoneshop.model.product.Product;
 
 @WebListener
 public class ProductDemodataServletContextListener implements ServletContextListener {

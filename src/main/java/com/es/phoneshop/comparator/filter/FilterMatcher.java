@@ -1,6 +1,6 @@
-package com.es.phoneshop.browsing.filter;
+package com.es.phoneshop.comparator.filter;
 
-import com.es.phoneshop.model.Product;
+import com.es.phoneshop.model.product.Product;
 
 public class FilterMatcher {
 
