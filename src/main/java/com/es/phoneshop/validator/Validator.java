@@ -6,18 +6,18 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import static com.es.phoneshop.enums.ProductPageState.*;
+import static com.es.phoneshop.enums.CartAddingState.*;
 
 public class Validator {
 
 	public static Long validatingId(String productId) {
 		if(productId == null || "".equals(productId)) {
-			throw new ValidationException("Id is null");
+			throw new IllegalArgumentException("Id is null");
 		}
 		try {
-			return Long.valueOf(productId.substring(1));
+			return Long.valueOf(productId);
 		} catch(NumberFormatException ex) {
-			throw new ValidationException("Cannot parse id to Long");
+			throw new IllegalArgumentException("Cannot parse id to Long");
 		}
 	}
 	

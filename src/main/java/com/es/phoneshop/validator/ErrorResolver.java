@@ -1,11 +1,11 @@
 package com.es.phoneshop.validator;
 
 import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.enums.ProductPageState;
+import com.es.phoneshop.enums.CartAddingState;
 
-public class PageStateResolver {
+public class ErrorResolver {
 
-    public static String getMessageFromState(ProductPageState state){
+    public static String getMessageFromState(CartAddingState state){
         switch(state){
             case IS_EMPTY: return ConstantStrings.FIELD_IS_EMPTY;
             case NOT_A_NUMBER: return ConstantStrings.NOT_A_NUMBER;
