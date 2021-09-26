@@ -2,12 +2,14 @@ package com.es.phoneshop.model.product;
 
 import com.es.phoneshop.model.historyRecord.HistoryRecord;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
 import java.util.Objects;
 
-public class Product {
+public class Product implements Serializable {
 
     private Long id;
     private String code;

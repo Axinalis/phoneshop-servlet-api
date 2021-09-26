@@ -1,6 +1,6 @@
 package com.es.phoneshop.enums;
 
-public enum ProductPageState {
+public enum CartAddingState {
     PRODUCT_ADDED,
     NOT_A_NUMBER,
     IS_EMPTY,
