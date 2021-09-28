@@ -2,6 +2,7 @@ package com.es.phoneshop.service.impl;
 
 import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.exception.ValidationException;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
@@ -50,32 +51,32 @@ public class DefaultCartServiceTest {
 	@Test
 	public void test() {
 		//Didn't find assertThrow in junit, therefore here we are
-		service.add(1L, 1, request);
+		service.add(1L, 1, service.getCart(request));
 		try{
-			service.add(0L, 1, request);
+			service.add(0L, 1, service.getCart(request));
 			fail();
 		} catch (ProductNotFoundException ex){}
 		try{
-			service.add(9L, 1, request);
+			service.add(9L, 1, service.getCart(request));
 			fail();
 		} catch (ProductNotFoundException ex){}
 
 		try{
-			service.add(1L, 10000, request);
+			service.add(1L, 10000, service.getCart(request));
 			fail();
-		} catch (WrongQuantityValueOnProductPageException ex){}
+		} catch (ValidationException ex){}
 		try{
-			service.add(1L, -1, request);
+			service.add(1L, -1, service.getCart(request));
 			fail();
-		} catch (WrongQuantityValueOnProductPageException ex){}
+		} catch (ValidationException ex){}
 		try{
-			service.add(1L, 0, request);
+			service.add(1L, 0, service.getCart(request));
 			fail();
-		} catch (WrongQuantityValueOnProductPageException ex){}
+		} catch (ValidationException ex){}
 		try{
-			service.add(1L, -10000, request);
+			service.add(1L, -10000, service.getCart(request));
 			fail();
-		} catch (WrongQuantityValueOnProductPageException ex){}
+		} catch (ValidationException ex){}
 
 		try{
 			service.add(1L, 1, null);

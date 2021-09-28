@@ -82,7 +82,7 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		
 		try {
 			quantityInt = Validator.parsingQuantity(request.getParameter(QUANTITY), request.getLocale());
-			cartService.add(id, quantityInt, request);
+			cartService.add(id, quantityInt, cartService.getCart(request));
 			stateInfo = SUCCESS + "=" + CartAddingState.PRODUCT_ADDED.toString().toLowerCase();
 		} catch(ValidationException ex) {
 			stateInfo = ERROR + "=" + ex.getMessage().toLowerCase();

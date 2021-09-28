@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.es.phoneshop.constant.ConstantStrings.MINI_CART;
+import static com.es.phoneshop.constant.ConstantStrings.MINI_CART_FULL;
+
 @WebServlet("/MiniCartServlet")
 public class MiniCartServlet extends HttpServlet {
 
@@ -29,9 +32,9 @@ public class MiniCartServlet extends HttpServlet {
         List<CartItem> miniCart = cartService.getCart(request).getItems();
         if(miniCart.size() > 3){
             miniCart = miniCart.subList(0, 2);
-            request.setAttribute("miniCartFull", "true");
+            request.setAttribute(MINI_CART_FULL, "true");
         }
-        request.setAttribute("miniCart", miniCart);
+        request.setAttribute(MINI_CART, miniCart);
         request.getRequestDispatcher("/WEB-INF/pages/minicart.jsp").include(request, response);
     }
 }

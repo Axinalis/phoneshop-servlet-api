@@ -62,7 +62,7 @@ public class UserCartServlet extends HttpServlet {
 			try{
 				id = Validator.validatingId(productIds[i]);
 				quantity = Validator.parsingQuantity(quantities[i], locale);
-				cartService.update(id, quantity, request);
+				cartService.update(id, quantity, cartService.getCart(request));
 			} catch(IllegalArgumentException ex){
 				throw ex;
 			} catch(ValidationException ex){
