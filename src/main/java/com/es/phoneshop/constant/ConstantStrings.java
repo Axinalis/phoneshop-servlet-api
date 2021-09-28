@@ -30,4 +30,7 @@ public class ConstantStrings {
     public static final String OUT_OF_STOCK = "No enough products available";
     public static final String NEGATIVE_VALUE = "Enter a positive value";
 
+    //For MiniCartServlet
+    public static final String MINI_CART = "miniCart";
+    public static final String MINI_CART_FULL = "miniCartFull";
 }

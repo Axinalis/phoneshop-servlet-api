@@ -11,8 +11,7 @@ import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 
 import java.util.ArrayList;
 
-import static com.es.phoneshop.constant.ConstantStrings.RECENTLY_VIEWED;
-import static com.es.phoneshop.constant.ConstantStrings.STRING_SESSION_ATTRIBUTE_CART;
+import static com.es.phoneshop.constant.ConstantStrings.*;
 
 @WebListener
 public class SessionListener implements HttpSessionListener {
@@ -22,7 +21,7 @@ public class SessionListener implements HttpSessionListener {
 
     public void sessionCreated(HttpSessionEvent se)  { 
     	se.getSession().setAttribute(RECENTLY_VIEWED, new UserViewsHistory());
-    	se.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
+    	se.getSession().setAttribute(CART, new Cart());
     	//se.getSession().setAttribute("miniCart", new ArrayList<CartItem>());
     }
 

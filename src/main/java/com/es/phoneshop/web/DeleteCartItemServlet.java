@@ -38,7 +38,7 @@ public class DeleteCartItemServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String productId = request.getPathInfo();
-    	cartService.delete(Validator.validatingId(productId.substring(1)), request);
+    	cartService.delete(Validator.validatingId(productId.substring(1)), cartService.getCart(request));
 
     	response.sendRedirect("/phoneshop-servlet-api/products/cart");
 	}

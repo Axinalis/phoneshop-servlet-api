@@ -59,7 +59,7 @@
           </tr>
           <tr>
             <td bgcolor="#dde2e7" align="center">
-              Place for minicart
+                <jsp:include page="/products/cart/miniCart"/>
             </td>
           </tr>
           <tr>
