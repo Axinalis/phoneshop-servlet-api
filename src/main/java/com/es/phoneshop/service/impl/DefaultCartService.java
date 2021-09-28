@@ -59,7 +59,7 @@ public class DefaultCartService implements CartService {
 	}
 
 	@Override
-	public void add(Long productId, int quantity, HttpServletRequest request) {
+	public void add(Long productId, int quantity, Cart cart) {
 		ReadWriteLock lock = new ReentrantReadWriteLock();
 		if(quantity <= 0) {
 			throw new ValidationException(CartAddingState.NEGATIVE_VALUE.toString().toLowerCase());
@@ -71,7 +71,7 @@ public class DefaultCartService implements CartService {
 			throw new ValidationException(CartAddingState.OUT_OF_STOCK.toString().toLowerCase());
 		}
 
-		Optional<CartItem> existingItem = getOptionalCartItem(getCart(request), product);
+		Optional<CartItem> existingItem = getOptionalCartItem(cart, product);
 
 		lock.writeLock().lock();
 		if(existingItem.isPresent()) {
@@ -81,23 +81,22 @@ public class DefaultCartService implements CartService {
 			}
 			existingItem.get().setQuantity(bufQuantity + quantity);
 		} else {
-			getCart(request).getItems().add(new CartItem(product, quantity));
+			cart.getItems().add(new CartItem(product, quantity));
 		}
-		recalculateTotalParameters(getCart(request));
+		recalculateTotalParameters(cart);
 		lock.writeLock().unlock();
 
 	}
 
 	@Override
-	public void delete(Long productId, HttpServletRequest request) {
-		getCart(request)
-				.getItems()
+	public void delete(Long productId, Cart cart) {
+		cart.getItems()
 				.removeIf(item -> productId.equals(item.getProduct().getId()));
-		recalculateTotalParameters(getCart(request));
+		recalculateTotalParameters(cart);
 	}
 
 	@Override
-	public void update(Long productId, int quantity, HttpServletRequest request) {
+	public void update(Long productId, int quantity, Cart cart) {
 		ReadWriteLock lock = new ReentrantReadWriteLock();
 		if(quantity < 0) {
 			throw new ValidationException(CartAddingState.NEGATIVE_VALUE.toString().toLowerCase());
@@ -109,22 +108,21 @@ public class DefaultCartService implements CartService {
 			throw new ValidationException(CartAddingState.OUT_OF_STOCK.toString().toLowerCase());
 		}
 
-		Optional<CartItem> existingItem = getOptionalCartItem(getCart(request), product);
+		Optional<CartItem> existingItem = getOptionalCartItem(cart, product);
 
 		lock.writeLock().lock();
 		//Deleting by setting quantity to zero
 		if(quantity == 0){
-			getCart(request)
-					.getItems()
+			cart.getItems()
 					.removeIf(item -> productId.equals(item.getProduct().getId()));
 		} else {
 			if(existingItem.isPresent()) {
 				existingItem.get().setQuantity(quantity);
 			} else {
-				getCart(request).getItems().add(new CartItem(product, quantity));
+				cart.getItems().add(new CartItem(product, quantity));
 			}
 		}
-		recalculateTotalParameters(getCart(request));
+		recalculateTotalParameters(cart);
 		lock.writeLock().unlock();
 	}
 
@@ -167,6 +165,9 @@ public class DefaultCartService implements CartService {
 	}
 
 	private void recalculateTotalParameters(Cart cart){
+		ReadWriteLock lock = new ReentrantReadWriteLock();
+
+		lock.writeLock().lock();
 		if(cart.getItems().size() == 0){
 			cart.setTotalCost(BigDecimal.valueOf(0));
 			cart.setTotalQuantity(0);
@@ -182,5 +183,6 @@ public class DefaultCartService implements CartService {
 				cart.getItems().stream()
 						.map(cartItem -> cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())))
 						.reduce(BigDecimal::add).get());
+		lock.writeLock().unlock();
 	}
 }
