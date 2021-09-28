@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
-<jsp:useBean id="cartList" type="java.util.ArrayList" scope="request"/>
+<jsp:useBean id="cart" type="com.es.phoneshop.model.cart.Cart" scope="session"/>
 <jsp:useBean id="recentlyViewed" type="com.es.phoneshop.model.viewsHistory.UserViewsHistory" scope="session"/>
 <tags:master pageTitle="My cart">
   <table id="shell">
@@ -32,7 +32,7 @@
                 </td>
               </tr>
             </thead>
-            <c:forEach var="item" items="${cartList}">
+            <c:forEach var="item" items="${cart.items}">
               <tr>
                 <td>
                   <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer${item.product.imageUrl}"></td>
@@ -60,24 +60,45 @@
                       Delete
                     </button>
                   </td>
-                </td>
               </tr>
             </c:forEach>
+            <tr>
+              <td colspan="2">
+                Summary
+              </td>
+              <td>
+                ${cart.totalQuantity}
+              </td>
+              <td>
+                ${cart.totalCost} $
+              </td>
+            </tr>
           </table>
         </form>
         <form id="deleteCartItem" method="post">
         </form>
       </td>
-      <td id="menu" bgcolor="#dde2e7" align="center">
-        <tags:menu/>
-        <br/>
+      <td>
+        <table>
+          <tr>
+            <td id="menu" bgcolor="#dde2e7" align="center">
+                <tags:menu/>
+              <br/>
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor="#dde2e7" align="center">
+              Place for minicart
+            </td>
+          </tr>
+          <tr>
+            <td id="shell-td" bgcolor="#e9eef1" align="center">
+              <%@ include file="recent.html"%>
+            </td>
+          </tr>
+        </table>
       </td>
-    </tr>
-    <tr>
-      <td id="shell-td" bgcolor="#e9eef1" align="center">
-        <%@ include file="recent.html"%>
-        </td>
-      </tr>
+
     </table>
 
     <%@ include file="antiheader.html"%>
