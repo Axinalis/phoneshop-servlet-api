@@ -49,13 +49,14 @@ td#menu {
 }
 
 button#addToCart {
-  background: #79a3d0;
+  background: #c99966;
   color: white;
   font-size: 9pt;
   width: 100%;
   border-radius: 5px;
   border: 0px;
   height: 30px;
+  font-weight: bold;
 }
 
 button#menuButton {
@@ -70,7 +71,7 @@ button#menuButton {
 }
 
 button#search {
-  background: #bcd1e7;
+  background: #dde2e7;
   color: #1c426b;
   font-size: 10pt;
   width: 80%;
@@ -86,7 +87,7 @@ p#errorInfo {
 }
 
 p#successInfo {
-  color: #79a3d0;
+  color: #c99966;
   font-weight: bold;
   font-style: italic;
 }

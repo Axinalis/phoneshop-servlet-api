@@ -1,5 +1,6 @@
 package com.es.phoneshop.web;
 
+import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.enums.CartAddingState;
 import com.es.phoneshop.exception.ValidationException;
 import com.es.phoneshop.model.product.Product;
@@ -37,7 +38,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		super.init(config);
 		productDao = ArrayListProductDao.getInstance();
 		cartService = DefaultCartService.getInstance();
-
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -67,6 +67,7 @@ public class ProductDetailsPageServlet extends HttpServlet {
 			request.setAttribute(ERROR,	ErrorResolver.getMessageFromState(errorParameter));
 		}
 
+		request.setAttribute(ConstantStrings.CART, cartService.getCart(request));
 		request.setAttribute("product", product);
 		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
 	}

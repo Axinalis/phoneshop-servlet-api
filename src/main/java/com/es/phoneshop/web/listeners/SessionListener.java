@@ -5,7 +5,11 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import com.es.phoneshop.constant.ConstantStrings;
+import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
+
+import static com.es.phoneshop.constant.ConstantStrings.RECENTLY_VIEWED;
+import static com.es.phoneshop.constant.ConstantStrings.STRING_SESSION_ATTRIBUTE_CART;
 
 @WebListener
 public class SessionListener implements HttpSessionListener {
@@ -14,7 +18,8 @@ public class SessionListener implements HttpSessionListener {
     }
 
     public void sessionCreated(HttpSessionEvent se)  { 
-    	se.getSession().setAttribute(ConstantStrings.RECENTLY_VIEWED, new UserViewsHistory());
+    	se.getSession().setAttribute(RECENTLY_VIEWED, new UserViewsHistory());
+    	se.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
     }
 
     public void sessionDestroyed(HttpSessionEvent se)  { 

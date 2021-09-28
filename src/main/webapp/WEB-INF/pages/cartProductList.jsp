@@ -11,20 +11,20 @@
       <!-- Main content -->
       <td id="shell-td" rowspan="2" style="width:80%">
 
-        <form method="post">
-
+        <form method="get">
+          <input name="updating" value="true" type="hidden"/>
           <button id="addToCart">Update</button>
-
-          <table bgcolor="#eef3f9" style="width:100%;">
+          <br />
+          <table bgcolor="#f9f9f9" style="width:100%;">
             <thead>
               <tr>
-                <td>
+                <td style="width:64px;">
                   Image
                 </td>
                 <td>
                   Description
                 </td>
-                <td class="price">
+                <td>
                   Quantity
                 </td>
                 <td>
@@ -50,24 +50,31 @@
                     </c:if>
                     <input name="productId" value="${item.product.id}" type="hidden"/>
                   </td>
-                  <td class="price">
+                  <td>
                     <a href="${pageContext.servletContext.contextPath}/products/history/${item.product.id}">
                       <fmt:formatNumber value="${item.product.price}" type="currency" currencySymbol="${item.product.currency.symbol}"/>
                     </a>
+                  </td>
+                  <td>
+                    <button formaction="${pageContext.servletContext.contextPath}/products/cart/deleteCartItem/${item.product.id}" form="deleteCartItem">
+                      Delete
+                    </button>
                   </td>
                 </td>
               </tr>
             </c:forEach>
           </table>
         </form>
+        <form id="deleteCartItem" method="post">
+        </form>
       </td>
-      <td id="menu" bgcolor="#bcd1e7" align="center">
+      <td id="menu" bgcolor="#dde2e7" align="center">
         <tags:menu/>
         <br/>
       </td>
     </tr>
     <tr>
-      <td id="shell-td" bgcolor="#cfdeee" align="center">
+      <td id="shell-td" bgcolor="#e9eef1" align="center">
         <%@ include file="recent.html"%>
         </td>
       </tr>
