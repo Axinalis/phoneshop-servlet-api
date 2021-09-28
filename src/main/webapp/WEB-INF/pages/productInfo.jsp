@@ -96,13 +96,7 @@
           </tr>
           <tr>
             <td bgcolor="#dde2e7" align="center">
-              <p>
-                <c:forEach var="item" items="${cart.items}">
-                  <p>
-                    ${item.product.description} - ${item.quantity}
-                  </p>
-                </c:forEach>
-              </p>
+              Place for minicart
             </td>
           </tr>
           <tr>
