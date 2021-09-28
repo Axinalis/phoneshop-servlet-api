@@ -38,13 +38,19 @@ public class UserCartServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if("true".equals(request.getParameter(UPDATING))){
+			updateCart(request, response);
+		}
 		Cart cart = cartService.getCart(request);
-		
 		request.setAttribute(ConstantStrings.CART_LIST, cart.getItems());
 		request.getRequestDispatcher("/WEB-INF/pages/cartProductList.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	doGet(request, response);
+	}
+
+	private void updateCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		String[] productIds = request.getParameterValues(PRODUCT_ID);
 		String[] quantities = request.getParameterValues(QUANTITY);
 		Locale locale = request.getLocale();
@@ -52,23 +58,20 @@ public class UserCartServlet extends HttpServlet {
 		Long id = null;
 		int quantity = 0;
 
-    	for(int i = 0; i < productIds.length; i++){
-    		try{
-    			id = Validator.validatingId(productIds[i]);
-    			quantity = Validator.parsingQuantity(quantities[i], locale);
+		for(int i = 0; i < productIds.length; i++){
+			try{
+				id = Validator.validatingId(productIds[i]);
+				quantity = Validator.parsingQuantity(quantities[i], locale);
 				cartService.update(id, quantity, request);
 			} catch(IllegalArgumentException ex){
-    			throw ex;
+				throw ex;
 			} catch(ValidationException ex){
-    			errors.put(id, ErrorResolver.getMessageFromState(ex.getMessage()) + " (not " + quantities[i] + ")");
+				errors.put(id, ErrorResolver.getMessageFromState(ex.getMessage()) + " (not " + quantities[i] + ")");
 			}
 		}
 
-    	request.setAttribute("errors", errors);
-		Cart cart = cartService.getCart(request);
-
-		request.setAttribute(ConstantStrings.CART_LIST, cart.getItems());
-		request.getRequestDispatcher("/WEB-INF/pages/cartProductList.jsp").forward(request, response);;
+		request.setAttribute("errors", errors);
 	}
+
 
 }
