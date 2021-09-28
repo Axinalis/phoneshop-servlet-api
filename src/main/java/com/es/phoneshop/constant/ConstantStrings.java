@@ -16,6 +16,8 @@ public class ConstantStrings {
     //For UserCartServlet
     public static final String CART_LIST = "cartList";
     public static final String PRODUCT_ID = "productId";
+    public static final String UPDATING = "updating";
+    public static final String CART = "cart";
     
     //For ProductListPageServlet
     public static final String FIELD = "field";

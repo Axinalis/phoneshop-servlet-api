@@ -9,15 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.service.CartService;
+import com.es.phoneshop.service.impl.DefaultCartService;
 import com.es.phoneshop.validator.Validator;
 
 @WebServlet("/ProductPriceHistoryServlet")
 public class ProductPriceHistoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	ProductDao productDao;
+	private ProductDao productDao;
 
 	public ProductPriceHistoryServlet() {
 		super();
@@ -36,8 +39,8 @@ public class ProductPriceHistoryServlet extends HttpServlet {
 		String productId = request.getPathInfo();
 		productDao = ArrayListProductDao.getInstance();
 		
-		id = Validator.validatingId(productId);
-		
+		id = Validator.validatingId(productId.substring(1));
+
 		request.setAttribute("product", productDao.getProduct(id));
 		request.getRequestDispatcher("/WEB-INF/pages/productHistory.jsp").forward(request, response);
 
