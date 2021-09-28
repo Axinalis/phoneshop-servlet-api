@@ -5,6 +5,7 @@ import com.es.phoneshop.constant.ConstantStrings;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
 import com.es.phoneshop.model.cart.Cart;
+import com.es.phoneshop.model.cart.CartItem;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 import com.es.phoneshop.service.CartService;
 import com.es.phoneshop.service.impl.DefaultCartService;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ProductListPageServlet extends HttpServlet {
 	
@@ -36,6 +38,9 @@ public class ProductListPageServlet extends HttpServlet {
     	}
 		if(request.getSession().getAttribute(ConstantStrings.CART) == null) {
 			request.getSession().setAttribute(ConstantStrings.CART, new Cart());
+		}
+		if(request.getSession().getAttribute("miniCart") == null){
+			request.getSession().setAttribute("miniCart", new ArrayList<CartItem>());
 		}
 
         //Filter-creating logic

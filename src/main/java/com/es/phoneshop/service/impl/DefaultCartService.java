@@ -11,9 +11,11 @@ import com.es.phoneshop.dao.ProductDao;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.es.phoneshop.constant.ConstantStrings.STRING_SESSION_ATTRIBUTE_CART;
@@ -51,7 +53,6 @@ public class DefaultCartService implements CartService {
 					session.setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
 				}
 			}
-
 		}
 		
 		return (Cart)session.getAttribute(STRING_SESSION_ATTRIBUTE_CART);
@@ -82,6 +83,7 @@ public class DefaultCartService implements CartService {
 		} else {
 			getCart(request).getItems().add(new CartItem(product, quantity));
 		}
+		recalculateTotalParameters(getCart(request));
 		lock.writeLock().unlock();
 
 	}
@@ -91,6 +93,7 @@ public class DefaultCartService implements CartService {
 		getCart(request)
 				.getItems()
 				.removeIf(item -> productId.equals(item.getProduct().getId()));
+		recalculateTotalParameters(getCart(request));
 	}
 
 	@Override
@@ -121,6 +124,7 @@ public class DefaultCartService implements CartService {
 				getCart(request).getItems().add(new CartItem(product, quantity));
 			}
 		}
+		recalculateTotalParameters(getCart(request));
 		lock.writeLock().unlock();
 	}
 
@@ -136,13 +140,7 @@ public class DefaultCartService implements CartService {
 		if(existingItems.count() > 1){
 			//Getting sum of all same-id-product quantities and setting that sum to the first fitting item in cart
 			CartItem firstItem = new CartItem(product, 0);
-			int count = existingItems.reduce(
-					firstItem,
-					(combinedItem, item) -> {
-						combinedItem.setQuantity(combinedItem.getQuantity() + item.getQuantity());
-						return combinedItem;
-					})
-					.getQuantity();
+			int count = existingItems.mapToInt(CartItem::getQuantity).sum();
 			lock.writeLock().lock();
 			{
 				existingItems.findFirst().get().setQuantity(count);
@@ -168,4 +166,21 @@ public class DefaultCartService implements CartService {
 		return existingItem;
 	}
 
+	private void recalculateTotalParameters(Cart cart){
+		if(cart.getItems().size() == 0){
+			cart.setTotalCost(BigDecimal.valueOf(0));
+			cart.setTotalQuantity(0);
+			return;
+		}
+		cart.setTotalQuantity(
+				cart.getItems().stream()
+						.mapToInt(CartItem::getQuantity)
+						.sum()
+		);
+		BigDecimal total = new BigDecimal(0);
+		cart.setTotalCost(
+				cart.getItems().stream()
+						.map(cartItem -> cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())))
+						.reduce(BigDecimal::add).get());
+	}
 }

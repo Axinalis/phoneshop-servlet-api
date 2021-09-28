@@ -24,6 +24,7 @@
               </th>
             </tr>
           </table>
+          <jsp:include page="/products/cart/miniCart"/>
           <jsp:doBody/>
         </td>
       </tr>
