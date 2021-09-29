@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public class HistoryRecord implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private LocalDate date;
 	private BigDecimal price;
 	private Currency curr;

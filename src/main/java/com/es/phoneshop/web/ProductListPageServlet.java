@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.es.phoneshop.constant.ConstantStrings.MINI_CART;
+
 public class ProductListPageServlet extends HttpServlet {
 	
 	private ProductDao productDao;
@@ -39,8 +41,8 @@ public class ProductListPageServlet extends HttpServlet {
 		if(request.getSession().getAttribute(ConstantStrings.CART) == null) {
 			request.getSession().setAttribute(ConstantStrings.CART, new Cart());
 		}
-		if(request.getSession().getAttribute("miniCart") == null){
-			request.getSession().setAttribute("miniCart", new ArrayList<CartItem>());
+		if(request.getSession().getAttribute(MINI_CART) == null){
+			request.getSession().setAttribute(MINI_CART, new ArrayList<CartItem>());
 		}
 
         //Filter-creating logic
