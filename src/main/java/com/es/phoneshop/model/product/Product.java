@@ -2,7 +2,6 @@ package com.es.phoneshop.model.product;
 
 import com.es.phoneshop.model.historyRecord.HistoryRecord;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
