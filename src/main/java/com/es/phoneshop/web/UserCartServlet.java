@@ -58,7 +58,7 @@ public class UserCartServlet extends HttpServlet {
 		Long id = null;
 		int quantity = 0;
 
-		for(int i = 0; i < productIds.length; i++){
+		for(int i = 0; i < ((productIds == null) ? 0 : productIds.length); i++){
 			try{
 				id = Validator.validatingId(productIds[i]);
 				quantity = Validator.parsingQuantity(quantities[i], locale);

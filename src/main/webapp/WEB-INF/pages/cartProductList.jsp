@@ -12,9 +12,7 @@
       <td id="shell-td" rowspan="2" style="width:80%">
 
         <form method="get">
-          <input name="updating" value="true" type="hidden"/>
-          <button id="addToCart">Update</button>
-          <br />
+
           <table bgcolor="#f9f9f9" style="width:100%;">
             <thead>
               <tr>
@@ -74,6 +72,9 @@
               </td>
             </tr>
           </table>
+          <br />
+          <input name="updating" value="true" type="hidden"/>
+          <button id="addToCart">Update</button>
         </form>
         <form id="deleteCartItem" method="post">
         </form>
@@ -88,11 +89,11 @@
           </tr>
           <tr>
             <td bgcolor="#dde2e7" align="center">
-              Place for minicart
+              <jsp:include page="/products/cart/miniCart"/>
             </td>
           </tr>
           <tr>
-            <td id="shell-td" bgcolor="#e9eef1" align="center">
+            <td id="shell-td" bgcolor="#dde2e7" align="center">
               <%@ include file="recent.html"%>
             </td>
           </tr>

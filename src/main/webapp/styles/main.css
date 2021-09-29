@@ -19,6 +19,12 @@ table {
   border: 3px solid white;
 }
 
+table#minicart {
+  background-color: #ced5dc;
+  border-collapse: collapse;
+  border: 3px solid #b0bcc7;
+}
+
 table#shell {
   align-self: center;
   border-collapse: collapse;
@@ -31,6 +37,12 @@ td {
   padding: 5px;
   border: 3px solid white;
   vertical-align: top;
+}
+
+td#minicart-td{
+  border: 3px solid #dde2e7;
+  vertical-align: top;
+  width: 90%;
 }
 
 td#shell-td {

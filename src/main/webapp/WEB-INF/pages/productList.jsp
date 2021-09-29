@@ -63,7 +63,7 @@
             </td>
           </tr>
           <tr>
-            <td id="shell-td" bgcolor="#e9eef1" align="center">
+            <td id="shell-td" bgcolor="#dde2e7" align="center">
               <%@ include file="recent.html"%>
             </td>
           </tr>

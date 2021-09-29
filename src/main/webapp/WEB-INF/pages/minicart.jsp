@@ -4,10 +4,26 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <jsp:useBean id="miniCart" type="java.util.ArrayList" scope="session"/>
-Minicart:
-<c:forEach var="item" items="${miniCart}">
-  ${item.product.description} - ${item.quantity}
-</c:forEach>
+<h3>My Cart</h3>
+<table id="minicart">
+  <c:forEach var="item" items="${miniCart}">
+    <tr>
+      <td id="minicart-td" style="width: 35px;">
+        <img style="max-width: 30px;" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer${item.product.imageUrl}">
+      </td>
+      <td id="minicart-td">
+        ${item.product.description}
+      </td>
+      <td id="minicart-td">
+        ${item.quantity}
+      </td>
+    </tr>
+
+
+  </c:forEach>
+</table>
 <c:if test="${miniCartFull eq true}">
-  More...
+  <form action="${pageContext.servletContext.contextPath}/products/cart">
+  	<button>More...</button>
+  </form>
 </c:if>
