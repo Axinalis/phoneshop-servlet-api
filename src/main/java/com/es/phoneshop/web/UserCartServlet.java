@@ -63,8 +63,6 @@ public class UserCartServlet extends HttpServlet {
 				id = Validator.validatingId(productIds[i]);
 				quantity = Validator.parsingQuantity(quantities[i], locale);
 				cartService.update(id, quantity, cartService.getCart(request));
-			} catch(IllegalArgumentException ex){
-				throw ex;
 			} catch(ValidationException ex){
 				errors.put(id, ErrorResolver.getMessageFromState(ex.getMessage()) + " (not " + quantities[i] + ")");
 			}

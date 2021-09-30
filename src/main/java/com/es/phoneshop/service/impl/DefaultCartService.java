@@ -135,9 +135,13 @@ public class DefaultCartService implements CartService {
 			int count = existingItems.mapToInt(CartItem::getQuantity).sum();
 			{
 				existingItems.findFirst().get().setQuantity(count);
-				cart.getItems().removeIf(item -> (
-						product.getId().equals(item.getProduct().getId()))
-						&& item.getQuantity() != count);
+				cart.getItems().removeIf(item -> {
+					if(product.getId() == null){
+						return false;
+					} else {
+						return (product.getId().equals(item.getProduct().getId()) && item.getQuantity() != count);
+					}
+				});
 			}
 		} else{
 			existingItems.close();
@@ -151,7 +155,14 @@ public class DefaultCartService implements CartService {
 		Stream<CartItem> existingItem = cart
 				.getItems()
 				.stream()
-				.filter(item -> product.getId().equals(item.getProduct().getId()));
+				.filter(item -> {
+							if (product.getId() == null) {
+								return false;
+							} else {
+								return (product.getId().equals(item.getProduct().getId()));
+							}
+						}
+				);
 
 		return existingItem;
 	}

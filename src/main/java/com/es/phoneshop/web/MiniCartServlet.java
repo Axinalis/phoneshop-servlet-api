@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.es.phoneshop.constant.ConstantStrings.MINI_CART;
@@ -31,7 +32,8 @@ public class MiniCartServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<CartItem> miniCart = cartService.getCart(request).getItems();
         if(miniCart.size() > 3){
-            miniCart = miniCart.subList(0, 2);
+            miniCart.sort(Comparator.comparingInt(CartItem::getQuantity).reversed());
+            miniCart = miniCart.subList(0, 3);
             request.setAttribute(MINI_CART_FULL, "true");
         }
         request.setAttribute(MINI_CART, miniCart);
