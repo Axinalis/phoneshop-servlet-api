@@ -15,6 +15,9 @@ public class ConstantStrings {
     
     //For UserCartServlet
     public static final String CART_LIST = "cartList";
+    public static final String PRODUCT_ID = "productId";
+    public static final String UPDATING = "updating";
+    public static final String CART = "cart";
     
     //For ProductListPageServlet
     public static final String FIELD = "field";
@@ -27,4 +30,7 @@ public class ConstantStrings {
     public static final String OUT_OF_STOCK = "No enough products available";
     public static final String NEGATIVE_VALUE = "Enter a positive value";
 
+    //For MiniCartServlet
+    public static final String MINI_CART = "miniCart";
+    public static final String MINI_CART_FULL = "miniCartFull";
 }

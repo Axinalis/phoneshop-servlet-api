@@ -5,6 +5,7 @@
 
 <jsp:useBean id="products" type="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="recentlyViewed" type="com.es.phoneshop.model.viewsHistory.UserViewsHistory" scope="session"/>
+<jsp:useBean id="cart" type="com.es.phoneshop.model.cart.Cart" scope="session"/>
 <tags:master pageTitle="Product List">
   <table id="shell">
     <tr>
@@ -13,7 +14,7 @@
     -->
       <td id="shell-td" rowspan="2" style="width:80%">
 
-        <table  bgcolor="#f7fcfe" style="width:100%;">
+        <table  bgcolor="#f9f9f9" style="width:100%;">
           <thead>
             <tr>
               <td>Image</td>
@@ -47,16 +48,26 @@
             </tr>
           </c:forEach>
         </table>
-
       </td>
-      <td id="menu" bgcolor="#bcd1e7" align="center">
-          <tags:menu listIsActive="false" cartIsActive="true"/>
-        <br/>
-      </td>
-    </tr>
-    <tr>
-      <td id="shell-td" bgcolor="#cfdeee" align="center">
-        <%@ include file="recent.html"%>
+      <td>
+        <table>
+          <tr>
+            <td id="menu" bgcolor="#dde2e7" align="center">
+                <tags:menu/>
+              <br/>
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor="#dde2e7" align="center">
+                <jsp:include page="/products/cart/miniCart"/>
+            </td>
+          </tr>
+          <tr>
+            <td id="shell-td" bgcolor="#dde2e7" align="center">
+              <%@ include file="recent.html"%>
+            </td>
+          </tr>
+        </table>
       </td>
     </tr>
   </table>

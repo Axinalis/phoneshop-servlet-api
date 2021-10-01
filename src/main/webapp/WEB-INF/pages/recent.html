@@ -1,10 +1,10 @@
 <h3>
   Recently viewed
 </h3>
-<table id="shell">
+<table id="minicart">
   <c:forEach var="historyItem" items="${recentlyViewed.recentlyViewed}">
     <tr>
-      <td>
+      <td id="minicart-td">
         <p align="center">
           <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer${historyItem.imageUrl}">
         </p>

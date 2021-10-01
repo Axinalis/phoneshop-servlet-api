@@ -1,4 +1,4 @@
-package com.es.phoneshop.service.impl;
+package com.es.phoneshop.dao.impl;
 
 import java.util.Currency;
 

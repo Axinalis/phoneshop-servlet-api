@@ -1,6 +1,7 @@
 package com.es.phoneshop.web;
 
-import com.es.phoneshop.enums.ProductPageState;
+import com.es.phoneshop.constant.ConstantStrings;
+import com.es.phoneshop.enums.CartAddingState;
 import com.es.phoneshop.exception.ValidationException;
 import com.es.phoneshop.model.product.Product;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
@@ -8,7 +9,7 @@ import com.es.phoneshop.service.CartService;
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
 import com.es.phoneshop.service.impl.DefaultCartService;
-import com.es.phoneshop.validator.PageStateResolver;
+import com.es.phoneshop.validator.ErrorResolver;
 import com.es.phoneshop.validator.Validator;
 
 import javax.servlet.ServletConfig;
@@ -37,13 +38,12 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		super.init(config);
 		productDao = ArrayListProductDao.getInstance();
 		cartService = DefaultCartService.getInstance();
-
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long id;
-		String productId = request.getPathInfo();
+		String productId = request.getPathInfo().substring(1);
 		productDao = ArrayListProductDao.getInstance();
 		Product product;
 		UserViewsHistory history;
@@ -61,12 +61,13 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		String successParameter = request.getParameter(SUCCESS);
 		String errorParameter = request.getParameter(ERROR);
 		if(successParameter != null && !successParameter.equals("")){
-			request.setAttribute(SUCCESS, PageStateResolver.getMessageFromState(successParameter));
+			request.setAttribute(SUCCESS, ErrorResolver.getMessageFromState(successParameter));
 		}
 		if(errorParameter != null && !errorParameter.equals("")){
-			request.setAttribute(ERROR,	PageStateResolver.getMessageFromState(errorParameter));
+			request.setAttribute(ERROR,	ErrorResolver.getMessageFromState(errorParameter));
 		}
 
+		request.setAttribute(ConstantStrings.CART, cartService.getCart(request));
 		request.setAttribute("product", product);
 		request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp").forward(request, response);
 	}
@@ -76,13 +77,13 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		Long id;
 		int quantityInt;
 		String stateInfo;
-		String productId = request.getPathInfo();
+		String productId = request.getPathInfo().substring(1);
 		id = Validator.validatingId(productId);
 		
 		try {
 			quantityInt = Validator.parsingQuantity(request.getParameter(QUANTITY), request.getLocale());
-			cartService.add(id, quantityInt, request);
-			stateInfo = SUCCESS + "=" + ProductPageState.PRODUCT_ADDED.toString().toLowerCase();
+			cartService.add(id, quantityInt, cartService.getCart(request));
+			stateInfo = SUCCESS + "=" + CartAddingState.PRODUCT_ADDED.toString().toLowerCase();
 		} catch(ValidationException ex) {
 			stateInfo = ERROR + "=" + ex.getMessage().toLowerCase();
 		}
