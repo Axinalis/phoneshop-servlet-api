@@ -14,6 +14,8 @@
     -->
       <td id="shell-td" rowspan="2" style="width:80%">
 
+          <h3 align="center">List of products</h3>
+
         <table  bgcolor="#f9f9f9" style="width:100%;">
           <thead>
             <tr>

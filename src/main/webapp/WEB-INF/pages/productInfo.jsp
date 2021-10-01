@@ -12,6 +12,8 @@
       <!-- Main content -->
       <td id="shell-td" rowspan="2" style="width:80%">
 
+          <h3 align="center">Information about product</h3>
+
         <table id="shell">
           <tr>
             <td style="width:200px;">

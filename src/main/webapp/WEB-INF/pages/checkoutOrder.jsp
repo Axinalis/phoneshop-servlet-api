@@ -3,15 +3,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
-<jsp:useBean id="cart" type="com.es.phoneshop.model.cart.Cart" scope="session"/>
-<jsp:useBean id="recentlyViewed" type="com.es.phoneshop.model.viewsHistory.UserViewsHistory" scope="session"/>
-<tags:master pageTitle="My cart">
+<jsp:useBean id="order" type="com.es.phoneshop.model.order.Order" scope="request"/>
+<tags:master pageTitle="Checkout">
   <table id="shell">
     <tr>
       <!-- Main content -->
       <td id="shell-td" rowspan="2" style="width:80%">
 
-        <h3 align="center">My Cart</h3>
+        <h3 align="center">Checkout order</h3>
 
         <form method="get">
 
@@ -32,7 +31,7 @@
                 </td>
               </tr>
             </thead>
-            <c:forEach var="item" items="${cart.items}">
+            <c:forEach var="item" items="${order.items}">
               <tr>
                 <td>
                   <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer${item.product.imageUrl}"></td>
@@ -42,47 +41,49 @@
                     </a>
                   </td>
                   <td>
-                    <input name="quantity" value="${item.quantity}"/>
-                    <c:if test="${not empty errors[item.product.id]}">
-                      <p id="errorInfo">
-                        ${errors[item.product.id]}
-                      </p>
-                    </c:if>
-                    <input name="productId" value="${item.product.id}" type="hidden"/>
+                    ${item.quantity}
                   </td>
                   <td>
                     <a href="${pageContext.servletContext.contextPath}/products/history/${item.product.id}">
                       <fmt:formatNumber value="${item.product.price}" type="currency" currencySymbol="${item.product.currency.symbol}"/>
                     </a>
                   </td>
-                  <td>
-                    <button formaction="${pageContext.servletContext.contextPath}/products/cart/deleteCartItem/${item.product.id}" form="deleteCartItem">
-                      Delete
-                    </button>
-                  </td>
               </tr>
             </c:forEach>
+            <tr>
+              <td colspan="3">
+                Total cost of products
+              </td>
+              <td>
+                ${order.subTotal} $
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                Delivery cost
+              </td>
+              <td>
+                ${order.deliveryCost} $
+              </td>
+            </tr>
             <tr>
               <td colspan="2">
                 Summary
               </td>
               <td>
-                ${cart.totalQuantity}
+                ${order.totalQuantity}
               </td>
               <td>
-                ${cart.totalCost} $
+                ${order.totalCost} $
               </td>
             </tr>
+
           </table>
           <br />
           <input name="updating" value="true" type="hidden"/>
           <button id="addToCart">Update</button>
         </form>
         <form id="deleteCartItem" method="post">
-        </form>
-        <br/>
-        <form action="${pageContext.servletContext.contextPath}/products/order">
-          <button id="addToCart">Make an order</button>
         </form>
       </td>
       <td>

@@ -104,6 +104,12 @@ p#successInfo {
   font-style: italic;
 }
 
+p#pageName{
+  color: #2e5b8c;
+  font-size: 30px;
+  font-weight: bold;
+}
+
 a#headerText {
   color: #2e5b8c;
 }
@@ -113,7 +119,7 @@ a:visited#headerText {
 }
 
 a:active#headerText {
-  color: white;
+  color: #2e5b8c;
 }
 
 .price {

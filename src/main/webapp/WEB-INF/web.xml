@@ -65,6 +65,16 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>checkoutPage</servlet-name>
+    <servlet-class>com.es.phoneshop.web.CheckoutPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>checkoutPage</servlet-name>
+    <url-pattern>/products/order</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>DeleteCartItem</servlet-name>
     <servlet-class>com.es.phoneshop.web.DeleteCartItemServlet</servlet-class>
   </servlet>
