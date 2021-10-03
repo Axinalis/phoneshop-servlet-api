@@ -76,6 +76,59 @@
                 ${order.totalCost} $
               </td>
             </tr>
+            <tr>
+              <td colspan="4">
+                
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                First name
+              </td>
+              <td colspan="2">
+                ${order.firstName}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Last name
+              </td>
+              <td colspan="2">
+                ${order.lastName}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Phone number
+              </td>
+              <td colspan="2">
+                ${order.phone}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Date of delivery
+              </td>
+              <td colspan="2">
+                ${order.deliveryDate}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Address
+              </td>
+              <td colspan="2">
+                ${order.deliveryAddress}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Type of payment
+              </td>
+              <td colspan="2">
+                ${order.paymentType}
+              </td>
+            </tr>
 
           </table>
           <br />
@@ -91,12 +144,21 @@
                   <button id="addToCart">Place an order</button>
                 </a>
               </td>
+              <td>
+                <a href="${pageContext.servletContext.contextPath}/products/order/filling-details">
+                  <button id="addToCart">Back to info</button>
+                </a>
+              </td>
             </tr>
           </table>
         <form id="deleteCartItem" method="post">
         </form>
-      </td>
+
+      <table align="center" id="shell" style="width:40%">
+
+      </table>
       <td>
+
         <table>
           <tr>
             <td id="menu" bgcolor="#dde2e7" align="center">

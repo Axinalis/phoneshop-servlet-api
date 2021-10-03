@@ -33,4 +33,23 @@ public class ConstantStrings {
     //For MiniCartServlet
     public static final String MINI_CART = "miniCart";
     public static final String MINI_CART_FULL = "miniCartFull";
+
+    //For PersonalDetailsServlet
+    public static final String FIRST_NAME = "firstName";
+    public static final String LAST_NAME = "lastName";
+    public static final String PHONE_NUMBER = "phoneNumber";
+    public static final String DELIVERY_DATE = "deliveryDate";
+    public static final String ADDRESS = "address";
+    public static final String PAYMENT_TYPE = "paymentType";
+    public static final String PHONE_NUMBER_INCORRECT = "Phone number is incorrect";
+    public static final String DATE_INCORRECT = "Date is incorrect";
+    public static final String DATE_WRONG = "Date is in the past";
+    public static final String DATE_EMPTY = "Date is not choosed";
+    public static final String PAYMENT_TYPE_INCORRECT = "Payment type is incorrect";
+    public static final String ERRORS = "errors";
+    public static final String VALUES = "values";
+
+    //Types of payment
+    public static final String BY_CACHE = "By cache";
+    public static final String VIA_CREDIT_CARD = "Via credit card";
 }

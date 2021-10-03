@@ -34,12 +34,17 @@ public class DefaultOrderService implements OrderService {
     public Order getOrder(Cart cart) {
         Order order = new Order(cart);
         order.setSubTotal(cart.getTotalCost());
-        order.setDeliveryCost(calculateDeliveryCost());
+        order.setDeliveryCost(calculateDeliveryCost(cart));
         order.setTotalCost(order.getSubTotal().add(order.getDeliveryCost()));
         return order;
     }
 
-    private BigDecimal calculateDeliveryCost(){
-        return new BigDecimal(10);
+    private BigDecimal calculateDeliveryCost(Cart cart){
+        if(cart.getTotalCost().compareTo(new BigDecimal(500)) == -1){
+            return new BigDecimal(10);
+        } else {
+            return new BigDecimal(0);
+        }
+
     }
 }

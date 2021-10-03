@@ -76,13 +76,13 @@
           </table>
           <br />
           <input name="updating" value="true" type="hidden"/>
-          <button id="addToCart">Update</button>
+          <button style="background: #79a3d0;color: white;font-size: 10pt;width: 100%;border-radius: 5px;border: 0px;height: 30px;font-weight: bold;">Update</button>
         </form>
         <form id="deleteCartItem" method="post">
         </form>
         <br/>
         <form action="${pageContext.servletContext.contextPath}/products/order">
-          <button id="addToCart">Make an order</button>
+          <button id="addToCart">Order is ready</button>
         </form>
       </td>
       <td>

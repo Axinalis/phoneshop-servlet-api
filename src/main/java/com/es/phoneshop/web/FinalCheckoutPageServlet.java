@@ -14,15 +14,15 @@ import java.io.IOException;
 
 import static com.es.phoneshop.constant.ConstantStrings.ORDER;
 
-@WebServlet("/CheckoutPageServlet")
-public class CheckoutPageServlet extends HttpServlet {
+@WebServlet("/FinalCheckoutPageServlet")
+public class FinalCheckoutPageServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
     private CartService cartService;
     private OrderService orderService;
 
-    public CheckoutPageServlet() {
+    public FinalCheckoutPageServlet() {
         cartService = DefaultCartService.getInstance();
         orderService = DefaultOrderService.getInstance();
     }
@@ -34,7 +34,9 @@ public class CheckoutPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().setAttribute(ORDER, orderService.getOrder(cartService.getCart(request)));
-        request.getRequestDispatcher("/WEB-INF/pages/checkoutOrder.jsp").forward(request, response);
+        if(request.getSession().getAttribute(ORDER) == null){
+            response.sendError(404);
+        }
+        request.getRequestDispatcher("/WEB-INF/pages/finalCheckoutOrder.jsp").forward(request, response);
     }
 }

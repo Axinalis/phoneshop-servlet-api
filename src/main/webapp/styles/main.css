@@ -67,7 +67,7 @@ button#addToCart {
   width: 100%;
   border-radius: 5px;
   border: 0px;
-  height: 30px;
+  height: 50px;
   font-weight: bold;
 }
 
@@ -76,6 +76,17 @@ button#menuButton {
   color: #1c426b;
   font-size: 10pt;
   width: 80%;
+  border-radius: 5px;
+  border: 0px;
+  height: 30px;
+  font-weight: bold;
+}
+
+button#updateButton {
+  background: #79a3d0;
+  color: white;
+  font-size: 10pt;
+  width: 100%;
   border-radius: 5px;
   border: 0px;
   height: 30px;

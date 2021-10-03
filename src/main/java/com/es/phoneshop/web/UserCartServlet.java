@@ -42,7 +42,7 @@ public class UserCartServlet extends HttpServlet {
 			updateCart(request, response);
 		}
 		Cart cart = cartService.getCart(request);
-		request.setAttribute(ConstantStrings.CART, cart);
+		request.getSession().setAttribute(ConstantStrings.CART, cart);
 		request.getRequestDispatcher("/WEB-INF/pages/cartProductList.jsp").forward(request, response);
 	}
 
