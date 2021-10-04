@@ -53,7 +53,7 @@ public class ProductListPageServlet extends HttpServlet {
         //Filter-creating logic
         FilterCreator creator = new FilterCreator();
         creator.setQuery(request.getParameter(ConstantStrings.QUERY));
-        creator.setSorting(request.getParameter(ConstantStrings.FIELD), request.getParameter(ConstantStrings.ORDER));
+        creator.setSorting(request.getParameter(ConstantStrings.FIELD), request.getParameter(ConstantStrings.CURRENT_ORDER));
         
     	request.setAttribute("products", productDao.findProducts(creator.createFilter()));
     	request.setAttribute(ConstantStrings.CART, cartService.getCart(request));

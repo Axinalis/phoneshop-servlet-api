@@ -134,6 +134,16 @@
     <url-pattern>/products/order/delete/*</url-pattern>
   </servlet-mapping>
 
+  <filter>
+    <filter-name>dosFilter</filter-name>
+    <filter-class>com.es.phoneshop.web.filters.DosFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <servlet-name>dosFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <error-page>
   	<location>/WEB-INF/pages/productNotFoundError.jsp</location>
   	<exception-type>com.es.phoneshop.exception.ProductNotFoundException</exception-type>

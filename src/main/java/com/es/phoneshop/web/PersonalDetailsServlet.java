@@ -35,8 +35,8 @@ public class PersonalDetailsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getSession().getAttribute(ORDER) == null){
-            request.getSession().setAttribute(ORDER, orderService.getOrder(cartService.getCart(request)));
+        if(request.getSession().getAttribute(CURRENT_ORDER) == null){
+            request.getSession().setAttribute(CURRENT_ORDER, orderService.getOrder(cartService.getCart(request)));
         }
         request.setAttribute(PAYMENT_TYPES, orderService.getPaymentTypes());
         request.getRequestDispatcher("/WEB-INF/pages/personalDataForOrder.jsp").forward(request, response);
@@ -44,11 +44,11 @@ public class PersonalDetailsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getSession().getAttribute(ORDER) == null){
-            request.getSession().setAttribute(ORDER, orderService.getOrder(cartService.getCart(request)));
+        if(request.getSession().getAttribute(CURRENT_ORDER) == null){
+            request.getSession().setAttribute(CURRENT_ORDER, orderService.getOrder(cartService.getCart(request)));
         }
         request.setAttribute(PAYMENT_TYPES, orderService.getPaymentTypes());
-        Order order = (Order)request.getSession().getAttribute(ORDER);
+        Order order = (Order)request.getSession().getAttribute(CURRENT_ORDER);
         Map<String, String> errors = new HashMap<>();
         Map<String, String> values = new HashMap<>();
         LocalDate deliveryDate = null;
@@ -88,7 +88,7 @@ public class PersonalDetailsServlet extends HttpServlet {
         putNotError(PAYMENT_TYPE, errors, order, paymentType);
 
         if(errors.size() == 0){
-            response.sendRedirect("/phoneshop-servlet-api/products/order/finalCheckout");
+            response.sendRedirect(PROJECT_NAME + "/products/order/finalCheckout");
         } else {
             request.setAttribute(ERRORS, errors);
             request.setAttribute(VALUES, values);

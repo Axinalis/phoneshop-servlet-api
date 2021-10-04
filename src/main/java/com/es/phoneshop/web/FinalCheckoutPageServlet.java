@@ -40,32 +40,31 @@ public class FinalCheckoutPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getSession().getAttribute(ORDER) == null){
+        if(request.getSession().getAttribute(CURRENT_ORDER) == null){
             response.sendError(404);
         }
         request.setAttribute(PAYMENT_TYPE, PaymentTypeResolver
                 .GetMessageFromType(((Order)request
                         .getSession()
-                        .getAttribute(ORDER))
+                        .getAttribute(CURRENT_ORDER))
                         .getPaymentType()));
 
-        if("true".equals(request.getParameter(ORDER_PLACED))){
-            request.setAttribute(ORDER_PLACED, "true");
-        }
         request.getRequestDispatcher("/WEB-INF/pages/finalCheckoutOrder.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Order order = (Order) request.getSession().getAttribute(CURRENT_ORDER);
         try{
-            orderService.placeOrder((Order) request.getSession().getAttribute(ORDER));
+            orderService.placeOrder(order);
         } catch (IllegalArgumentException | OrderNotFoundException ex){
             response.sendError(404);
         }
         List<Order> orders = (ArrayList)request.getSession().getAttribute(STRING_SESSION_ATTRIBUTE_ORDER);
-        orders.add((Order) request.getSession().getAttribute(ORDER));
+        orders.add(order);
         request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_ORDER, orders);
         request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
-        response.sendRedirect(PROJECT_NAME + "/products/order/finalCheckout?orderPlaced=true");
+        request.getSession().removeAttribute(CURRENT_ORDER);
+        response.sendRedirect(PROJECT_NAME + "/products/order/overview/" + order.getSecureId() + "?orderPlaced=true");
     }
 }

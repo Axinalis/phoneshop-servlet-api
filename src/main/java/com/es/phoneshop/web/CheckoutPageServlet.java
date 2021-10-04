@@ -39,7 +39,7 @@ public class CheckoutPageServlet extends HttpServlet {
         if(cart == null || cart.getItems() == null || cart.getItems().size() < 1){
             response.sendRedirect(PROJECT_NAME + "/products/cart");
         } else {
-            request.getSession().setAttribute(ORDER, orderService.getOrder(cartService.getCart(request)));
+            request.getSession().setAttribute(CURRENT_ORDER, orderService.getOrder(cartService.getCart(request)));
             request.getRequestDispatcher("/WEB-INF/pages/checkoutOrder.jsp").forward(request, response);
         }
     }

@@ -23,7 +23,7 @@ public class ConstantStrings {
     
     //For ProductListPageServlet
     public static final String FIELD = "field";
-    public static final String ORDER = "order";
+    public static final String CURRENT_ORDER = "order";
     public static final String QUERY = "query";
 
     //Messages for users

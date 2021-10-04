@@ -1,7 +1,6 @@
 package com.es.phoneshop.web;
 
 import com.es.phoneshop.exception.OrderNotFoundException;
-import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.order.Order;
 import com.es.phoneshop.service.CartService;
 import com.es.phoneshop.service.OrderService;
@@ -15,8 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.es.phoneshop.constant.ConstantStrings.*;
 
@@ -48,7 +45,13 @@ public class OverviewPageServlet extends HttpServlet {
             response.sendError(404);
         }
 
-        request.setAttribute(ORDER, order);
+        if("true".equals(request.getParameter(ORDER_PLACED))){
+            request.setAttribute(ORDER_PLACED, "true");
+        }
+        request.setAttribute(PAYMENT_TYPE, PaymentTypeResolver
+                .GetMessageFromType(order
+                        .getPaymentType()));
+        request.setAttribute(CURRENT_ORDER, order);
         request.getRequestDispatcher("/WEB-INF/pages/overviewOrder.jsp").forward(request, response);
     }
 }

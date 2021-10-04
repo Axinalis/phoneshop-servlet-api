@@ -132,11 +132,6 @@
 
           </table>
           <br />
-          <c:if test="${not empty orderPlaced}">
-            <p id="successInfo">
-              Order successfully placed!
-            </p>
-          </c:if>
 
           <table style="width:100%;">
             <tr>
