@@ -38,10 +38,10 @@ public class UserCartServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if("true".equals(request.getParameter(UPDATING))){
+		Cart cart = cartService.getCart(request);
+		if("true".equals(request.getParameter(UPDATING)) && cart.getItems().size() > 0){
 			updateCart(request);
 		}
-		Cart cart = cartService.getCart(request);
 		request.setAttribute(ConstantStrings.CART, cart);
 		request.getRequestDispatcher("/WEB-INF/pages/cartProductList.jsp").forward(request, response);
 	}

@@ -1,11 +1,13 @@
 package com.es.phoneshop.constant;
 
 import com.es.phoneshop.service.impl.DefaultCartService;
+import com.es.phoneshop.service.impl.DefaultOrderService;
 
 public class ConstantStrings {
 
 	//For DefaultCartService
 	public static final String STRING_SESSION_ATTRIBUTE_CART = DefaultCartService.getInstance().getClass().toString().split(" ")[1] + ".cart";
+	public static final String STRING_SESSION_ATTRIBUTE_ORDER = DefaultOrderService.getInstance().getClass().toString().split(" ")[1] + ".cart";
 	public static final String SUCCESS = "success";
 	
 	//For ProductDetailsPageServlet
@@ -59,6 +61,9 @@ public class ConstantStrings {
 
     //For FinalCheckoutPageServlet
     public static final String ORDER_PLACED = "orderPlaced";
+
+    //For UserOrdersServlet
+    public static final String ORDERS_LIST = "ordersList";
 
     public static final String PROJECT_NAME = "/phoneshop-servlet-api";
 }

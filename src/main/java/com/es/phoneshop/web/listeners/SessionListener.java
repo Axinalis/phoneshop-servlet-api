@@ -1,14 +1,13 @@
 package com.es.phoneshop.web.listeners;
 
+import com.es.phoneshop.model.cart.Cart;
+import com.es.phoneshop.model.cart.CartItem;
+import com.es.phoneshop.model.order.Order;
+import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
+
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-
-import com.es.phoneshop.constant.ConstantStrings;
-import com.es.phoneshop.model.cart.Cart;
-import com.es.phoneshop.model.cart.CartItem;
-import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
-
 import java.util.ArrayList;
 
 import static com.es.phoneshop.constant.ConstantStrings.*;
@@ -23,6 +22,7 @@ public class SessionListener implements HttpSessionListener {
     	se.getSession().setAttribute(RECENTLY_VIEWED, new UserViewsHistory());
     	se.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
     	se.getSession().setAttribute(MINI_CART, new ArrayList<CartItem>());
+    	se.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_ORDER, new ArrayList<Order>());
     }
 
     public void sessionDestroyed(HttpSessionEvent se)  { 

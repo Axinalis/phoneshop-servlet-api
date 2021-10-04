@@ -1,7 +1,5 @@
 package com.es.phoneshop.web;
 
-import com.es.phoneshop.dao.OrderDao;
-import com.es.phoneshop.dao.impl.ArrayListOrderDao;
 import com.es.phoneshop.exception.OrderNotFoundException;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.order.Order;
@@ -17,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.es.phoneshop.constant.ConstantStrings.*;
 
@@ -27,12 +27,10 @@ public class FinalCheckoutPageServlet extends HttpServlet {
 
     private CartService cartService;
     private OrderService orderService;
-    private OrderDao orderDao;
 
     public FinalCheckoutPageServlet() {
         cartService = DefaultCartService.getInstance();
         orderService = DefaultOrderService.getInstance();
-        orderDao = ArrayListOrderDao.getInstance();
     }
 
     @Override
@@ -60,10 +58,13 @@ public class FinalCheckoutPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            orderDao.save((Order) request.getSession().getAttribute(ORDER));
+            orderService.placeOrder((Order) request.getSession().getAttribute(ORDER));
         } catch (IllegalArgumentException | OrderNotFoundException ex){
             response.sendError(404);
         }
+        List<Order> orders = (ArrayList)request.getSession().getAttribute(STRING_SESSION_ATTRIBUTE_ORDER);
+        orders.add((Order) request.getSession().getAttribute(ORDER));
+        request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_ORDER, orders);
         request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
         response.sendRedirect(PROJECT_NAME + "/products/order/finalCheckout?orderPlaced=true");
     }

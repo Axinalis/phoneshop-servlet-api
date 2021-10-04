@@ -13,3 +13,6 @@
 <form action="${pageContext.servletContext.contextPath}/products/cart">
 	<button id="menuButton">My Cart</button>
 </form>
+<form action="${pageContext.servletContext.contextPath}/products/order/overview">
+	<button id="menuButton">My Orders</button>
+</form>

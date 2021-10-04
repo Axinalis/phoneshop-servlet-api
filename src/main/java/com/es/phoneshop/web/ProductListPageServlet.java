@@ -6,6 +6,7 @@ import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.cart.CartItem;
+import com.es.phoneshop.model.order.Order;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 import com.es.phoneshop.service.CartService;
 import com.es.phoneshop.service.impl.DefaultCartService;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.es.phoneshop.constant.ConstantStrings.MINI_CART;
+import static com.es.phoneshop.constant.ConstantStrings.STRING_SESSION_ATTRIBUTE_ORDER;
 
 public class ProductListPageServlet extends HttpServlet {
 	
@@ -43,6 +45,9 @@ public class ProductListPageServlet extends HttpServlet {
 		}
 		if(request.getSession().getAttribute(MINI_CART) == null){
 			request.getSession().setAttribute(MINI_CART, new ArrayList<CartItem>());
+		}
+		if(request.getSession().getAttribute(STRING_SESSION_ATTRIBUTE_ORDER) == null){
+			request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_ORDER, new ArrayList<Order>());
 		}
 
         //Filter-creating logic
