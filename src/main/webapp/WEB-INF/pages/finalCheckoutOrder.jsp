@@ -78,7 +78,7 @@
             </tr>
             <tr>
               <td colspan="4">
-                
+
               </td>
             </tr>
             <tr>
@@ -126,12 +126,18 @@
                 Type of payment
               </td>
               <td colspan="2">
-                ${order.paymentType}
+                ${paymentType}
               </td>
             </tr>
 
           </table>
           <br />
+          <c:if test="${not empty orderPlaced}">
+            <p id="successInfo">
+              Order successfully placed!
+            </p>
+          </c:if>
+
           <table style="width:100%;">
             <tr>
               <td>
@@ -139,11 +145,13 @@
                   <button id="addToCart">Back to my cart</button>
                 </a>
               </td>
-              <td>
-                <a href="${pageContext.servletContext.contextPath}/products/order/filling-details">
-                  <button id="addToCart">Place an order</button>
-                </a>
-              </td>
+              <c:if test="${empty orderPlaced}">
+                <td>
+                  <form action="${pageContext.servletContext.contextPath}/products/order/finalCheckout" method="post">
+                    <button id="addToCart">Place an order</button>
+                  </form>
+                </td>
+              </c:if>
               <td>
                 <a href="${pageContext.servletContext.contextPath}/products/order/filling-details">
                   <button id="addToCart">Back to info</button>

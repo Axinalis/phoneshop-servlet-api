@@ -1,10 +1,7 @@
 package com.es.phoneshop.web;
 
-import static com.es.phoneshop.constant.ConstantStrings.*;
-
 import com.es.phoneshop.enums.PaymentMethodType;
 import com.es.phoneshop.exception.PersonalInfoParsingException;
-import com.es.phoneshop.exception.ValidationException;
 import com.es.phoneshop.model.order.Order;
 import com.es.phoneshop.service.CartService;
 import com.es.phoneshop.service.OrderService;
@@ -18,12 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.es.phoneshop.constant.ConstantStrings.*;
 
 @WebServlet("/PersonalDetailsServlet")
 public class PersonalDetailsServlet extends HttpServlet {
@@ -42,8 +38,8 @@ public class PersonalDetailsServlet extends HttpServlet {
         if(request.getSession().getAttribute(ORDER) == null){
             request.getSession().setAttribute(ORDER, orderService.getOrder(cartService.getCart(request)));
         }
+        request.setAttribute(PAYMENT_TYPES, orderService.getPaymentTypes());
         request.getRequestDispatcher("/WEB-INF/pages/personalDataForOrder.jsp").forward(request, response);
-
     }
 
     @Override
@@ -51,6 +47,7 @@ public class PersonalDetailsServlet extends HttpServlet {
         if(request.getSession().getAttribute(ORDER) == null){
             request.getSession().setAttribute(ORDER, orderService.getOrder(cartService.getCart(request)));
         }
+        request.setAttribute(PAYMENT_TYPES, orderService.getPaymentTypes());
         Order order = (Order)request.getSession().getAttribute(ORDER);
         Map<String, String> errors = new HashMap<>();
         Map<String, String> values = new HashMap<>();
@@ -91,7 +88,7 @@ public class PersonalDetailsServlet extends HttpServlet {
         putNotError(PAYMENT_TYPE, errors, order, paymentType);
 
         if(errors.size() == 0){
-            request.getRequestDispatcher("/WEB-INF/pages/finalCheckoutOrder.jsp").forward(request, response);
+            response.sendRedirect("/phoneshop-servlet-api/products/order/finalCheckout");
         } else {
             request.setAttribute(ERRORS, errors);
             request.setAttribute(VALUES, values);

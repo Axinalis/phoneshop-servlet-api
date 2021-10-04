@@ -39,10 +39,10 @@ public class UserCartServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if("true".equals(request.getParameter(UPDATING))){
-			updateCart(request, response);
+			updateCart(request);
 		}
 		Cart cart = cartService.getCart(request);
-		request.getSession().setAttribute(ConstantStrings.CART, cart);
+		request.setAttribute(ConstantStrings.CART, cart);
 		request.getRequestDispatcher("/WEB-INF/pages/cartProductList.jsp").forward(request, response);
 	}
 
@@ -50,7 +50,7 @@ public class UserCartServlet extends HttpServlet {
     	doGet(request, response);
 	}
 
-	private void updateCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+	private void updateCart(HttpServletRequest request) throws IOException, ServletException{
 		String[] productIds = request.getParameterValues(PRODUCT_ID);
 		String[] quantities = request.getParameterValues(QUANTITY);
 		Locale locale = request.getLocale();

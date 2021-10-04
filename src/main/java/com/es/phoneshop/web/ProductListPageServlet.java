@@ -38,8 +38,8 @@ public class ProductListPageServlet extends HttpServlet {
     	if(request.getSession().getAttribute(ConstantStrings.RECENTLY_VIEWED) == null) {
     		request.getSession().setAttribute(ConstantStrings.RECENTLY_VIEWED, new UserViewsHistory());
     	}
-		if(request.getSession().getAttribute(ConstantStrings.CART) == null) {
-			request.getSession().setAttribute(ConstantStrings.CART, new Cart());
+		if(request.getSession().getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART) == null) {
+			request.getSession().setAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART, new Cart());
 		}
 		if(request.getSession().getAttribute(MINI_CART) == null){
 			request.getSession().setAttribute(MINI_CART, new ArrayList<CartItem>());
@@ -51,7 +51,7 @@ public class ProductListPageServlet extends HttpServlet {
         creator.setSorting(request.getParameter(ConstantStrings.FIELD), request.getParameter(ConstantStrings.ORDER));
         
     	request.setAttribute("products", productDao.findProducts(creator.createFilter()));
-    	request.setAttribute(ConstantStrings.CART, cartService.getCart(request) == null ? new Cart() : cartService.getCart(request));
+    	request.setAttribute(ConstantStrings.CART, cartService.getCart(request));
         request.getRequestDispatcher("/WEB-INF/pages/productList.jsp").forward(request, response);
     }
 

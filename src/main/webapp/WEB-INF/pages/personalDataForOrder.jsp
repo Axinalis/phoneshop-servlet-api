@@ -4,6 +4,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <jsp:useBean id="order" type="com.es.phoneshop.model.order.Order" scope="session"/>
+<jsp:useBean id="paymentTypes" type="java.util.ArrayList" scope="request"/>
 <tags:master pageTitle="Order details">
   <p>
     <h3 align="center">Order details</h3>
@@ -82,12 +83,11 @@
       </td>
       <td>
         <select name="paymentType">
-          <option>
-            By cache
-          </option>
-          <option>
-            Via credit card
-          </option>
+          <c:forEach var="type" items="${paymentTypes}">
+            <option>
+              ${type}
+            </option>
+          </c:forEach>
         </select>
       </td>
     </tr>

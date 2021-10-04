@@ -12,6 +12,13 @@ public class Order extends Cart {
     private BigDecimal subTotal;
     private BigDecimal deliveryCost;
 
+    public Order() {
+    }
+
+    public Order(Cart cart) {
+        super(cart);
+    }
+
     public Long getId() {
         return id;
     }
@@ -74,13 +81,6 @@ public class Order extends Cart {
     private LocalDate deliveryDate;
     private String deliveryAddress;
     private PaymentMethodType paymentType;
-
-    public Order() {
-    }
-
-    public Order(Cart cart) {
-        super(cart);
-    }
 
     public BigDecimal getSubTotal() {
         return subTotal;

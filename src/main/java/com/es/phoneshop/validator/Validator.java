@@ -81,13 +81,11 @@ public class Validator {
 	}
 
 	public static PaymentMethodType parsingPaymentType(String rawType){
-		if(rawType != null && rawType.equals(BY_CACHE)){
-			return PaymentMethodType.CACHE;
+		PaymentMethodType type = PaymentTypeResolver.GetTypeFromMessage(rawType);
+		if(type == null){
+			throw new PersonalInfoParsingException(PAYMENT_TYPE_INCORRECT);
 		}
-		if(rawType != null && rawType.equals(VIA_CREDIT_CARD)){
-			return PaymentMethodType.CREDIT_CARD;
-		}
-		throw new PersonalInfoParsingException(PAYMENT_TYPE_INCORRECT);
+		return type;
 	}
 
 }

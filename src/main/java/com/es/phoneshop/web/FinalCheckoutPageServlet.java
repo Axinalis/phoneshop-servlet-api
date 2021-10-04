@@ -1,9 +1,15 @@
 package com.es.phoneshop.web;
 
+import com.es.phoneshop.dao.OrderDao;
+import com.es.phoneshop.dao.impl.ArrayListOrderDao;
+import com.es.phoneshop.exception.OrderNotFoundException;
+import com.es.phoneshop.model.cart.Cart;
+import com.es.phoneshop.model.order.Order;
 import com.es.phoneshop.service.CartService;
 import com.es.phoneshop.service.OrderService;
 import com.es.phoneshop.service.impl.DefaultCartService;
 import com.es.phoneshop.service.impl.DefaultOrderService;
+import com.es.phoneshop.validator.PaymentTypeResolver;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.es.phoneshop.constant.ConstantStrings.ORDER;
+import static com.es.phoneshop.constant.ConstantStrings.*;
 
 @WebServlet("/FinalCheckoutPageServlet")
 public class FinalCheckoutPageServlet extends HttpServlet {
@@ -21,10 +27,12 @@ public class FinalCheckoutPageServlet extends HttpServlet {
 
     private CartService cartService;
     private OrderService orderService;
+    private OrderDao orderDao;
 
     public FinalCheckoutPageServlet() {
         cartService = DefaultCartService.getInstance();
         orderService = DefaultOrderService.getInstance();
+        orderDao = ArrayListOrderDao.getInstance();
     }
 
     @Override
@@ -37,6 +45,26 @@ public class FinalCheckoutPageServlet extends HttpServlet {
         if(request.getSession().getAttribute(ORDER) == null){
             response.sendError(404);
         }
+        request.setAttribute(PAYMENT_TYPE, PaymentTypeResolver
+                .GetMessageFromType(((Order)request
+                        .getSession()
+                        .getAttribute(ORDER))
+                        .getPaymentType()));
+
+        if("true".equals(request.getParameter(ORDER_PLACED))){
+            request.setAttribute(ORDER_PLACED, "true");
+        }
         request.getRequestDispatcher("/WEB-INF/pages/finalCheckoutOrder.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            orderDao.save((Order) request.getSession().getAttribute(ORDER));
+        } catch (IllegalArgumentException | OrderNotFoundException ex){
+            response.sendError(404);
+        }
+        request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
+        response.sendRedirect(PROJECT_NAME + "/products/order/finalCheckout?orderPlaced=true");
     }
 }

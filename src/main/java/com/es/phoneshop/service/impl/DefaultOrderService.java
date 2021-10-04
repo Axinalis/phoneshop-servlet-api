@@ -2,11 +2,16 @@ package com.es.phoneshop.service.impl;
 
 import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
+import com.es.phoneshop.enums.PaymentMethodType;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.order.Order;
 import com.es.phoneshop.service.OrderService;
+import com.es.phoneshop.validator.PaymentTypeResolver;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DefaultOrderService implements OrderService {
 
@@ -37,6 +42,14 @@ public class DefaultOrderService implements OrderService {
         order.setDeliveryCost(calculateDeliveryCost(cart));
         order.setTotalCost(order.getSubTotal().add(order.getDeliveryCost()));
         return order;
+    }
+
+    @Override
+    public List<String> getPaymentTypes() {
+        return Arrays.asList(PaymentMethodType.values())
+                .stream()
+                .map(PaymentTypeResolver::GetMessageFromType)
+                .collect(Collectors.toList());
     }
 
     private BigDecimal calculateDeliveryCost(Cart cart){
