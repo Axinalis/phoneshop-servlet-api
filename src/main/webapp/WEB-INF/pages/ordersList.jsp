@@ -16,7 +16,7 @@
           <table style="width:100%;">
             <thead>
               <tr>
-                <td style="width:64px;">
+                <td style="width:40%;">
                   Order ID
                 </td>
                 <td>

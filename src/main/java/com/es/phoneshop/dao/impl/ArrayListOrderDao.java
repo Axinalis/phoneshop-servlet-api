@@ -21,7 +21,7 @@ public class ArrayListOrderDao implements OrderDao {
         orders = new ArrayList<Order>();
         this.readWriteLock = new ReentrantReadWriteLock();
         if(maxId == null) {
-            maxId = (long) orders.size() + 1;
+            maxId = 1L;
         }
     }
 
@@ -65,7 +65,7 @@ public class ArrayListOrderDao implements OrderDao {
         if (order == null) {
             throw new IllegalArgumentException("Order is null");
         }
-        List<Order> sameIdOrders;
+        Order sameIdOrder;
 
         try{
             readWriteLock.writeLock().lock();
@@ -73,14 +73,11 @@ public class ArrayListOrderDao implements OrderDao {
                 order.setId(maxId++);
                 orders.add(order);
             } else {
-                sameIdOrders = orders.stream()
+                sameIdOrder = orders.stream()
                         .filter(o -> order.getId().equals(o.getId()))
-                        .collect(Collectors.toList());
-                if(sameIdOrders.size() < 1){
-                    throw new OrderNotFoundException("No orders with current id were found");
-                } else {
-                    orders.set(orders.indexOf(sameIdOrders.get(0)), order);
-                }
+                        .findFirst()
+                        .orElseThrow(() -> new OrderNotFoundException("No orders with current id were found"));
+                orders.set(orders.indexOf(sameIdOrder), order);
             }
         } finally {
             readWriteLock.writeLock().unlock();

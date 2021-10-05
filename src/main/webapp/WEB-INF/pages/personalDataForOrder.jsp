@@ -93,10 +93,10 @@
     </tr>
     <tr>
       <td>
-        <button style="width:100%" formaction="${pageContext.servletContext.contextPath}/products/cart">Back to cart</button>
+        <button id="supportButton" style="width:100%" formaction="${pageContext.servletContext.contextPath}/products/cart">Back to cart</button>
       </td>
       <td>
-        <button style="width:100%">Place an order</button>
+        <button id="addToCart" style="width:100%">Place an order</button>
       </td>
     </tr>
   </table>

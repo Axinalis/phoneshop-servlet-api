@@ -143,12 +143,12 @@
             <tr>
               <td>
                 <a href="${pageContext.servletContext.contextPath}/products/order/overview">
-                  <button id="addToCart">Back to orders</button>
+                  <button id="supportButton">Back to orders</button>
                 </a>
               </td>
               <td>
                 <form action="${pageContext.servletContext.contextPath}/products/order/delete/${order.secureId}" method="post">
-                  <button id="addToCart">Delete order</button>
+                  <button id="dangerAction">Delete order</button>
                 </form>
               </td>
             </tr>

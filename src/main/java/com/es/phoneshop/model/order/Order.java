@@ -23,7 +23,7 @@ public class Order extends Cart {
     public Order() {
     }
 
-    public Order(Cart cart) {
+    public Order(Cart cart) throws CloneNotSupportedException {
         super(cart);
     }
 

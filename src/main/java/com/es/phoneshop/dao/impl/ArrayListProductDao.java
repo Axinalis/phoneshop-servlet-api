@@ -24,7 +24,7 @@ public class ArrayListProductDao implements ProductDao {
 		products = new ArrayList<Product>();
 		this.readWriteLock = new ReentrantReadWriteLock();
 		if(maxId == null) {
-			maxId = (long) products.size() + 1;
+			maxId = 1L;
 		}
 	}
 	
@@ -74,8 +74,7 @@ public class ArrayListProductDao implements ProductDao {
         				if(filter.getQueryWords().size() == 0) {
         					return true;
         				} else {
-        					return FilterMatcher.percentOfWords(p, filter) > 0 ?
-        		    				true : false;
+        					return FilterMatcher.percentOfWords(p, filter) > 0;
         				}})
         			.sorted((p1, p2) -> {
         			return SortingComparator.sortProducts(p1, p2, filter);
@@ -92,21 +91,18 @@ public class ArrayListProductDao implements ProductDao {
     	if (product == null) {
     		throw new IllegalArgumentException("Product is null");
     	}
-    	List<Product> sameIdProducts;
+    	Product sameIdProduct;
 
     	try {
     		readWriteLock.writeLock().lock();
         	if (product.getId() == null) {
         		products.add(new Product(maxId++, product));
         	} else {
-        		sameIdProducts = products.stream()
+        		sameIdProduct = products.stream()
             			.filter(p -> product.getId().equals(p.getId()))
-            			.collect(Collectors.toList());
-            	if (sameIdProducts.size() < 1) {
-            		throw new ProductNotFoundException("No products with current id were found");
-            	} else {
-            		products.set(products.indexOf(sameIdProducts.get(0)), product);
-        		}
+						.findFirst()
+						.orElseThrow(() -> new ProductNotFoundException("No products with current id were found"));
+        		products.set(products.indexOf(sameIdProduct), product);
         	}
     	} finally {
     		readWriteLock.writeLock().unlock();

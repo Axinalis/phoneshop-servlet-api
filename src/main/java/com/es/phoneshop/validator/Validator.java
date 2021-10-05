@@ -70,13 +70,11 @@ public class Validator {
 		try {
 			LocalDate date = format.parse(rawDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			if(date.isBefore(LocalDate.now())){
-				throw new ValidationException();
+				throw new PersonalInfoParsingException(DATE_WRONG);
 			}
 			return date;
 		} catch (ParseException e) {
 			throw new PersonalInfoParsingException(DATE_INCORRECT, e);
-		} catch (ValidationException e) {
-			throw new PersonalInfoParsingException(DATE_WRONG, e);
 		}
 	}
 

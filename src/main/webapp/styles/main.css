@@ -82,6 +82,28 @@ button#menuButton {
   font-weight: bold;
 }
 
+button#supportButton {
+  background: ##9a9a9a;
+  color: #1c426b;
+  font-size: 10pt;
+  width: 100%;
+  border-radius: 5px;
+  border: 0px;
+  height: 30px;
+  font-weight: bold;
+}
+
+button#dangerAction {
+  background: #fb7875;
+  color: #1c426b;
+  font-size: 10pt;
+  width: 100%;
+  border-radius: 5px;
+  border: 0px;
+  height: 30px;
+  font-weight: bold;
+}
+
 button#updateButton {
   background: #79a3d0;
   color: white;

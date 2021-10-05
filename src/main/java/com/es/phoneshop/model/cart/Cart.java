@@ -19,17 +19,10 @@ public class Cart implements Serializable {
 		items = new ArrayList<>();
 	}
 
-	public Cart(Cart cart) {
-		items = Collections.unmodifiableList(
-				cart.getItems().stream().map(item -> {
-			try {
-				return (CartItem)item.clone();
-			} catch (CloneNotSupportedException ex) {
-				throw new RuntimeException("Error cloning CartItem", ex);
-			}
-		}).collect(Collectors.toList()));
-		totalQuantity = cart.getTotalQuantity();
+	public Cart(Cart cart)  {
+		items = cart.getItems();
 		totalCost = cart.getTotalCost();
+		totalQuantity = cart.getTotalQuantity();
 	}
 	
 	public List<CartItem> getItems(){
@@ -50,6 +43,21 @@ public class Cart implements Serializable {
 
 	public void setTotalQuantity(int totalQuantity) {
 		this.totalQuantity = totalQuantity;
+	}
+
+	@Override
+	public Cart clone() throws CloneNotSupportedException {
+		Cart cart = new Cart();
+		items.forEach(cartItem -> {
+			try {
+				cart.getItems().add((CartItem)cartItem.clone());
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+		});
+		cart.setTotalQuantity(totalQuantity);
+		cart.setTotalCost(totalCost);
+		return cart;
 	}
 }
 

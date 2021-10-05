@@ -137,7 +137,12 @@
             <tr>
               <td>
                 <a href="${pageContext.servletContext.contextPath}/products/cart">
-                  <button id="addToCart">Back to my cart</button>
+                  <button id="supportButton">Back to my cart<span style="color:#ff0000">*</span></button>
+                </a>
+              </td>
+              <td>
+                <a href="${pageContext.servletContext.contextPath}/products/order/filling-details">
+                  <button id="supportButton">Back to info</button>
                 </a>
               </td>
               <c:if test="${empty orderPlaced}">
@@ -147,19 +152,10 @@
                   </form>
                 </td>
               </c:if>
-              <td>
-                <a href="${pageContext.servletContext.contextPath}/products/order/filling-details">
-                  <button id="addToCart">Back to info</button>
-                </a>
-              </td>
             </tr>
           </table>
-        <form id="deleteCartItem" method="post">
-        </form>
 
-      <table align="center" id="shell" style="width:40%">
-
-      </table>
+          <span style="color:#ff0000">*</span> - your personal info will be erased
       <td>
 
         <table>

@@ -46,7 +46,7 @@ public class OverviewPageServlet extends HttpServlet {
         }
 
         if("true".equals(request.getParameter(ORDER_PLACED))){
-            request.setAttribute(ORDER_PLACED, "true");
+            request.setAttribute(ORDER_PLACED, true);
         }
         request.setAttribute(PAYMENT_TYPE, PaymentTypeResolver
                 .GetMessageFromType(order

@@ -83,7 +83,7 @@
             <tr>
               <td>
                 <a href="${pageContext.servletContext.contextPath}/products/cart">
-                  <button id="addToCart">Back to my cart</button>
+                  <button id="supportButton">Back to my cart</button>
                 </a>
               </td>
               <td>

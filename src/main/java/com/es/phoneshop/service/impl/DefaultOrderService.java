@@ -54,9 +54,15 @@ public class DefaultOrderService implements OrderService {
                 .orElseThrow(() -> new OrderNotFoundException("Order with current id is not found"));
     }
 
+    //Forming order from given cart
     @Override
     public Order getOrder(Cart cart) {
-        Order order = new Order(cart);
+        Order order;
+        try {
+            order = new Order(cart.clone());
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
         order.setSubTotal(cart.getTotalCost());
         order.setDeliveryCost(calculateDeliveryCost(cart));
         order.setTotalCost(order.getSubTotal().add(order.getDeliveryCost()));
@@ -65,8 +71,7 @@ public class DefaultOrderService implements OrderService {
 
     @Override
     public List<String> getPaymentTypes() {
-        return Arrays.asList(PaymentMethodType.values())
-                .stream()
+        return Arrays.stream(PaymentMethodType.values())
                 .map(PaymentTypeResolver::GetMessageFromType)
                 .collect(Collectors.toList());
     }
