@@ -65,6 +65,16 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>checkoutPage</servlet-name>
+    <servlet-class>com.es.phoneshop.web.CheckoutPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>checkoutPage</servlet-name>
+    <url-pattern>/products/order</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>DeleteCartItem</servlet-name>
     <servlet-class>com.es.phoneshop.web.DeleteCartItemServlet</servlet-class>
   </servlet>
@@ -73,6 +83,66 @@
     <servlet-name>DeleteCartItem</servlet-name>
     <url-pattern>/products/cart/deleteCartItem/*</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>personalDetails</servlet-name>
+    <servlet-class>com.es.phoneshop.web.PersonalDetailsServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>personalDetails</servlet-name>
+    <url-pattern>/products/order/filling-details</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>finalCheckout</servlet-name>
+    <servlet-class>com.es.phoneshop.web.FinalCheckoutPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>finalCheckout</servlet-name>
+    <url-pattern>/products/order/finalCheckout</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>orderOverview</servlet-name>
+    <servlet-class>com.es.phoneshop.web.OverviewPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>orderOverview</servlet-name>
+    <url-pattern>/products/order/overview/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>orders</servlet-name>
+    <servlet-class>com.es.phoneshop.web.UserOrdersServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>orders</servlet-name>
+    <url-pattern>/products/order/overview</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>deleteOrder</servlet-name>
+    <servlet-class>com.es.phoneshop.web.DeleteOrderServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>deleteOrder</servlet-name>
+    <url-pattern>/products/order/delete/*</url-pattern>
+  </servlet-mapping>
+
+  <filter>
+    <filter-name>dosFilter</filter-name>
+    <filter-class>com.es.phoneshop.web.filters.DosFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>dosFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
   <error-page>
   	<location>/WEB-INF/pages/productNotFoundError.jsp</location>

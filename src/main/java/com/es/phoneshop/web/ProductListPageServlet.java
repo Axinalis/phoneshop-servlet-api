@@ -6,6 +6,7 @@ import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.dao.impl.ArrayListProductDao;
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.cart.CartItem;
+import com.es.phoneshop.model.order.Order;
 import com.es.phoneshop.model.viewsHistory.UserViewsHistory;
 import com.es.phoneshop.service.CartService;
 import com.es.phoneshop.service.impl.DefaultCartService;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.es.phoneshop.constant.ConstantStrings.MINI_CART;
+import static com.es.phoneshop.constant.ConstantStrings.STRING_SESSION_ATTRIBUTE_ORDER;
 
 public class ProductListPageServlet extends HttpServlet {
 	
@@ -38,20 +40,23 @@ public class ProductListPageServlet extends HttpServlet {
     	if(request.getSession().getAttribute(ConstantStrings.RECENTLY_VIEWED) == null) {
     		request.getSession().setAttribute(ConstantStrings.RECENTLY_VIEWED, new UserViewsHistory());
     	}
-		if(request.getSession().getAttribute(ConstantStrings.CART) == null) {
-			request.getSession().setAttribute(ConstantStrings.CART, new Cart());
+		if(request.getSession().getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART) == null) {
+			request.getSession().setAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART, new Cart());
 		}
 		if(request.getSession().getAttribute(MINI_CART) == null){
 			request.getSession().setAttribute(MINI_CART, new ArrayList<CartItem>());
+		}
+		if(request.getSession().getAttribute(STRING_SESSION_ATTRIBUTE_ORDER) == null){
+			request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_ORDER, new ArrayList<Order>());
 		}
 
         //Filter-creating logic
         FilterCreator creator = new FilterCreator();
         creator.setQuery(request.getParameter(ConstantStrings.QUERY));
-        creator.setSorting(request.getParameter(ConstantStrings.FIELD), request.getParameter(ConstantStrings.ORDER));
+        creator.setSorting(request.getParameter(ConstantStrings.FIELD), request.getParameter(ConstantStrings.CURRENT_ORDER));
         
     	request.setAttribute("products", productDao.findProducts(creator.createFilter()));
-    	request.setAttribute(ConstantStrings.CART, cartService.getCart(request) == null ? new Cart() : cartService.getCart(request));
+    	request.setAttribute(ConstantStrings.CART, cartService.getCart(request));
         request.getRequestDispatcher("/WEB-INF/pages/productList.jsp").forward(request, response);
     }
 

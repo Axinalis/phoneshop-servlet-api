@@ -5,7 +5,6 @@
 
 <jsp:useBean id="products" type="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="recentlyViewed" type="com.es.phoneshop.model.viewsHistory.UserViewsHistory" scope="session"/>
-<jsp:useBean id="cart" type="com.es.phoneshop.model.cart.Cart" scope="session"/>
 <tags:master pageTitle="Product List">
   <table id="shell">
     <tr>
@@ -13,6 +12,8 @@
       Main content
     -->
       <td id="shell-td" rowspan="2" style="width:80%">
+
+          <h3 align="center">List of products</h3>
 
         <table  bgcolor="#f9f9f9" style="width:100%;">
           <thead>
