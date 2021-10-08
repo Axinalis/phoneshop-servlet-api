@@ -19,8 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.es.phoneshop.constant.ConstantStrings.MINI_CART;
-import static com.es.phoneshop.constant.ConstantStrings.STRING_SESSION_ATTRIBUTE_ORDER;
+import static com.es.phoneshop.constant.ConstantStrings.*;
 
 public class ProductListPageServlet extends HttpServlet {
 	

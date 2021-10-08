@@ -1,5 +1,6 @@
 package com.es.phoneshop.comparator.filter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +14,9 @@ public class Filter{
 	private SortField sortField;
 	private SortOrder sortOrder;
 	private List<String> queryWords;
+	private BigDecimal minPrice;
+	private BigDecimal maxPrice;
+	private String typeOfSearch;
 
 	public Filter() {
 		this(null, null, null);
@@ -27,6 +31,20 @@ public class Filter{
 						query.split("\\s+")));
 		this.setSortField(sortField);
 		this.setSortOrder(sortOrder);
+	}
+
+	public Filter(SortField sortField, SortOrder sortOrder, String query, BigDecimal minPrice, BigDecimal maxPrice, String typeOfSearch) {
+		if(query == null) {
+			query = "";
+		}
+		this.queryWords = new ArrayList<String>(
+				Arrays.asList(
+						query.split("\\s+")));
+		this.setSortField(sortField);
+		this.setSortOrder(sortOrder);
+		this.setMaxPrice(maxPrice);
+		this.setMinPrice(minPrice);
+		this.typeOfSearch = typeOfSearch;
 	}
 	
 	public Filter(String query) {
@@ -55,6 +73,30 @@ public class Filter{
 
 	public void setQueryWords(List<String> queryWords) {
 		this.queryWords = queryWords;
+	}
+
+	public BigDecimal getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(BigDecimal minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public BigDecimal getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(BigDecimal maxPrice) {
+		this.maxPrice = maxPrice;
+	}
+
+	public String getTypeOfSearch() {
+		return typeOfSearch;
+	}
+
+	public void setTypeOfSearch(String typeOfSearch) {
+		this.typeOfSearch = typeOfSearch;
 	}
 	
 	@Override
@@ -94,5 +136,4 @@ public class Filter{
 		+ " | queryWords=" + this.queryWords.toString()
 		+ " }";
 	}
-	
 }

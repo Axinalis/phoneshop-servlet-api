@@ -2,6 +2,8 @@ package com.es.phoneshop.comparator.filter;
 
 import com.es.phoneshop.model.product.Product;
 
+import static com.es.phoneshop.constant.ConstantStrings.ALL_WORDS;
+
 public class FilterMatcher {
 
 	public static double percentOfWords(Product product, Filter filter) {
@@ -13,20 +15,16 @@ public class FilterMatcher {
 			return 1;
 		}
 
-		String descript = product.getDescription();
-		if(descript == null) {
+		String description = product.getDescription();
+		if(description == null) {
 			return 0;
 		}
 
 		int wordsNum = (int) filter.getQueryWords().stream()
 				.filter(word -> 
-			descript.toLowerCase().contains(word.toLowerCase()))
+			description.toLowerCase().contains(word.toLowerCase()))
 				.count();
 
-		descript.split("\\s+");
-		
-		return (double) wordsNum / (double) descript.split("\\s+").length;
+		return (double) wordsNum / (double) description.split("\\s+").length;
 	}
-	 
-	
 }

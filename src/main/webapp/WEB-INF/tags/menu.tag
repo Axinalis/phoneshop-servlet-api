@@ -7,6 +7,9 @@
 	<button id="search">Search</button>
 </form>
 
+<form action="${pageContext.servletContext.contextPath}/products/adv-search">
+	<button id="menuButton">Advanced search</button>
+</form>
 <form action="${pageContext.servletContext.contextPath}/products">
 	<button id="menuButton">Product List</button>
 </form>

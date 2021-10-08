@@ -5,9 +5,8 @@ import com.es.phoneshop.enums.PaymentMethodType;
 import com.es.phoneshop.exception.PersonalInfoParsingException;
 import com.es.phoneshop.exception.ValidationException;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.math.BigDecimal;
+import java.text.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.chrono.ChronoLocalDate;
@@ -84,6 +83,19 @@ public class Validator {
 			throw new PersonalInfoParsingException(PAYMENT_TYPE_INCORRECT);
 		}
 		return type;
+	}
+
+	public static BigDecimal parsingPrice(String rawPrice){
+		if(rawPrice == null){
+			return null;
+		}
+		BigDecimal price = null;
+		try{
+			price = BigDecimal.valueOf(Double.parseDouble(rawPrice));
+		} catch (NumberFormatException ex){
+			throw new ValidationException("Price is not correct");
+		}
+		return price;
 	}
 
 }

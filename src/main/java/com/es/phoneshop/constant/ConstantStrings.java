@@ -65,5 +65,13 @@ public class ConstantStrings {
     //For UserOrdersServlet
     public static final String ORDERS_LIST = "ordersList";
 
+    //For AdvancedSearchPageServlet
+    public static final String DESCRIPTION = "description";
+    public static final String MIN_PRICE = "minPrice";
+    public static final String MAX_PRICE = "maxPrice";
+    public static final String ALL_WORDS = "All words";
+    public static final String ANY_WORD = "Any word";
+    public static final String SEARCH_TYPE = "typeOfSearch";
+
     public static final String PROJECT_NAME = "/phoneshop-servlet-api";
 }

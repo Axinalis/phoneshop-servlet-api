@@ -13,6 +13,8 @@ import com.es.phoneshop.dao.ProductDao;
 import com.es.phoneshop.exception.ProductNotFoundException;
 import com.es.phoneshop.model.product.Product;
 
+import static com.es.phoneshop.constant.ConstantStrings.ALL_WORDS;
+
 public class ArrayListProductDao implements ProductDao {
 
 	private static volatile ArrayListProductDao instance;
@@ -70,15 +72,9 @@ public class ArrayListProductDao implements ProductDao {
     	try {
     		readWriteLock.readLock().lock();
         	prods = products.stream()
-        			.filter(p -> {
-        				if(filter.getQueryWords().size() == 0) {
-        					return true;
-        				} else {
-        					return FilterMatcher.percentOfWords(p, filter) > 0;
-        				}})
-        			.sorted((p1, p2) -> {
-        			return SortingComparator.sortProducts(p1, p2, filter);
-        			})
+        			.filter(p -> queryMatch(p, filter))
+					.filter(p -> isPriceSatisfy(p, filter))
+        			.sorted((p1, p2) -> SortingComparator.sortProducts(p1, p2, filter))
         			.collect(Collectors.toList());
     	} finally {
     		readWriteLock.readLock().unlock();
@@ -123,5 +119,29 @@ public class ArrayListProductDao implements ProductDao {
     		readWriteLock.writeLock().unlock();
     	}
     }
+
+    private boolean queryMatch(Product product, Filter filter){
+		if(filter.getQueryWords().size() == 0){
+			return true;
+		} else {
+			double percent = FilterMatcher.percentOfWords(product, filter);
+			if(ALL_WORDS.equals(filter.getTypeOfSearch())) {
+				return percent > 0.9;
+			} else {
+				return percent > 0;
+			}
+		}
+	}
+
+	private boolean isPriceSatisfy(Product product, Filter filter){
+		int higherThanMax = filter.getMinPrice() == null ? -1 : product.getPrice().compareTo(filter.getMinPrice());
+		int lesserThanMin  = filter.getMaxPrice() == null ? -1 : filter.getMinPrice().compareTo(product.getPrice());
+
+		if(lesserThanMin > 0 || higherThanMax > 0){
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 }
