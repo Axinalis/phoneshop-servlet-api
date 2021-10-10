@@ -124,7 +124,7 @@ public class ArrayListProductDao implements ProductDao {
 		if(filter.getQueryWords().size() == 0){
 			return true;
 		} else {
-			double percent = FilterMatcher.percentOfWords(product, filter);
+			double percent = FilterMatcher.matchesInQuery(product, filter);
 			if(ALL_WORDS.equals(filter.getTypeOfSearch())) {
 				return percent > 0.9;
 			} else {
@@ -134,8 +134,8 @@ public class ArrayListProductDao implements ProductDao {
 	}
 
 	private boolean isPriceSatisfy(Product product, Filter filter){
-		int higherThanMax = filter.getMinPrice() == null ? -1 : product.getPrice().compareTo(filter.getMinPrice());
-		int lesserThanMin  = filter.getMaxPrice() == null ? -1 : filter.getMinPrice().compareTo(product.getPrice());
+		int higherThanMax = filter.getMinPrice() == null ? -1 : filter.getMinPrice().compareTo(product.getPrice());
+		int lesserThanMin = filter.getMaxPrice() == null ? -1 : product.getPrice().compareTo(filter.getMaxPrice());;
 
 		if(lesserThanMin > 0 || higherThanMax > 0){
 			return false;

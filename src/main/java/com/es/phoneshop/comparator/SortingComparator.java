@@ -18,8 +18,8 @@ public class SortingComparator {
 		}
 		if (filter.getSortField() == null || filter.getSortOrder() == null) {
 			return (int) (100 * (
-					FilterMatcher.percentOfWords(p2, filter) - 
-					FilterMatcher.percentOfWords(p1, filter)));
+					FilterMatcher.matchesInProduct(p2, filter) -
+					FilterMatcher.matchesInProduct(p1, filter)));
 		} else {
 			
 			switch (filter.getSortField()) {

@@ -28,7 +28,7 @@
         Type of search
       </td>
       <td>
-        <select name="paymentType">
+        <select name="typeOfSearch">
           <option>
             All words
           </option>

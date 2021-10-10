@@ -25,22 +25,22 @@ public class FilterMatcherTest {
 	@Test
 	public void test() {
 		f = new Filter(SortField.DESCRIPTION, SortOrder.ASC, "Apple Samsung Nokia");
-		assertTrue(FilterMatcher.percentOfWords(p, f) < 0.5);
+		assertTrue(FilterMatcher.matchesInProduct(p, f) < 0.5);
 		
 		f = new Filter(SortField.DESCRIPTION, SortOrder.ASC, "A B C D E F G");
-		assertTrue(FilterMatcher.percentOfWords(p, f) > 0.3);
+		assertTrue(FilterMatcher.matchesInProduct(p, f) > 0.3);
 		
 		f = new Filter(SortField.DESCRIPTION, SortOrder.ASC, "Samsung Galaxy S");
-		assertTrue(FilterMatcher.percentOfWords(p, f) == 1.0);
+		assertTrue(FilterMatcher.matchesInProduct(p, f) == 1.0);
 		
 		f = new Filter(SortField.DESCRIPTION, SortOrder.ASC, "sgs");
-		assertTrue(FilterMatcher.percentOfWords(p, f) == 1.0);
+		assertTrue(FilterMatcher.matchesInProduct(p, f) == 1.0);
 		
 		f = new Filter(SortField.DESCRIPTION, SortOrder.ASC, "sam sung sal axy");
-		assertTrue(FilterMatcher.percentOfWords(p, f) > 0.8);
+		assertTrue(FilterMatcher.matchesInProduct(p, f) > 0.8);
 		
 		f = new Filter(SortField.DESCRIPTION, SortOrder.ASC, "SAMSUNG GALAXY");
-		assertTrue(FilterMatcher.percentOfWords(p, f) > 0.5);
+		assertTrue(FilterMatcher.matchesInProduct(p, f) > 0.5);
 		
 	}
 

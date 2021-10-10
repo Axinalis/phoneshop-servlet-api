@@ -86,7 +86,7 @@ public class Validator {
 	}
 
 	public static BigDecimal parsingPrice(String rawPrice){
-		if(rawPrice == null){
+		if(rawPrice == null || rawPrice.equals("")){
 			return null;
 		}
 		BigDecimal price = null;
