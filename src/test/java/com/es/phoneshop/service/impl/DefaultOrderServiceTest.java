@@ -78,16 +78,52 @@ public class DefaultOrderServiceTest {
 		try{
 			order = service.getOrderByUUID(UUID.randomUUID().toString(), request);
 			fail();
-		} catch(OrderNotFoundException ignored){
-
-		}
+		} catch(OrderNotFoundException ignored){}
 	}
 
 	@Test
 	public void testCreatingOrder(){
 		cart.setTotalCost(new BigDecimal(5));
 		cart.setTotalQuantity(5);
-		Order order = new Order();
 
+		Order order = service.getOrder(cart);
+		assertNotNull(order);
+		assertEquals(cart.getTotalCost(),  order.getSubTotal());
+		assertEquals(new BigDecimal(10), order.getDeliveryCost());
+
+		try{
+			service.getOrder(null);
+			fail();
+		} catch (NullPointerException ignored){}
+
+	}
+
+	@Test
+	public void testGetPaymentTypes(){
+		List<String> types;
+
+		types = service.getPaymentTypes();
+		assertNotNull(types);
+		assertTrue(types.size() > 0);
+		assertEquals("By cache", types.get(0));
+
+	}
+
+	@Test
+	public void testPlaceOrder(){
+		cart.setTotalCost(new BigDecimal(5));
+		cart.setTotalQuantity(5);
+		Order order = service.getOrder(cart);
+
+		service.placeOrder(order);
+		Order order2 = dao.getOrder(1L);
+		assertEquals(order, order2);
+	}
+
+	@Test
+	public void testDelete(){
+		Order order = orders.get(1);
+		service.delete(uuids.get(1), request);
+		assertFalse(orders.contains(order));
 	}
 }

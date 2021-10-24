@@ -41,15 +41,16 @@ public class FinalCheckoutPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(request.getSession().getAttribute(CURRENT_ORDER) == null){
-            response.sendError(404);
-        }
-        request.setAttribute(PAYMENT_TYPE, PaymentTypeResolver
-                .GetMessageFromType(((Order)request
-                        .getSession()
-                        .getAttribute(CURRENT_ORDER))
-                        .getPaymentType()));
+            response.sendError(404, ORDER_NOT_AVAILABLE);
+        } else {
+            request.setAttribute(PAYMENT_TYPE, PaymentTypeResolver
+                    .GetMessageFromType(((Order)request
+                            .getSession()
+                            .getAttribute(CURRENT_ORDER))
+                            .getPaymentType()));
 
-        request.getRequestDispatcher("/WEB-INF/pages/finalCheckoutOrder.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/finalCheckoutOrder.jsp").forward(request, response);
+        }
     }
 
     @Override
@@ -57,14 +58,15 @@ public class FinalCheckoutPageServlet extends HttpServlet {
         Order order = (Order) request.getSession().getAttribute(CURRENT_ORDER);
         try{
             orderService.placeOrder(order);
+            List<Order> orders = (ArrayList)request.getSession().getAttribute(STRING_SESSION_ATTRIBUTE_ORDER);
+            orders.add(order);
+            request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_ORDER, orders);
+            request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
+            request.getSession().removeAttribute(CURRENT_ORDER);
+            response.sendRedirect(PROJECT_NAME + "/products/order/overview/" + order.getSecureId() + "?orderPlaced=true");
         } catch (IllegalArgumentException | OrderNotFoundException ex){
             response.sendError(404);
         }
-        List<Order> orders = (ArrayList)request.getSession().getAttribute(STRING_SESSION_ATTRIBUTE_ORDER);
-        orders.add(order);
-        request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_ORDER, orders);
-        request.getSession().setAttribute(STRING_SESSION_ATTRIBUTE_CART, new Cart());
-        request.getSession().removeAttribute(CURRENT_ORDER);
-        response.sendRedirect(PROJECT_NAME + "/products/order/overview/" + order.getSecureId() + "?orderPlaced=true");
+
     }
 }

@@ -32,9 +32,14 @@ public class DeleteOrderServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String secureId = request.getPathInfo().substring(1);
-    	orderService.delete(secureId, request);
+    	String rawSecureId = request.getPathInfo();
+    	if(rawSecureId == null || rawSecureId.length() < 2){
+    		response.sendError(400);
+    		return;
+		}
+    	String secureId = rawSecureId.substring(1);
+		orderService.delete(secureId, request);
+		response.sendRedirect(PROJECT_NAME + "/products/order/overview");
 
-    	response.sendRedirect(PROJECT_NAME + "/products/order/overview");
 	}
 }

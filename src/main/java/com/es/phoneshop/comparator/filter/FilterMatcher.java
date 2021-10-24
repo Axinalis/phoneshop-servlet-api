@@ -9,6 +9,12 @@ public class FilterMatcher {
 	public static double matchesInProduct(Product product, Filter filter) {
 		int wordsNum = percentOfMatchedWords(product, filter);
 
+		if(filter.getQueryWords()
+				.stream()
+				.anyMatch(word -> word.equalsIgnoreCase(product.getCode()))){
+			return 1;
+		}
+
 		return (double) wordsNum / (double) product.getDescription().split("\\s+").length;
 	}
 
@@ -20,10 +26,7 @@ public class FilterMatcher {
 
 	public static int percentOfMatchedWords(Product product, Filter filter) {
 
-		if(filter.getQueryWords() == null
-				|| filter.getQueryWords().size() == 0
-				|| filter.getQueryWords().stream()
-				.anyMatch(word -> word.equalsIgnoreCase(product.getCode()))) {
+		if(filter.getQueryWords() == null || filter.getQueryWords().size() == 0) {
 			return 1;
 		}
 

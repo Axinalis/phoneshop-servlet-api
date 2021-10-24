@@ -68,14 +68,9 @@ public class MiniCartServletTest {
     	disp = mock(RequestDispatcher.class);
     	cart = new Cart();
     	service = DefaultCartService.getInstance();
-        when(request.getPathInfo()).thenReturn("/1");
-        when(request.getParameter(ConstantStrings.QUANTITY)).thenReturn("5");
-        when(request.getLocale()).thenReturn(Locale.ENGLISH);
         when(request.getSession()).thenReturn(session);
         when(request.getRequestDispatcher("/WEB-INF/pages/minicart.jsp")).thenReturn(disp);
-        when(session.getAttribute(ConstantStrings.RECENTLY_VIEWED)).thenReturn(new UserViewsHistory());
         when(session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART)).thenReturn(new Cart());
-        when(request.getParameter(ConstantStrings.UPDATING)).thenReturn("true");
         page.init(config);
     }
 

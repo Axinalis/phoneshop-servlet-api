@@ -1,5 +1,6 @@
 package com.es.phoneshop.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Currency;
 
 import org.junit.Before;
@@ -27,6 +28,7 @@ public class ArrayListProductDaoTest
         productDao = ArrayListProductDao.getInstance();
 		newProduct = new Product("htces4g", "HTC UVO Short 4G", new BigDecimal(32),
 				Currency.getInstance("USD"), 3, "HTC/HTC%20EVO%20Shift%204G.jpg");
+		newProduct.setPriceHistory(new ArrayList<>());
     }
 
     @Test
@@ -44,7 +46,7 @@ public class ArrayListProductDaoTest
     @Test
 	public void testSavingAndGettingProduct() {
     	Long id = productDao.save(newProduct);
-		
+
 		assertEquals(new Product(id, newProduct), productDao.getProduct(id));
 		assertNotNull(productDao.getProduct(id));
 	}

@@ -77,8 +77,18 @@ public class ProductDetailsPageServlet extends HttpServlet {
 		Long id;
 		int quantityInt;
 		String stateInfo;
-		String productId = request.getPathInfo().substring(1);
-		id = Validator.validatingId(productId);
+		String rawProductId = request.getPathInfo();
+		if(rawProductId == null || rawProductId.length() < 2){
+			response.sendError(404);
+			return;
+		}
+		String productId = rawProductId.substring(1);
+		try{
+			id = Validator.validatingId(productId);
+		} catch (IllegalArgumentException ex){
+			response.sendError(404);
+			return;
+		}
 		
 		try {
 			quantityInt = Validator.parsingQuantity(request.getParameter(QUANTITY), request.getLocale());

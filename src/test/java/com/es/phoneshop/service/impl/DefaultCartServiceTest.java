@@ -56,8 +56,9 @@ public class DefaultCartServiceTest {
 			service.add(0L, 1, service.getCart(request));
 			fail();
 		} catch (ProductNotFoundException ex){}
+
 		try{
-			service.add(9L, 1, service.getCart(request));
+			service.add(90L, 1, service.getCart(request));
 			fail();
 		} catch (ProductNotFoundException ex){}
 
@@ -65,14 +66,17 @@ public class DefaultCartServiceTest {
 			service.add(1L, 10000, service.getCart(request));
 			fail();
 		} catch (ValidationException ex){}
+
 		try{
 			service.add(1L, -1, service.getCart(request));
 			fail();
 		} catch (ValidationException ex){}
+
 		try{
 			service.add(1L, 0, service.getCart(request));
 			fail();
 		} catch (ValidationException ex){}
+
 		try{
 			service.add(1L, -10000, service.getCart(request));
 			fail();

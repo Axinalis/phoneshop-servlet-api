@@ -4,6 +4,7 @@ import com.es.phoneshop.model.historyRecord.HistoryRecord;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +35,7 @@ public class Product implements Serializable {
         this.currency = currency;
         this.stock = stock;
         this.imageUrl = imageUrl;
+        this.setPriceHistory(new ArrayList<>());
     }
 
     public Product(Long id, Product product) {
@@ -55,6 +57,7 @@ public class Product implements Serializable {
 		this.currency = currency;
 		this.stock = stock;
 		this.imageUrl = imageUrl;
+        this.setPriceHistory(new ArrayList<>());
 	}
 	
 	public Product(Long id, String code, String description, BigDecimal price, Currency currency, int stock, String imageUrl, List<HistoryRecord> priceHistory) {

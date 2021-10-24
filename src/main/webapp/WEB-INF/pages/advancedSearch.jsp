@@ -66,7 +66,7 @@
     </tr>
     <tr>
       <td>
-        <button id="supportButton" style="width:100%" formaction="${pageContext.servletContext.contextPath}/products">Back to list</button>
+        <button id="supportButton" style="width:100%" formmethod="get" formaction="${pageContext.servletContext.contextPath}/products">Back to list</button>
       </td>
       <td>
         <button id="addToCart" style="width:100%">Search</button>

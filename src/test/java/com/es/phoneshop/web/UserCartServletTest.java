@@ -56,22 +56,20 @@ public class UserCartServletTest {
     @Before
     public void setup() throws ServletException{
     	page = new UserCartServlet();
+    	Cart cart  = new Cart();
         Currency usd = Currency.getInstance("USD");
         dao.save(new Product("sgs", "Samsung Galaxy S", new BigDecimal(100), usd, 100, "/Samsung/Samsung%20Galaxy%20S.jpg"));
         dao.save(new Product("sgs2", "Samsung Galaxy S II", new BigDecimal(200), usd, 0, "/Samsung/Samsung%20Galaxy%20S%20II.jpg"));
         dao.save(new Product("sgs3", "Samsung Galaxy S III", new BigDecimal(300), usd, 5, "/Samsung/Samsung%20Galaxy%20S%20III.jpg"));
         dao.save(new Product("iphone", "Apple iPhone", new BigDecimal(200), usd, 10, "/Apple/Apple%20iPhone.jpg"));
+        DefaultCartService.getInstance().add((long)3, 5, cart);
     	request = mock(HttpServletRequest.class);
     	session = mock(HttpSession.class);
     	disp = mock(RequestDispatcher.class);
-        when(request.getPathInfo()).thenReturn("/1");
-        when(request.getParameter(ConstantStrings.QUANTITY)).thenReturn("5");
         when(request.getLocale()).thenReturn(Locale.ENGLISH);
         when(request.getSession()).thenReturn(session);
-        when(request.getRequestDispatcher("/WEB-INF/pages/productInfo.jsp")).thenReturn(disp);
         when(request.getRequestDispatcher("/WEB-INF/pages/cartProductList.jsp")).thenReturn(disp);
-        when(session.getAttribute(ConstantStrings.RECENTLY_VIEWED)).thenReturn(new UserViewsHistory());
-        when(session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART)).thenReturn(new Cart());
+        when(session.getAttribute(ConstantStrings.STRING_SESSION_ATTRIBUTE_CART)).thenReturn(cart);
         when(request.getParameter(ConstantStrings.UPDATING)).thenReturn("true");
         page.init(config);
     }
@@ -82,7 +80,7 @@ public class UserCartServletTest {
 			page.doGet(request, response);
 		} catch (ServletException | IOException e) {
 			fail();
-		} catch (NullPointerException ignored) {
+		} catch (NullPointerException ex) {
 		    fail();
         }
 
@@ -113,27 +111,5 @@ public class UserCartServletTest {
             fail();
         }
 	}
-
-	@Test
-	public void testDoPost(){
-        try{
-            page.doPost(request, response);
-        } catch(IOException | ServletException ex) {
-            fail();
-        }
-
-        when(request.getPathInfo()).thenReturn("/l");
-
-        try{
-            page.doPost(request, response);
-            fail();
-        } catch(IOException | ServletException ex) {
-            fail();
-        } catch (ValidationException ex) {
-
-        }
-
-    }
-
 
 }

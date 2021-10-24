@@ -37,12 +37,18 @@ public class OverviewPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String secureID = request.getPathInfo().substring(1);
+        String rawSecureID = request.getPathInfo();
+        if(rawSecureID == null || rawSecureID.length() < 2){
+            response.sendError(400);
+            return;
+        }
+        String secureID = rawSecureID.substring(1);
         Order order = null;
         try{
             order = orderService.getOrderByUUID(secureID, request);
         } catch (OrderNotFoundException ex){
             response.sendError(404);
+            return;
         }
 
         if("true".equals(request.getParameter(ORDER_PLACED))){

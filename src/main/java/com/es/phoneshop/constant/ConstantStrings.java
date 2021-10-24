@@ -49,8 +49,9 @@ public class ConstantStrings {
     public static final String PAYMENT_TYPES = "paymentTypes";
     //Messages for users
     public static final String PHONE_NUMBER_INCORRECT = "Phone number is incorrect";
+    public static final String PHONE_NUMBER_IS_NULL = "Phone number is empty";
     public static final String DATE_INCORRECT = "Date is incorrect";
-    public static final String DATE_WRONG = "Date is in the past";
+    public static final String DATE_IS_BEFORE = "Date is in the past";
     public static final String DATE_EMPTY = "Date is not choosed";
     public static final String PAYMENT_TYPE_INCORRECT = "Payment type is incorrect";
 
@@ -61,6 +62,7 @@ public class ConstantStrings {
 
     //For FinalCheckoutPageServlet
     public static final String ORDER_PLACED = "orderPlaced";
+    public static final String ORDER_NOT_AVAILABLE = "Order is not available";
 
     //For UserOrdersServlet
     public static final String ORDERS_LIST = "ordersList";
@@ -72,6 +74,17 @@ public class ConstantStrings {
     public static final String ALL_WORDS = "All words";
     public static final String ANY_WORD = "Any word";
     public static final String SEARCH_TYPE = "typeOfSearch";
+
+    //For Validator
+    public static final String ID_IS_NULL = "Id is null";
+    public static final String ID_NOT_LONG = "Cannot parse id to Long";
+    public static final String PRICE_NOT_CORRECT = "Price is not correct";
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String PHONE_NUMBER_TEMPLATE = "(\\+*)(\\d{11,15})";
+
+    //For ArrayListOrderDao
+    public static final String NO_ORDERS_FOUND = "No orders with current id were found (id = %d )";
+    public static final String ORDER_IS_NULL = "Order is null";
 
     public static final String PROJECT_NAME = "/phoneshop-servlet-api";
 }

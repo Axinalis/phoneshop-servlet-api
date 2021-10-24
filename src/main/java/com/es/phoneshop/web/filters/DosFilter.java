@@ -20,7 +20,7 @@ public class DosFilter implements Filter {
         if(dosProtection.isAllowed(request.getRemoteAddr())){
             chain.doFilter(request, response);
         } else {
-            ((HttpServletResponse)request).setStatus(429);
+            ((HttpServletResponse)response).setStatus(429);
         }
     }
 

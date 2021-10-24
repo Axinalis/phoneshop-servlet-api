@@ -91,7 +91,7 @@ public class DefaultOrderService implements OrderService {
     }
 
     private BigDecimal calculateDeliveryCost(Cart cart){
-        if(cart.getTotalCost().compareTo(new BigDecimal(500)) == -1){
+        if(cart.getTotalCost().compareTo(new BigDecimal(500)) < 0){
             return new BigDecimal(10);
         } else {
             return new BigDecimal(0);

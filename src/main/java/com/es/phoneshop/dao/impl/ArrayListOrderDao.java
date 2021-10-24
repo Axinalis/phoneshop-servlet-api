@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.stream.Collectors;
+
+import static com.es.phoneshop.constant.ConstantStrings.*;
 
 public class ArrayListOrderDao implements OrderDao {
 
@@ -44,7 +45,7 @@ public class ArrayListOrderDao implements OrderDao {
     public Order getOrder(Long id) {
         Order buf;
         if (id == null) {
-            throw new IllegalArgumentException("Id is null");
+            throw new IllegalArgumentException(ID_IS_NULL);
         }
 
         try{
@@ -52,7 +53,7 @@ public class ArrayListOrderDao implements OrderDao {
             buf = orders.stream()
                     .filter(o -> id.equals(o.getId()))
                     .findFirst()
-                    .orElseThrow(() -> new OrderNotFoundException("No orders with current id were found (id = " + id + ")"));
+                    .orElseThrow(() -> new OrderNotFoundException(String.format(NO_ORDERS_FOUND, id)));
         } finally {
             readWriteLock.readLock().unlock();
         }
@@ -63,32 +64,32 @@ public class ArrayListOrderDao implements OrderDao {
     @Override
     public Long save(Order order) {
         if (order == null) {
-            throw new IllegalArgumentException("Order is null");
+            throw new IllegalArgumentException(ORDER_IS_NULL);
         }
         Order sameIdOrder;
 
         try{
             readWriteLock.writeLock().lock();
             if (order.getId() == null){
-                order.setId(maxId++);
+                order.setId(maxId);
                 orders.add(order);
             } else {
                 sameIdOrder = orders.stream()
                         .filter(o -> order.getId().equals(o.getId()))
                         .findFirst()
-                        .orElseThrow(() -> new OrderNotFoundException("No orders with current id were found"));
+                        .orElseThrow(() -> new OrderNotFoundException(String.format(NO_ORDERS_FOUND, maxId)));
                 orders.set(orders.indexOf(sameIdOrder), order);
             }
         } finally {
             readWriteLock.writeLock().unlock();
         }
-        return maxId - 1;
+        return maxId++;
     }
 
     @Override
     public void deleteOrder(Long id) {
         if(id == null) {
-            throw new IllegalArgumentException("Id is null");
+            throw new IllegalArgumentException(ID_IS_NULL);
         }
 
         try {

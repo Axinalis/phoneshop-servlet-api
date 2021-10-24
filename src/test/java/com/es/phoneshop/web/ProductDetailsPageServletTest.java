@@ -1,8 +1,7 @@
 package com.es.phoneshop.web;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -86,23 +85,15 @@ public class ProductDetailsPageServletTest {
 	}
 
 	@Test
-	public void testDoPost(){
-        try{
-            page.doPost(request, response);
-        } catch(IOException | ServletException ex) {
-            fail();
-        }
+	public void testDoPost() throws ServletException, IOException {
+        when(request.getPathInfo()).thenReturn("/1");
+        page.doPost(request, response);
+        verify(response, times(1)).sendRedirect("/phoneshop-servlet-api/products/info/" + 1 + "?" + "success=product_added");
 
         when(request.getPathInfo()).thenReturn("/l");
 
-        try{
-            page.doPost(request, response);
-            fail();
-        } catch(IOException | ServletException ex) {
-            fail();
-        } catch (ValidationException ex) {
-
-        }
+        page.doPost(request, response);
+        verify(response, times(1)).sendError(404);
 
     }
 
